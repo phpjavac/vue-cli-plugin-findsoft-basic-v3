@@ -24,6 +24,31 @@ const routes: Array<RouteRecordRaw> = [
   //     },
   //   ],
   // },
+  {
+    path: '/Teacher',
+    name: 'teacher',
+    component: () => import(/* webpackChunkName: "teacher" */ '../views/Teacher/index.vue'),
+    children: [
+      // {
+      //   path: '/Teacher/userlist',
+      //   name: 'teacher/userlist',
+      //   // meta: meta(2, true),
+      //   component: () => import(/* webpackChunkName: "teacher/userlist" */ '../views/Teacher/userManage/userList.vue'),
+      // },
+      {
+        path: '/Teacher/classlist',
+        name: 'teacher/classlist',
+        // meta: meta(1, true),
+        component: () => import(/* webpackChunkName: "teacher/classlist" */ '../views/Teacher/classManage/classList.vue'),
+      },
+      // {
+      //   path: '/Teacher/userInfo',
+      //   name: 'TeacherUserInfo',
+      //   // meta: meta(0, true),
+      //   component: () => import(/* webpackChunkName: "teacher/userInfo" */ '../views/Public/UserInfo.vue'),
+      // },
+    ],
+  },
 ];
 
 const router = createRouter({
