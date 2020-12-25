@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/dcaw/',
+  publicPath: '/dcaw',
 
   devServer: {
     proxy: {
