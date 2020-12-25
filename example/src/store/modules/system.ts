@@ -23,6 +23,7 @@ class System implements StoreOptions<State> {
       mutations: MutationTree<State> ={
         updateSoftConfig(store, softConfig: SoftConfig) {
           store.softConfig = softConfig;
+          document.title = softConfig.softName;
         },
       }
 
