@@ -8,6 +8,9 @@ export default {
   setup() {
     const store = useStore();
     store.dispatch('system/getSoftConfig');
+    if (sessionStorage.getItem('code')) {
+      store.dispatch('user/getByCode');
+    }
   },
 };
 
