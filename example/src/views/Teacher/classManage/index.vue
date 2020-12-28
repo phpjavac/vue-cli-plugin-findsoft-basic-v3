@@ -21,8 +21,7 @@ export default defineComponent({
 });
 </script>
 <style lang="stylus" scoped>
-// @import '@/styles/variable.styl'
-// 引入抱错，暂时先不考虑。如果想用的话，直接在stylus文件里定义类，然后直接在html里使用。再不济就单独写stylus控制
+@import '~/../../../../styles/variable.styl'
 
 .main
   height 120vh

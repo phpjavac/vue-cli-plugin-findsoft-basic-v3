@@ -5,10 +5,14 @@
 json('./variable.json', false, "$")
 /*
   json(地址，哈希(应该是哈希，但应该对应的是一个settingOption)，前缀)
+  可能会用到的地方：
+    1、更改主题色，只需要更改json文件，就可以更改大部分色调（比如header&menu）
   原理&目标：
     1、在styl里可以直接用styl的变量，但是在js里暂时无法获得。sass好像可以通过 :export的方式暴露变量
     2、如果用stylus实现——大致原理：通过json文件，实现变量共享
-    3、在vue的stylus中使用变量——暂未实现⭐暂时没有解决方案
+    3、在vue的stylus中使用变量√
+      3-1：直接在标签引入：~表示当前根目录，后面就慢慢往外层文件夹跳出
+      3-eg：@import '~/../../../../styles/variable.styl'
     4、在js中使用：import导入的方式
       4-1：需要更改tsconfig.json 🔗https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-9.html
       4-2：{
@@ -27,6 +31,7 @@ json('./variable.json', false, "$")
     1、json https://github.com/stylus/stylus/issues/2441
     2、sass https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
     3、stylus https://medium.com/qbits/sharing-variables-between-stylus-and-react-324bf3b43f33
+    4、import https://blog.csdn.net/qq_40686529/article/details/103742902
 */
 
 
