@@ -12,6 +12,7 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
+    'linebreak-style': ["error", "windows"], /**windows开发 */
     'max-len':'off',
     'no-param-reassign':'off',
     "max-classes-per-file": ["error", 2],

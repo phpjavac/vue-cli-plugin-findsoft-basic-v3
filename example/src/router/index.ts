@@ -24,6 +24,14 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "userlist_index" */ '../views/Teacher/userlist/index.vue'),
 
       },
+      {
+
+        path: '/Teacher/classlist',
+        name: 'Teacher/classlist',
+        // role: ['admin'], // 计划用这样的权限组去区分，判断的地方用includes
+        component: () => import(/* webpackChunkName: "userlist_index" */ '../views/Teacher/classManage/index.vue'),
+
+      },
     ],
   },
 ];
