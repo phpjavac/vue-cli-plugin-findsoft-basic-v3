@@ -1,0 +1,9 @@
+{
+  "primary":{
+    "color":{
+      "background": "blue",
+      "text":"green"
+    }
+  },
+  "testother":"yellow"
+}
