@@ -1,4 +1,3 @@
-// import { definitions } from '@/types/api';
 import {
   ActionTree, MutationTree, StoreOptions,
 } from 'vuex';
@@ -77,7 +76,7 @@ class State {
   // list
   tableClassList: EditClassFace[] = [] // 班级列表
 
-  tableStudentList: EditStudentFace[] = [] // 学生列表
+  tableStudentList: EditStudentFace[] = [] // 学生列表——模态框用
 
   // loading
   loadingClassList = false // 班级列表
@@ -96,7 +95,7 @@ class State {
   modalStudentAdd = false // 学生新增
 }
 
-class ClassController implements StoreOptions<State> {
+class Classe implements StoreOptions<State> {
   namespaced = true;
 
   state = new State();
@@ -128,16 +127,12 @@ class ClassController implements StoreOptions<State> {
   actions: ActionTree<State, unknown> = {
     // 班级列表
     getClassList({ commit }, data) {
-      // commit('changeBoolean', { name: 'loadingClassList', type: true });
       const searchData = new SearchClassClass(data);
       return new Promise((resolve) => {
         axios.post('./api/class/queryClass', searchData).then((res) => {
           // console.log(res.data.data, 'resssss');
           commit('updateClassList', res.data.data.list || []);
           resolve(res.data.data);
-        }).finally(() => {
-          console.log('finally');
-          // commit('changeBoolean', { name: 'loadingClassList', type: false });
         });
       });
     },
@@ -157,4 +152,4 @@ class ClassController implements StoreOptions<State> {
   }
 }
 
-export default new ClassController();
+export default new Classe();

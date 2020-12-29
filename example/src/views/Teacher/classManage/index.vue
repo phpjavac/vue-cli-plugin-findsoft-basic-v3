@@ -129,17 +129,17 @@ export default defineComponent({
     ];
     // 数据
     const getFetchData = async (page = 1) => {
-      store.commit('classCon/changeBoolean', { name: 'loadingClassList', type: true });
-      const { searchForm } = store.state.classCon;
+      store.commit('classe/changeBoolean', { name: 'loadingClassList', type: true });
+      const { searchForm } = store.state.classe;
       const { pageSize } = pageConfig;
       const search = {
         ...searchForm, pageNo: page, pageSize,
       };
-      store.commit('classCon/updateSearchForm', search); // 同步searchForm
-      const { pageNo, totalRecords } = await store.dispatch('classCon/getClassList', search); // 同步数据
+      store.commit('classe/updateSearchForm', search); // 同步searchForm
+      const { pageNo, totalRecords } = await store.dispatch('classe/getClassList', search); // 同步数据
       pageConfig.current = pageNo;
       pageConfig.totalSize = totalRecords;
-      store.commit('classCon/changeBoolean', { name: 'loadingClassList', type: false });
+      store.commit('classe/changeBoolean', { name: 'loadingClassList', type: false });
     };
     // 页码改变
     const onChangeSize = (_: unknown, size: number) => {
@@ -148,17 +148,17 @@ export default defineComponent({
     };
     // 查询改变
     const searchChange = (keyWord: string) => {
-      const { searchForm } = store.state.classCon;
+      const { searchForm } = store.state.classe;
       const search = {
         ...searchForm, keyWord,
       };
-      store.commit('classCon/updateSearchForm', search); // 同步searchForm
+      store.commit('classe/updateSearchForm', search); // 同步searchForm
       getFetchData();
     };
     // 排序
     const tableSort = (s: {field: string;order: string}) => {
       const search: SearchClassFace = {};
-      const { searchForm } = store.state.classCon;
+      const { searchForm } = store.state.classe;
       if (s.order) {
         search.sortName = s.field;
         search.sortDesc = s.order === 'ascend';
@@ -166,7 +166,7 @@ export default defineComponent({
         search.sortName = undefined;
         search.sortDesc = undefined;
       }
-      store.commit('classCon/updateSearchForm', { ...searchForm, ...search }); // 同步searchForm
+      store.commit('classe/updateSearchForm', { ...searchForm, ...search }); // 同步searchForm
       getFetchData();
     };
 
@@ -181,10 +181,10 @@ export default defineComponent({
       console.log('formEdit');
     };
     const formCancel = (key: string, name: string, type: boolean) => {
-      store.commit('classCon/changeBoolean', { name, type });
+      store.commit('classe/changeBoolean', { name, type });
     };
     const changeBoolean = (name: string, type: boolean) => {
-      store.commit('classCon/changeBoolean', { name, type });
+      store.commit('classe/changeBoolean', { name, type });
     };
 
     onMounted(() => {
@@ -205,11 +205,11 @@ export default defineComponent({
       tableSort,
       columnClass,
       //
-      tableClassList: computed(() => store.state.classCon.tableClassList),
-      loadingClassList: computed(() => store.state.classCon.loadingClassList),
-      modalVisibleAdd: computed(() => store.state.classCon.modalClassAdd),
-      modalVisibleEdit: computed(() => store.state.classCon.modalClassEdit),
-      modalVisibleList: computed(() => store.state.classCon.modalStudentList),
+      tableClassList: computed(() => store.state.classe.tableClassList),
+      loadingClassList: computed(() => store.state.classe.loadingClassList),
+      modalVisibleAdd: computed(() => store.state.classe.modalClassAdd),
+      modalVisibleEdit: computed(() => store.state.classe.modalClassEdit),
+      modalVisibleList: computed(() => store.state.classe.modalStudentList),
     };
   },
 });
