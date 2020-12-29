@@ -75,8 +75,6 @@ export default defineComponent({
     theAdd: defineAsyncComponent(() => import('./modal/Create.vue')),
     theEdit: defineAsyncComponent(() => import('./modal/Create.vue')),
     theList: defineAsyncComponent(() => import('./modal/List.vue')),
-    theStuAdd: defineAsyncComponent(() => import('./modal/StuCreate.vue')),
-    theStuEdit: defineAsyncComponent(() => import('./modal/StuCreate.vue')),
     aButton: Button,
     aTable: Table,
     aPagination: Pagination,
