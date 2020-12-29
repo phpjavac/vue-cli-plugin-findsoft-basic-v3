@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
 import system from './modules/system';
 import user from './modules/user';
-import classCon from './modules/classManage';
+import classe from './modules/classManage';
 import student from './modules/student';
 import teacher from './modules/teacher';
 
@@ -15,7 +15,7 @@ const store = createStore({
   modules: {
     system,
     user,
-    classCon,
+    classe,
     teacher,
     student,
   },
@@ -26,7 +26,7 @@ declare module 'vuex' {
   type ModulesType = {
     system: typeof system.state;
     user: typeof user.state;
-    classCon: typeof classCon.state;
+    classe: typeof classe.state;
     teacher: typeof teacher.state;
     student: typeof student.state;
   }
