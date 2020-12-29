@@ -1,9 +1,8 @@
 {
   "primary":{
-    "color":{
-      "background": "blue",
-      "text":"green"
-    }
+    "color":"#1890ff"
   },
-  "testother":"yellow"
+  "button":{
+    "radius":"4px"
+  }
 }

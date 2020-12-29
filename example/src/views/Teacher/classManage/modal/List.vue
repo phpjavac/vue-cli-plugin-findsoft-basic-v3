@@ -3,7 +3,7 @@ a-modal.main(
   v-model:visible='props.visible'
   @cancel='onCancel'
 )
-  .div {{props.isEdit?'修改班级':'新增班级'}}
+  .div 学生列表
 </template>
 
 <script lang="ts">
@@ -15,25 +15,17 @@ export default defineComponent({
     aModal: Modal,
   },
   props: {
-    isEdit: {
-      type: Boolean,
-      defalut: () => false,
-    },
     visible: {
       type: Boolean,
       defalut: () => false,
     },
   },
   setup(props, context: SetupContext) {
-    const onSubmit = () => {
-      context.emit('on-submit');
-    };
     const onCancel = () => {
       context.emit('on-cancel');
     };
     return {
       props,
-      onSubmit,
       onCancel,
     };
   },

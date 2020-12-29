@@ -15,6 +15,36 @@ interface UserInfo{
 class State {
   user: definitions['User'] = {}
 }
+/**
+ * 理论上这里是否继承UserInfo都不影响，但考虑面向对象，先继承试试。如果不合适也方便更改。
+ * 目前只用到了UserInfo的name&code
+ */
+export interface EditUserFace extends UserInfo{
+  id?: string; // 用户id
+  // name: string; // 用户姓名 extends
+  // code: string; // 账号 extends
+  classId?: string; // 班级id
+  isTeacher?: boolean; // 是否教师
+}
+/**
+ * 对Class而言，现在主要作用是作为转换器&过滤器，即去除表单无用字段&转换列表所需字段
+ */
+class EditUserClass {
+  userId?: string
+
+  classId?: string;
+
+  name?: string
+
+  isTeacher?: boolean
+
+  constructor(data: EditUserFace) {
+    this.userId = data.id;
+    this.classId = data.classId;
+    this.name = data.name;
+    this.isTeacher = data.isTeacher;
+  }
+}
 
 class User implements StoreOptions<State> {
   namespaced = true;
@@ -77,6 +107,18 @@ class User implements StoreOptions<State> {
         });
       });
     },
+    // 添加用户 学生&教师
+    createUser(_: unknown, data) {
+      const formData = new EditUserClass(data);
+      return new Promise((resolve, reject) => {
+        axios.post('./api/classMember/createClassMember', formData).then((res) => {
+          resolve(res);
+        }).catch((err) => {
+          reject(err);
+        });
+      });
+    },
+
   };
 }
 
