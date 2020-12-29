@@ -2,13 +2,4 @@
 @import './flex.styl'
 @import './scroll.styl'
 @import './text.styl'
-
-// 在styl里可以直接用styl的变量，但是在js里暂时无法获得。sass好像可以通过 :export的方式暴露变量
-// 如果用stylus实现——大致原理：通过json文件，实现变量共享
-// sass参考链接🔗 https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
-// stylus可能用到链接🔗 https://medium.com/qbits/sharing-variables-between-stylus-and-react-324bf3b43f33
-
-// 目前设计出的图里，还没有涉及到其他色系，但是先考虑到更改系统配色。
-
-.test-color-primary
-  background $primary-color-background
+@import './button.styl'
