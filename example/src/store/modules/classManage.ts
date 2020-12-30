@@ -61,11 +61,23 @@ class SearchClassClass {
   seqColumn?: string;
 
   constructor(data: SearchClassFace) {
+    console.log(data, 'constructor');
     this.keyWord = data.keyWord;
     this.pageNo = data.pageNo;
     this.pageSize = data.pageSize;
     this.seqAsc = data.sortDesc;
-    this.seqColumn = data.sortName;
+    if (data.sortName) {
+      console.log(data.sortName, 'data.sortName');
+      if (data.sortName === 'teacherId') {
+        this.seqColumn = 'teacherCodes';
+      } else if (data.sortName === 'number') {
+        this.seqColumn = 'stuNum';
+      } else if (data.sortName === 'teacherName') {
+        this.seqColumn = 'userNames';
+      } else {
+        this.seqColumn = data.sortName;
+      }
+    }
   }
 }
 

@@ -40,10 +40,5 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
-@import '~/../../../styles/variable.styl'
 
-.main
-  .search
-    >>>.ant-input-search
-      border-radius $button-radius
 </style>

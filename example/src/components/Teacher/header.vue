@@ -109,6 +109,8 @@ export default defineComponent({
 });
 </script>
 <style lang="stylus" scoped>
+@import '~/../../../styles/variable.styl';
+
 .the-header
   min-width 1366px
   height 60px
@@ -144,8 +146,8 @@ export default defineComponent({
       text-align center
       width 90px
     .active
-      color rgba(74, 144, 226, 1)
-      border-bottom 3px solid #4A90E2
+      color $primary-color //rgba(74, 144, 226, 1)
+      border-bottom 3px solid $primary-color
   .user-profile
     display flex
     align-items center

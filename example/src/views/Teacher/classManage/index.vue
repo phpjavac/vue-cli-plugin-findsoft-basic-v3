@@ -6,12 +6,12 @@
   )
     template(#btn-action)
       .btn-group.flex.flex-row.flex-start
-        a-button.btn-i.btns-radius-all(
+        a-button.btn-i(
           type='primary'
           @click="changeBoolean('modalClassAdd',true)"
         ) 新建
-        a-button.btn-i.btns-radius-all(type='primary') 下载学生模板
-        a-button.btn-i.btns-radius-all(type='primary' ghost) 删除
+        a-button.btn-i(type='primary') 下载学生模板
+        a-button.btn-i(type='primary' ghost) 删除
   a-table.table(
     rowKey='id'
     size='middle'
@@ -19,23 +19,24 @@
     :data-source='tableClassList'
     :pagination='false'
     :loading="loadingClassList"
-    @change='tableSort'
+    :row-selection='{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }'
     :scroll='{x:"max-content"}'
+    @change='tableSort'
   )
     template(v-slot:list='{ text, record }')
       a-button.btn-link(type='link', :title='text', @click="getStudentList(record.id)") 查看
     template(v-slot:operation='{ text, record }')
-      a-button.btn-link(type='link') 编辑
+      a-button.btn-link(type='link', @click="editClass(record.id)") 编辑
       a-button.btn-link(type='link') 导入
       a-button.btn-link(type='link') 删除
   .page.flex.flex-row.justify-end
     a-pagination.foot-pagination(
-      show-quick-jumper
-      showSizeChanger
-      size="small"
+      :size='pageConfig.size'
       :current='pageConfig.current'
       :total='pageConfig.totalSize'
       :page-size-options='pageConfig.options'
+      :show-quick-jumper='pageConfig.showJumper'
+      :showSizeChanger='pageConfig.showSize'
       @change='getFetchData'
       @showSizeChange='onChangeSize'
     )
@@ -44,28 +45,27 @@
     key='modalClassAdd'
     :isEdit='false'
     :visible='modalVisibleAdd'
-    @onSubmit='formAdd'
-    @onCancel="formCancel('modalClassAdd','modalClassAdd',false)"
+    @onSubmit="changeBoolean('modalClassAdd',false)"
+    @onCancel="changeBoolean('modalClassAdd',false)"
   )
   the-edit(
     key='modalClassEdit'
     :isEdit='true'
     :visible='modalVisibleEdit'
-    @onSubmit='formEdit'
-    @onCancel="formCancel('modalClassEdit','modalClassEdit',false)"
+    @onSubmit="changeBoolean('modalClassEdit',false)"
+    @onCancel="changeBoolean('modalClassEdit',false)"
   )
   the-list(
     key='modalStudentList'
     :visible='modalVisibleList'
-    @onCancel="formCancel('modalStudentList','modalStudentList',false)"
+    @onCancel="changeBoolean('modalStudentList',false)"
   )
 </template>
 <script lang="ts">
-// import { SearchClassFace } from '@/store/modules/classManage';
 import { SearchClassFace } from '@/store/modules/classManage';
 import { Button, Pagination, Table } from 'ant-design-vue';
 import {
-  computed, defineAsyncComponent, defineComponent, onMounted, reactive,
+  computed, defineAsyncComponent, defineComponent, onMounted, reactive, Ref, ref,
 } from 'vue';
 import { useStore } from 'vuex';
 
@@ -81,13 +81,18 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    // 条件被放在组件里了，查询时会同步vuex。如果比较复杂的条件，那对应组件考虑watch改变
-    // const searchForm = reactive<SearchClassFace>({});
+    // 更改true&false
+    const changeBoolean = (name: string, type: boolean) => {
+      store.commit('classe/changeBoolean', { name, type });
+    };
     const pageConfig = reactive({
       current: 1, // 当前页
       pageSize: 10, // 每页条数
       totalSize: 0, // 总条数
       options: ['10', '20', '30', '40', '50'], // 选项
+      size: 'small', // 尺寸
+      showJumper: false, // 是否显示跳页
+      showSize: false, // 是否显示条数切换
     });
     const columnClass = [
       {
@@ -102,7 +107,7 @@ export default defineComponent({
         dataIndex: 'number',
         key: 'number',
         ellipsis: true,
-        sorter: true,
+        // sorter: true, 接口报错
       },
       {
         title: '学生明细',
@@ -129,7 +134,7 @@ export default defineComponent({
     ];
     // 数据
     const getFetchData = async (page = 1) => {
-      store.commit('classe/changeBoolean', { name: 'loadingClassList', type: true });
+      changeBoolean('loadingClassList', true);
       const { searchForm } = store.state.classe;
       const { pageSize } = pageConfig;
       const search = {
@@ -139,7 +144,7 @@ export default defineComponent({
       const { pageNo, totalRecords } = await store.dispatch('classe/getClassList', search); // 同步数据
       pageConfig.current = pageNo;
       pageConfig.totalSize = totalRecords;
-      store.commit('classe/changeBoolean', { name: 'loadingClassList', type: false });
+      changeBoolean('loadingClassList', false);
     };
     // 页码改变
     const onChangeSize = (_: unknown, size: number) => {
@@ -156,7 +161,7 @@ export default defineComponent({
       getFetchData();
     };
     // 排序
-    const tableSort = (s: {field: string;order: string}) => {
+    const tableSort = (p: unknown, f: unknown, s: {field: string;order: string}) => {
       const search: SearchClassFace = {};
       const { searchForm } = store.state.classe;
       if (s.order) {
@@ -171,20 +176,17 @@ export default defineComponent({
     };
 
     const getStudentList = (id: string) => {
-      console.log(id);
+      console.log(id, '再掉一波学生列表接口');
+      changeBoolean('modalStudentList', true);
+    };
+    const editClass = (id: string) => {
+      console.log(id, '再掉一波班级详情接口');
+      changeBoolean('modalClassEdit', true);
     };
 
-    const formAdd = () => {
-      console.log('formAdd');
-    };
-    const formEdit = () => {
-      console.log('formEdit');
-    };
-    const formCancel = (key: string, name: string, type: boolean) => {
-      store.commit('classe/changeBoolean', { name, type });
-    };
-    const changeBoolean = (name: string, type: boolean) => {
-      store.commit('classe/changeBoolean', { name, type });
+    const selectedRowKeys: Ref<string[]> = ref([]);
+    const onSelectChange = (selectedRowKeyP: string[]) => {
+      selectedRowKeys.value = selectedRowKeyP;
     };
 
     onMounted(() => {
@@ -194,9 +196,6 @@ export default defineComponent({
     return {
       searchChange,
       changeBoolean,
-      formAdd,
-      formEdit,
-      formCancel,
       getStudentList,
       // table
       pageConfig,
@@ -204,6 +203,9 @@ export default defineComponent({
       onChangeSize,
       tableSort,
       columnClass,
+      selectedRowKeys,
+      onSelectChange,
+      editClass,
       //
       tableClassList: computed(() => store.state.classe.tableClassList),
       loadingClassList: computed(() => store.state.classe.loadingClassList),
@@ -230,5 +232,5 @@ export default defineComponent({
   .table
     margin-top 24px
   .page
-    margin-top 16px
+    margin 16px 0
 </style>
