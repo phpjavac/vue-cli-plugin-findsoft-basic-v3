@@ -3,7 +3,7 @@ import { isProxy, toRaw } from 'vue';
 
 /**
  * @description Rankpicker 时间转换，因为Proxy下的Rank数组 Proxy|Moment统一转换
- * @param MomentArr Moment数组【Proxy|Moment, Proxy|Moment】 
+ * @param MomentArr Moment数组【Proxy|Moment, Proxy|Moment】
  * @param type format类型 默认YYYY-MM-DD
  * @return ['日期', '日期']
  */
@@ -28,7 +28,7 @@ export const momentProxyTrans = (MomentArr: [Moment|{}, Moment|{}], type = 'date
 
 /**
  * @description 转换单个Moment时间
- * @param MomentData 需要转换的时间 Moment|Proxy 
+ * @param MomentData 需要转换的时间 Moment|Proxy
  * @param type format类型 默认YYYY-MM-DD
  * @return 日期|undefined
  */

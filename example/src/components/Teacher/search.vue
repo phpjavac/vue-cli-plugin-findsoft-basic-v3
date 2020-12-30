@@ -40,10 +40,11 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
-@import '~/../../../styles/variable.styl'
+// 改成用颜色主题的方式
+// @import '~/../../../styles/variable.styl'
 
-.main
-  .search
-    >>>.ant-input-search
-      border-radius $button-radius
+// .main
+//   .search
+//     >>>.ant-input-search
+//       border-radius $button-radius
 </style>
