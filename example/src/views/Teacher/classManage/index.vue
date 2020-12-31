@@ -11,7 +11,7 @@
           @click="changeBoolean('modalClassAdd',true)"
         ) 新建
         a-button.btn-i(type='primary') 下载学生模板
-        a-button.btn-i(type='primary' ghost) 删除
+        a-button.btn-i(type='primary' ghost @click='delClass(undefined)') 删除
   a-table.table(
     rowKey='id'
     size='middle'
@@ -24,13 +24,22 @@
     @change='tableSort'
   )
     template(v-slot:list='{ text, record }')
-      a-button.btn-link(type='link', :title='text', @click="getStudentList(record.id)") 查看
+      a-button(type='link', :title='text', @click="getStudentList(record.id)") 查看
     template(v-slot:operation='{ text, record }')
-      a-button.btn-link(type='link', @click="editClass(record.id)") 编辑
-      a-button.btn-link(type='link') 导入
-      a-button.btn-link(type='link') 删除
+      .operation.flex.flex-row.justify-between.align-items-center
+        .btn-link.pointer.btns-link-primary(@click="editClass(record)") 编辑
+        .btn-column
+        a-upload(
+          name='file',
+          :multiple="true",
+          :showUploadList="false",
+          @change='fileChange'
+        )
+          .btn-link.pointer.btns-link-primary(@click='editClass(record, false)') 导入
+        .btn-column
+        .btn-link.pointer.btns-link-primary(@click='delClass(record.id)') 删除
   .page.flex.flex-row.justify-end
-    a-pagination.foot-pagination(
+    a-pagination(
       :size='pageConfig.size'
       :current='pageConfig.current'
       :total='pageConfig.totalSize'
@@ -45,27 +54,29 @@
     key='modalClassAdd'
     :isEdit='false'
     :visible='modalVisibleAdd'
-    @onSubmit="changeBoolean('modalClassAdd',false)"
-    @onCancel="changeBoolean('modalClassAdd',false)"
+    @onSubmit="modalCallback('modalClassAdd')"
+    @onCancel="modalCallback('modalClassAdd')"
   )
   the-edit(
     key='modalClassEdit'
     :isEdit='true'
     :visible='modalVisibleEdit'
-    @onSubmit="changeBoolean('modalClassEdit',false)"
-    @onCancel="changeBoolean('modalClassEdit',false)"
+    @onSubmit="modalCallback('modalClassEdit')"
+    @onCancel="modalCallback('modalClassEdit')"
   )
   the-list(
     key='modalStudentList'
     :visible='modalVisibleList'
-    @onCancel="changeBoolean('modalStudentList',false)"
+    @onCancel="modalCallback('modalStudentList')"
   )
 </template>
 <script lang="ts">
-import { SearchClassFace } from '@/store/modules/classManage';
-import { Button, Pagination, Table } from 'ant-design-vue';
+import { Afile, EditClassFace, SearchClassFace } from '@/store/modules/classe';
 import {
-  computed, defineAsyncComponent, defineComponent, onMounted, reactive, Ref, ref,
+  Button, message, Modal, Pagination, Table, Upload,
+} from 'ant-design-vue';
+import {
+  computed, defineAsyncComponent, defineComponent, onMounted, reactive, Ref, ref, toRaw,
 } from 'vue';
 import { useStore } from 'vuex';
 
@@ -78,10 +89,11 @@ export default defineComponent({
     aButton: Button,
     aTable: Table,
     aPagination: Pagination,
+    aUpload: Upload,
   },
   setup() {
     const store = useStore();
-    // 更改true&false
+    // vuex true&false
     const changeBoolean = (name: string, type: boolean) => {
       store.commit('classe/changeBoolean', { name, type });
     };
@@ -129,10 +141,10 @@ export default defineComponent({
         dataIndex: 'operation',
         key: 'operation',
         slots: { customRender: 'operation' },
-        width: 250,
+        width: '15%',
       },
     ];
-    // 数据
+    // fetchData
     const getFetchData = async (page = 1) => {
       changeBoolean('loadingClassList', true);
       const { searchForm } = store.state.classe;
@@ -146,12 +158,12 @@ export default defineComponent({
       pageConfig.totalSize = totalRecords;
       changeBoolean('loadingClassList', false);
     };
-    // 页码改变
+    // pageSize change
     const onChangeSize = (_: unknown, size: number) => {
       pageConfig.pageSize = size;
       getFetchData();
     };
-    // 查询改变
+    // search change
     const searchChange = (keyWord: string) => {
       const { searchForm } = store.state.classe;
       const search = {
@@ -160,7 +172,7 @@ export default defineComponent({
       store.commit('classe/updateSearchForm', search); // 同步searchForm
       getFetchData();
     };
-    // 排序
+    // sort
     const tableSort = (p: unknown, f: unknown, s: {field: string;order: string}) => {
       const search: SearchClassFace = {};
       const { searchForm } = store.state.classe;
@@ -174,23 +186,75 @@ export default defineComponent({
       store.commit('classe/updateSearchForm', { ...searchForm, ...search }); // 同步searchForm
       getFetchData();
     };
-
-    const getStudentList = (id: string) => {
-      console.log(id, '再掉一波学生列表接口');
-      changeBoolean('modalStudentList', true);
-    };
-    const editClass = (id: string) => {
-      console.log(id, '再掉一波班级详情接口');
-      changeBoolean('modalClassEdit', true);
-    };
-
+    // selectRowKey
     const selectedRowKeys: Ref<string[]> = ref([]);
     const onSelectChange = (selectedRowKeyP: string[]) => {
       selectedRowKeys.value = selectedRowKeyP;
     };
+    // upload
+    const fileCheck = (file: File) => {
+      const suffix = file.name.substr(file.name.lastIndexOf('.') + 1);
+      if (!['xls', 'xlsx'].includes(suffix)) {
+        message.error('选择Excel格式的文件导入！');
+        return false;
+      } if (file.size > 1024 * 1024 * 10) {
+        message.error('文件大小不能超过10MB');
+        return false;
+      }
+      return true;
+    };
+    const fileChange = async (f: {file: Afile; fileList: Afile[]; event: Event}) => {
+      const { file } = f;
+      if (file.status === 'done' && fileCheck(file.originFileObj)) {
+        const { id } = store.state.classe.classInfo;
+        changeBoolean('loadingClassList', true);
+        await store.dispatch('classe/uploadStudentByClass', { classId: id, file: file.originFileObj });
+        getFetchData(pageConfig.current); // 用list函数 自己会关闭loading
+      } else if (file.status === 'error') {
+        message.destroy();
+        message.error('上传失败');
+      }
+    };
+    // record action
+    const getStudentList = (id: string) => {
+      console.log(id, '再掉一波学生列表接口');
+      changeBoolean('modalStudentList', true);
+    };
+    const editClass = (v: EditClassFace, modal = true) => {
+      store.commit('classe/updateClassInfo', { ...toRaw(v) });
+      if (modal)changeBoolean('modalClassEdit', true);
+    };
+    const modalCallback = (type: string) => {
+      getFetchData(pageConfig.current);
+      changeBoolean(type, false);
+    };
+    const delClass = (id: string|undefined) => {
+      // modal—confirm可以参考磊哥的方式优化一下
+      let ids = [id];
+      if (!id) ids = selectedRowKeys.value;
+      if (id || selectedRowKeys.value.length) {
+        Modal.confirm({
+          title: '删除班级',
+          content: '是否删除该班级？',
+          okText: '确定',
+          okType: 'danger',
+          cancelText: '取消',
+          onOk: async () => {
+            await store.dispatch('classe/delClass', ids);
+            message.success('删除成功');
+            getFetchData(pageConfig.current);
+          },
+        });
+      } else {
+        message.info('请先选择要删除的班级');
+      }
+    };
 
     onMounted(() => {
       getFetchData();
+      // 更新教师列表——下拉框用，所以不传pageSize
+      // 这里queryParam可以不处理，后面写教师列表的时候，用 类和接口 一起优化一下
+      store.dispatch('user/getTeacherList', { pageNo: 1, queryParam: { role: 1 } });
     });
 
     return {
@@ -206,7 +270,10 @@ export default defineComponent({
       selectedRowKeys,
       onSelectChange,
       editClass,
+      delClass,
+      fileChange,
       //
+      modalCallback,
       tableClassList: computed(() => store.state.classe.tableClassList),
       loadingClassList: computed(() => store.state.classe.loadingClassList),
       modalVisibleAdd: computed(() => store.state.classe.modalClassAdd),
@@ -231,6 +298,12 @@ export default defineComponent({
         margin-right 16px
   .table
     margin-top 24px
+    .operation
+      margin-right 16px
+      .btn-column
+        width 1px
+        height 14px
+        background #d8d8d8
   .page
     margin 16px 0
 </style>
