@@ -12,22 +12,17 @@ interface UserInfo{
   code: string;
   token: string;
 }
-class State {
-  user: definitions['User'] = {}
-}
-/**
- * 理论上这里是否继承UserInfo都不影响，但考虑面向对象，先继承试试。如果不合适也方便更改。
- * 目前只用到了UserInfo的name&code
- */
-export interface EditUserFace extends UserInfo{
+// 用户列表没有token，暂时先不继承UserInfo interface
+export interface EditUserFace{
   id?: string; // 用户id
-  // name: string; // 用户姓名 extends
-  // code: string; // 账号 extends
+  name?: string; // 用户姓名
+  code?: string; // 账号
   classId?: string; // 班级id
-  isTeacher?: boolean; // 是否教师
+
+  isTeacher?: boolean; //
 }
 /**
- * 对Class而言，现在主要作用是作为转换器&过滤器，即去除表单无用字段&转换列表所需字段
+ * 作为转换器&过滤器，即去除表单无用字段&转换列表所需字段
  */
 class EditUserClass {
   userId?: string
@@ -36,7 +31,7 @@ class EditUserClass {
 
   name?: string
 
-  isTeacher?: boolean
+  isTeacher?: boolean // api need
 
   constructor(data: EditUserFace) {
     this.userId = data.id;
@@ -44,6 +39,18 @@ class EditUserClass {
     this.name = data.name;
     this.isTeacher = data.isTeacher;
   }
+}
+export interface StudentFace extends EditUserFace{
+  className?: string;
+  teacherName?: string;
+}
+
+class State {
+  user: definitions['User'] = {}
+
+  teacherData: EditUserFace[] = []
+
+  studentData: StudentFace[] = []
 }
 
 class User implements StoreOptions<State> {
@@ -60,6 +67,16 @@ class User implements StoreOptions<State> {
     },
     pulUser(store, user: definitions['User']) {
       store.user = user;
+    },
+    updateTeacherList(store, userList: definitions['User'][]) {
+      store.teacherData = userList.map((v: definitions['User']) => {
+        const item = {
+          // id: v.id,
+          code: v.code,
+          name: v.name,
+        };
+        return item;
+      });
     },
   };
 
@@ -115,6 +132,33 @@ class User implements StoreOptions<State> {
           resolve(res);
         }).catch((err) => {
           reject(err);
+        });
+      });
+    },
+    // 教师列表
+    getTeacherList({ commit }: { commit: Commit }, QueryUserRequest: definitions['QueryUserRequest']) {
+      // 先记一下，这里先用role控制一下。后面处理教师列表，需要用interface和class完善查询条件
+      (QueryUserRequest.queryParam as definitions['QueryUserParam']).role = 1;
+      return new Promise((resolve, reject) => {
+        axios.post('./api/user/queryUserList', QueryUserRequest).then((res) => {
+          const { data } = res.data;
+          commit('updateTeacherList', data.list || []);
+          resolve(data);
+        }).catch((err) => {
+          reject(err);
+        });
+      });
+    },
+    // 学生列表
+    getStudentList({ commit }: { commit: Commit }, ListClassMemberRequest: definitions['ListClassMemberRequest']) {
+      return new Promise((resolve, reject) => {
+        axios.post('./api/classMember/listStudent', ListClassMemberRequest).then((res) => {
+          const { data } = res.data;
+          commit('updateStudentList', data.list || []);
+          resolve(data);
+        }).catch((err) => {
+          reject(err);
+          console.log(err);
         });
       });
     },

@@ -3,7 +3,6 @@ import {
 } from 'vuex';
 import axios from '@/axios/fetch';
 import { definitions } from '@/types/api';
-import { EditStudentFace } from './student';
 
 export interface EditClassFace {
   // form
@@ -32,7 +31,7 @@ class EditClassClass {
     this.name = data.name;
     this.remarks = data.remark;
     this.disable = data.disable;
-    this.teacherCodes = data.teacherId;
+    this.teacherCodes = JSON.stringify([data.teacherId]); // api need
   }
 }
 
@@ -61,13 +60,12 @@ class SearchClassClass {
   seqColumn?: string;
 
   constructor(data: SearchClassFace) {
-    console.log(data, 'constructor');
+    // record：这里可以区分教师和管理员，但是接口已经自己处理了。
     this.keyWord = data.keyWord;
     this.pageNo = data.pageNo;
     this.pageSize = data.pageSize;
     this.seqAsc = data.sortDesc;
     if (data.sortName) {
-      console.log(data.sortName, 'data.sortName');
       if (data.sortName === 'teacherId') {
         this.seqColumn = 'teacherCodes';
       } else if (data.sortName === 'number') {
@@ -81,6 +79,17 @@ class SearchClassClass {
   }
 }
 
+// 暂时没找到暴露的interface，先从antd官网文档扒过来
+export interface Afile {
+  uid: string; // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
+  name: string; // 文件名
+  status: 'uploading'|'done'|'error'|'removed'; // 状态有：uploading done error removed
+  response: {}; // '{"status": "success"}', // 服务端响应内容
+  linkProps: {}; // '{"download": "image"}', // 下载链接额外的 HTML 属性
+  xhr: XMLHttpRequest;// 'XMLHttpRequest{ ... }', // XMLHttpRequest Header
+  originFileObj: File; // 文件对象
+}
+
 class State {
   // search
   searchForm: SearchClassFace = {}
@@ -88,7 +97,9 @@ class State {
   // list
   tableClassList: EditClassFace[] = [] // 班级列表
 
-  tableStudentList: EditStudentFace[] = [] // 学生列表——模态框用
+  classInfo: EditClassFace = {} // 班级详情
+
+  // tableStudentList: EditStudentFace[] = [] // 学生列表——模态框用
 
   // loading
   loadingClassList = false // 班级列表
@@ -117,18 +128,22 @@ class Classe implements StoreOptions<State> {
     updateSearchForm(state, data) {
       state.searchForm = data;
     },
-    // table
+    // list
     updateClassList(state, data: definitions['Class'][]) {
       state.tableClassList = data.map((v) => {
         const i: EditClassFace = {
           id: v.id,
           name: v.name,
           number: v.stuNum,
+          remark: v.remarks,
           teacherName: v.userNames,
           teacherId: v.teacherCodes,
         };
         return i;
       });
+    },
+    updateClassInfo(state, info: EditClassFace) {
+      state.classInfo = info;
     },
     // loading & modal
     changeBoolean(state, data) {
@@ -142,7 +157,6 @@ class Classe implements StoreOptions<State> {
       const searchData = new SearchClassClass(data);
       return new Promise((resolve) => {
         axios.post('./api/class/queryClass', searchData).then((res) => {
-          // console.log(res.data.data, 'resssss');
           commit('updateClassList', res.data.data.list || []);
           resolve(res.data.data);
         });
@@ -150,13 +164,39 @@ class Classe implements StoreOptions<State> {
     },
 
     // 新增编辑 班级
-    editClassData(_: unknown, data) {
+    editClassData(_: unknown, data: EditClassFace) {
       const formData = new EditClassClass(data);
       return new Promise((resolve, reject) => {
         axios.post('./api/class/createOrUpdateClass', formData).then((res) => {
           resolve(res);
         }).catch((err) => {
           reject(err);
+        });
+      });
+    },
+
+    /**
+     * @description 班级删除 批量删除
+     * @param ids [id] 或 [id1, id2]
+     */
+    delClass(_: unknown, ids) {
+      const formData = { classIds: JSON.stringify(ids) };
+      return new Promise((resolve) => {
+        axios.post('./api/userManage/delClass', formData).then((res) => {
+          resolve(res.data.data);
+        });
+      });
+    },
+
+    // 学生导入
+    uploadStudentByClass(_: unknown, data: {classId: string; file: File}) {
+      const { classId, file } = data;
+      const formData = new FormData();
+      formData.append('classId', classId);
+      formData.append('file', file);
+      return new Promise((resolve) => {
+        axios.post(`api/classMember/insertStudent?classId=${classId}`, formData).then((res) => {
+          resolve(res);
         });
       });
     },
