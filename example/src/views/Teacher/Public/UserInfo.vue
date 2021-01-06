@@ -57,7 +57,7 @@ import {
 import {
   Form, Input, Button, message,
 } from 'ant-design-vue';
-import router from '@/router';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 export default {
@@ -71,6 +71,7 @@ export default {
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
     const form = reactive({
       code: '',
       name: '',
