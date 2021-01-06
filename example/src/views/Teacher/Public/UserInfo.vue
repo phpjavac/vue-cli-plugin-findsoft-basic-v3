@@ -2,7 +2,7 @@
 .user-info
   .left-info
     .head-image
-      img(:src='form.img')
+      img(:src='img')
       .name {{ form.name }}
       .code id: {{ form.code }}
     .tabs
@@ -13,7 +13,7 @@
     .user-container(v-if='title === "我的资料"')
       a-form(:model='form', :labelCol='{ span: 2 }', :wrapperCol='{ span: 4 }')
         a-form-item(label='头像')
-          img(:src='form.img', style='width: 80px')
+          img(:src='img', style='width: 80px')
         a-form-item(label='账号')
           div {{ form.code }}
         a-form-item(label='班级')
@@ -51,8 +51,12 @@
           a-button(style='margin-left: 12px', @click='back') 取消
 </template>
 <script lang='ts'>
-import { reactive, ref, onMounted } from 'vue';
-import { Form, Input, Button } from 'ant-design-vue';
+import {
+  reactive, ref, onMounted,
+} from 'vue';
+import {
+  Form, Input, Button, message,
+} from 'ant-design-vue';
 import router from '@/router';
 import { useStore } from 'vuex';
 
@@ -71,8 +75,8 @@ export default {
       code: '',
       name: '',
       personalSignature: '',
-      img: '',
     });
+    const img = ref('');
 
     const title = ref('我的资料');
 
@@ -82,21 +86,55 @@ export default {
       newPassword: '',
     });
     const password = ref('');
+    // 更改个人信息
     function ok() {
-      console.log('ok');
+      store.dispatch('userInfo/changeUserSignature', form).then((res) => {
+        console.log(res);
+        store.dispatch('user/getByCode');
+      });
     }
+    // 改密码
     function passWordOk() {
-      console.log('改密码');
+      console.log(formPassWord);
+
+      return new Promise((resolve, reject) => {
+        if (formPassWord.newPassword !== password.value) {
+          message.info('两次密码输入不一致！');
+          return;
+        }
+        if (formPassWord.newPassword.length < 8) {
+          message.info('密码长度过短！');
+          return;
+        }
+        store
+          .dispatch('userInfo/changePassword', formPassWord)
+          .then((res) => {
+            formPassWord.newPassword = '';
+            formPassWord.oldPassword = '';
+            password.value = '';
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          })
+          .finally(() => {
+            console.log('finally');
+          });
+      });
     }
+
+    // 返回
     function back() {
       router.go(-1);
     }
     onMounted(() => {
       store.dispatch('user/getByCode').then((res) => {
         console.log(res);
+        formPassWord.code = res.code;
         form.code = res.code;
         form.name = res.name;
-        form.img = res.headImagePath;
+        form.personalSignature = res.personalSignature;
+        img.value = res.headImagePath;
       });
     });
     return {
@@ -107,6 +145,7 @@ export default {
       ok,
       back,
       passWordOk,
+      img,
     };
   },
 };
