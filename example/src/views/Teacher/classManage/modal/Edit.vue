@@ -1,6 +1,6 @@
 <template lang="pug">
 a-modal.main(
-  :title="props.isEdit?'修改班级':'新增班级'"
+  :title="props.isEdit?'编辑班级':'创建班级'"
   v-model:visible='props.visible'
   @cancel='onCancel'
 )
@@ -26,7 +26,6 @@ a-modal.main(
 </template>
 
 <script lang="ts">
-import { EditClassFace } from '@/store/modules/classe';
 import {
   Button, ConfigProvider, Form, Input, message, Modal, Select,
 } from 'ant-design-vue';
@@ -36,6 +35,7 @@ import {
   defineComponent, reactive, SetupContext, toRaw, watch,
 } from 'vue';
 import { useStore } from 'vuex';
+import { EditClassFace } from '@/types/modules/classe';
 
 export default defineComponent({
   components: {
@@ -67,7 +67,7 @@ export default defineComponent({
     const store = useStore();
     const formModel: EditClassFace = reactive({
       id: undefined,
-      name: undefined,
+      name: '',
       remark: undefined,
       teacherId: undefined,
     });
