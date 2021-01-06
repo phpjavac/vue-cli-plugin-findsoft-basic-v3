@@ -32,6 +32,13 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "userlist_index" */ '../views/Teacher/classManage/index.vue'),
 
       },
+      {
+
+        path: '/Teacher/userInfo',
+        name: 'Teacher/UserInfo',
+        component: () => import('../views/Teacher/Public/UserInfo.vue'),
+
+      },
     ],
   },
 ];
