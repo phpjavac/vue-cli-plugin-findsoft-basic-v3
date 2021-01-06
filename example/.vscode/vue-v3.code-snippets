@@ -19,13 +19,20 @@
 		"prefix": "ts",
 		"body": [
 			"<script lang=\"ts\">",
-			"export default {",
+			"import { defineComponent } from 'vue';",
+			"export default defineComponent({",
+				"components: {},",
+				"props: {},",
 				"setup() {",
 					"return {",
 						"};",
 					"},",
-				"};",
+				"});",
 			"</script>"
 		]
+	},
+	"log": {
+		"prefix": "log",
+		"body": "console.log();"
 	}
 }
