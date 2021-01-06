@@ -51,22 +51,22 @@ export default defineComponent({
     margin-bottom 16px
     color rgba(0,0,0,.85)
     line-height 33px
-  >>>.ant-tabs
+  :deep().ant-tabs
     height 40px
     margin-bottom 16px
-  >>>.ant-tabs-tab-disabled, >>>.ant-tabs-tab-disabled:hover
+  :deep().ant-tabs-tab-disabled, :deep().ant-tabs-tab-disabled:hover
     color rgba(42, 46, 54, 0.8)
     cursor default
-  >>> .ant-tabs-nav-container
+  :deep() .ant-tabs-nav-container
     height 40px
-  >>> .ant-tabs-bar
+  :deep() .ant-tabs-bar
     height 40px
     margin 0
-  >>> .ant-tabs-nav-container::before, .ant-tabs-nav-container::after
+  :deep() .ant-tabs-nav-container::before, .ant-tabs-nav-container::after
     margin-top 2px
-  >>> .ant-tabs-nav, >>> .ant-tabs-nav-wrap, >>> .ant-tabs-nav-scroll
+  :deep() .ant-tabs-nav, :deep() .ant-tabs-nav-wrap, :deep() .ant-tabs-nav-scroll
     height 40px
-  >>> .ant-tabs-tab
+  :deep() .ant-tabs-tab
     height 40px
     margin 0
     padding 10px 16px

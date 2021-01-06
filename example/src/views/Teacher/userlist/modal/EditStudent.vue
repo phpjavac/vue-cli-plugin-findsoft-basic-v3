@@ -93,7 +93,7 @@ export default defineComponent({
       validate().then(async () => {
         const path = props.isEdit ? 'user/changeUserInfo' : 'user/createUser';
         await store.dispatch(path, toRaw(formModel)).then(() => {
-          message.success(`${props.isEdit ? '编辑成功' : '编辑成功'}`);
+          message.success(props.isEdit ? '编辑成功' : '添加成功');
           resetFields();
           context.emit('on-submit');
         });
