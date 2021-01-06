@@ -166,8 +166,6 @@ export default defineComponent({
     };
     // record
     const editUser = (record: EditUserFace) => {
-      // const commitPath = activeTab.value === 0 ? 'user/updateTeacherInfo' : 'user/updateStudentInfo';
-      // const booleanPath = activeTab.value === 0 ? 'modalTeacherEdit' : 'modalStudentEdit';
       store.commit('user/updateStudentInfo', { ...toRaw(record) });
       changeBoolean('modalStudentEdit', true);
     };
@@ -186,9 +184,6 @@ export default defineComponent({
       });
     };
     const delUser = (code: string|undefined) => {
-      // let ids = [code];
-      // if (!code) ids = selectedRowKeys.value;
-      // if (code || selectedRowKeys.value.length) {
       Modal.confirm({
         title: '删除用户',
         content: '是否删除该用户？',
@@ -201,9 +196,6 @@ export default defineComponent({
           getFetchData(pageConfig.current);
         },
       });
-      // } else {
-      //   message.info('请先选择要删除的用户');
-      // }
     };
 
     // callback
