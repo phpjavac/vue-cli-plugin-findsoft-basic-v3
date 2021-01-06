@@ -118,7 +118,7 @@ class User implements StoreOptions<State> {
         }).then((user) => {
           const userInfo = user.data.data;
           commit('pulUser', userInfo);
-          resolve();
+          resolve(user.data.data);
         }).catch((err) => {
           reject(err);
         });
