@@ -6,9 +6,9 @@ a-modal.main(
 )
   a-form(:label-col="labelCol", :wrapper-col="wrapperCol", :model='formModel', :rules='formRule')
     a-form-item(label="账号", name='code', v-bind="validateInfos.code")
-      a-input(v-model:value='formModel.code', placeholder='填写账号', :maxlength="30", :disabled='props.isEdit')
+      a-input(v-model:value='formModel.code', placeholder='填写账号', :maxlength="20", :disabled='props.isEdit')
     a-form-item(label="姓名", name='name', v-bind="validateInfos.name")
-      a-input(v-model:value='formModel.name', placeholder='填写姓名', :maxlength="30")
+      a-input(v-model:value='formModel.name', placeholder='填写姓名', :maxlength="20")
     //- 如果 props 存在 classId ，表示是从班级管理过来的，自带classId。不需要显示Select，否则为用户列表，需要手动选择
     a-form-item(label='班级', name='classId',v-bind='validateInfos.classId', v-if='!props.classId')
       a-select(
@@ -71,9 +71,16 @@ export default defineComponent({
     const formRule = reactive({
       name: [
         { required: true, message: '请填写姓名', trigger: 'blur' },
+        {
+          min: 2, max: 20, message: '用户名称应在2~20字之间', trigger: 'blur',
+        },
       ],
       code: [
         { required: true, message: '请填写账号', trigger: 'blur' },
+        {
+          min: 2, max: 20, message: '账号应在2~20字之间', trigger: 'blur',
+        },
+        { pattern: new RegExp(/^[0-9a-zA-Z]+$/), message: '账号只能为数字或英文', trigger: 'change' },
       ],
       classId: [
         { required: true, message: '请选择班级', trigger: 'change' },

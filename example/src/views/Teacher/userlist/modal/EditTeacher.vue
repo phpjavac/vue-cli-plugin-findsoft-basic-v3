@@ -6,9 +6,9 @@ a-modal.main(
 )
   a-form(:label-col="labelCol", :wrapper-col="wrapperCol", :model='formModel', :rules='formRule')
     a-form-item(label="账号", name='code', v-bind="validateInfos.code")
-      a-input(v-model:value='formModel.code', placeholder='填写账号', :maxlength="30", :disabled='props.isEdit')
+      a-input(v-model:value='formModel.code', placeholder='填写账号', :maxlength="20", :disabled='props.isEdit')
     a-form-item(label="姓名", name='name', v-bind="validateInfos.name")
-      a-input(v-model:value='formModel.name', placeholder='填写姓名', :maxlength="30")
+      a-input(v-model:value='formModel.name', placeholder='填写姓名', :maxlength="20")
     a-form-item(label="密码") 初始密码为123456
   template(#footer)
     a-config-provider(:auto-insert-space-in-button="false")
@@ -55,9 +55,16 @@ export default defineComponent({
     const formRule = reactive({
       name: [
         { required: true, message: '请填写姓名', trigger: 'blur' },
+        {
+          min: 2, max: 20, message: '用户名称应在2~20字之间', trigger: 'blur',
+        },
       ],
       code: [
         { required: true, message: '请填写账号', trigger: 'blur' },
+        {
+          min: 2, max: 20, message: '账号应在2~20字之间', trigger: 'blur',
+        },
+        { pattern: new RegExp(/^[0-9a-zA-Z]+$/), message: '账号只能为数字或英文', trigger: 'change' },
       ],
     });
     const { resetFields, validate, validateInfos } = useForm(formModel, formRule);
