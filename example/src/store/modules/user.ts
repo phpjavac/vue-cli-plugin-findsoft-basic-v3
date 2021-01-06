@@ -1,56 +1,41 @@
 import {
-  ActionTree, Commit, MutationTree, StoreOptions,
+  ActionTree, Commit, GetterTree, MutationTree, StoreOptions,
 } from 'vuex';
 import axios from '@/axios/fetch';
 import { message } from 'ant-design-vue';
 import { definitions } from '@/types/api';
+import {
+  UserInfo, EditUserFace, StudentFace, SearchUserClass,
+} from '@/types/modules/user';
+import { BaseSearchFace } from '@/types/base';
 import router from '../../router/index';
 
-interface UserInfo{
-  role: string;
-  name: string;
-  code: string;
-  token: string;
-}
-// 用户列表没有token，暂时先不继承UserInfo interface
-export interface EditUserFace{
-  id?: string; // 用户id
-  name?: string; // 用户姓名
-  code?: string; // 账号
-  classId?: string; // 班级id
-
-  isTeacher?: boolean; //
-}
-/**
- * 作为转换器&过滤器，即去除表单无用字段&转换列表所需字段
- */
-class EditUserClass {
-  userId?: string
-
-  classId?: string;
-
-  name?: string
-
-  isTeacher?: boolean // api need
-
-  constructor(data: EditUserFace) {
-    this.userId = data.id;
-    this.classId = data.classId;
-    this.name = data.name;
-    this.isTeacher = data.isTeacher;
-  }
-}
-export interface StudentFace extends EditUserFace{
-  className?: string;
-  teacherName?: string;
-}
-
 class State {
+  // search
+  searchForm: BaseSearchFace = {} // searchForm student&teacher common
+
+  // list & info
   user: definitions['User'] = {}
 
   teacherData: EditUserFace[] = []
 
   studentData: StudentFace[] = []
+
+  studentInfo: StudentFace = {}
+
+  teacherInfo: EditUserFace = {}
+
+  // loading
+  loadingUserList = false // list-loading student&teacher common
+
+  // modal
+  modalTeacherEdit = false // 教师编辑
+
+  modalTeacherAdd = false // 教师新增
+
+  modalStudentEdit = false // 学生编辑
+
+  modalStudentAdd = false // 学生新增
 }
 
 class User implements StoreOptions<State> {
@@ -58,7 +43,14 @@ class User implements StoreOptions<State> {
 
   state = new State();
 
+  getters: GetterTree<State, unknown> = {
+    userInfo(state) {
+      return state.user; // 现在获得getters的方式有点奇怪。用户模块写完要翻翻博客
+    },
+  };
+
   mutations: MutationTree<State> = {
+    // list & info
     saveUserInfo(state: State, userInfo: UserInfo) {
       sessionStorage.setItem('role', userInfo.role);
       sessionStorage.setItem('name', userInfo.name);
@@ -77,6 +69,34 @@ class User implements StoreOptions<State> {
         };
         return item;
       });
+    },
+    updateStudentList(store, userList: definitions['ClassMember'][]) {
+      store.studentData = userList.map((v: definitions['ClassMember']) => {
+        const item = {
+          // id: v.id,
+          code: v.userId,
+          name: v.name,
+          className: v.className,
+          classId: v.classId,
+          teacherName: v.teacherNames,
+          teacherId: v.teacherCodes,
+        };
+        return item;
+      });
+    },
+    updateTeacherInfo(state, info: EditUserFace) {
+      state.teacherInfo = info;
+    },
+    updateStudentInfo(state, info: StudentFace) {
+      state.studentInfo = info;
+    },
+    // search
+    updateSearchForm(state, data) {
+      state.searchForm = data;
+    },
+    // loading & modal
+    changeBoolean(state, data) {
+      state[data.name as keyof typeof state] = data.type;
     },
   };
 
@@ -126,7 +146,12 @@ class User implements StoreOptions<State> {
     },
     // 添加用户 学生&教师
     createUser(_: unknown, data) {
-      const formData = new EditUserClass(data);
+      const formData: definitions['CreateOrUpdateClassMemberRequest'] = {
+        userId: data.code,
+        classId: data.classId,
+        name: data.name,
+        isTeacher: data.isTeacher,
+      };
       return new Promise((resolve, reject) => {
         axios.post('./api/classMember/createClassMember', formData).then((res) => {
           resolve(res);
@@ -135,12 +160,27 @@ class User implements StoreOptions<State> {
         });
       });
     },
-    // 教师列表
-    getTeacherList({ commit }: { commit: Commit }, QueryUserRequest: definitions['QueryUserRequest']) {
-      // 先记一下，这里先用role控制一下。后面处理教师列表，需要用interface和class完善查询条件
-      (QueryUserRequest.queryParam as definitions['QueryUserParam']).role = 1;
+    // 更改用户信息——编辑用户&个人中心
+    changeUserInfo(_: unknown, data) {
+      const formData: definitions['ChangeUserInfoRequest'] = {
+        code: data.code,
+        name: data.name,
+      };
       return new Promise((resolve, reject) => {
-        axios.post('./api/user/queryUserList', QueryUserRequest).then((res) => {
+        axios.post('./api/user/changeUserInfo', formData).then((res) => {
+          resolve(res.data);
+        }).catch((err) => {
+          message.error(err);
+          reject(err);
+        });
+      });
+    },
+    // 教师列表
+    getTeacherList({ commit }: { commit: Commit }, Querydata: BaseSearchFace) {
+      const searchData = new SearchUserClass(Querydata);
+      searchData.setQueryParam(Querydata);
+      return new Promise((resolve, reject) => {
+        axios.post('./api/user/queryUserList', searchData).then((res) => {
           const { data } = res.data;
           commit('updateTeacherList', data.list || []);
           resolve(data);
@@ -149,16 +189,42 @@ class User implements StoreOptions<State> {
         });
       });
     },
-    // 学生列表
-    getStudentList({ commit }: { commit: Commit }, ListClassMemberRequest: definitions['ListClassMemberRequest']) {
+    // 学生列表——按照v2版本的接口查询
+    getStudentList({ commit }: { commit: Commit }, Querydata: BaseSearchFace) {
+      const searchData = new SearchUserClass(Querydata);
+      searchData.setKeyWord(Querydata.keyWord);
+      searchData.setTeacherId();
       return new Promise((resolve, reject) => {
-        axios.post('./api/classMember/listStudent', ListClassMemberRequest).then((res) => {
+        axios.post('./api/classMember/listStudent', searchData).then((res) => {
           const { data } = res.data;
           commit('updateStudentList', data.list || []);
           resolve(data);
         }).catch((err) => {
           reject(err);
-          console.log(err);
+        });
+      });
+    },
+
+    // 重置用户密码为123456——teacher & student common
+    resetPassword(_: unknown, BaseUserCodeRequest: definitions['BaseUserCodeRequest']) {
+      return new Promise((resolve, reject) => {
+        axios.post('./api/user/adminResetPassword', { code: BaseUserCodeRequest }).then((res) => {
+          const { data } = res;
+          resolve(data);
+        }).catch((err) => {
+          reject(err);
+        });
+      });
+    },
+    // 删除用户——type 0教师 1学生
+    delUser(_: unknown, data: {type: number;ids: string[]}) {
+      const formData = { userCodes: JSON.stringify(data.ids) };
+      const path = data.type ? 'api/userManage/delStudent' : 'api/userManage/delTeacher';
+      return new Promise((resolve, reject) => {
+        axios.post(path, formData).then((res) => {
+          resolve(res.data);
+        }).catch((err) => {
+          reject(err);
         });
       });
     },

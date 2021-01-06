@@ -1,19 +1,12 @@
 <template lang="pug">
-.main.flex.flex-row.justify-between
-  .action
-    slot(name='btn-action')
-  .search
-    a-input-search(
-      v-model:value="searchValue"
-      placeholder='搜索关键字'
-      :style='{width:props.searchWidth}'
-      @search="onSearch"
-    )
+.main
+  .search(:style='{width:props.searchWidth}')
+    a-input-search(placeholder='搜索关键字' @search="onSearch")
 </template>
 
 <script lang="ts">
 import { Input } from 'ant-design-vue';
-import { defineComponent, ref, SetupContext } from 'vue';
+import { defineComponent, SetupContext } from 'vue';
 
 export default defineComponent({
   components: {
@@ -26,12 +19,10 @@ export default defineComponent({
     },
   },
   setup(props, context: SetupContext) {
-    const searchValue = ref('');
-    const onSearch = () => {
-      context.emit('get-search', searchValue.value);
+    const onSearch = (value: string) => {
+      context.emit('get-search', value);
     };
     return {
-      searchValue,
       onSearch,
       props,
     };
@@ -40,5 +31,7 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" scoped>
-
+.main
+  .search
+    display block
 </style>

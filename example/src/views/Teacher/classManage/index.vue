@@ -1,17 +1,17 @@
 <template lang="pug">
 .main
-  p.the-p.font-size-24 班级列表
-  the-search.the-search(
-    @getSearch='searchChange'
-  )
-    template(#btn-action)
+  the-title-and-search.the-search(:title='["班级列表"]')
+    template(#button)
       .btn-group.flex.flex-row.flex-start
         a-button.btn-i(
           type='primary'
           @click="changeBoolean('modalClassAdd',true)"
         ) 新建
-        a-button.btn-i(type='primary') 下载学生模板
+        a-button.btn-i(type='primary')
+          a(href="./static/students.xls") 下载学生模板
         a-button.btn-i(type='primary' ghost @click='delClass(undefined)') 删除
+    template(#search)
+      the-search(@getSearch='searchChange')
   a-table.table(
     rowKey='id'
     size='middle'
@@ -20,11 +20,12 @@
     :pagination='false'
     :loading="loadingClassList"
     :row-selection='{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }'
-    :scroll='{x:"max-content"}'
     @change='tableSort'
   )
     template(v-slot:list='{ text, record }')
-      a-button(type='link', :title='text', @click="getStudentList(record.id)") 查看
+      //- a-button(type='link', :title='text', @click="getStudentList(record.id)") 查看
+      .operation.flex.flex-row.justify-between.align-items-center
+        .btn-link.pointer.btns-link-primary(@click="getStudentList(record)") 查看
     template(v-slot:operation='{ text, record }')
       .operation.flex.flex-row.justify-between.align-items-center
         .btn-link.pointer.btns-link-primary(@click="editClass(record)") 编辑
@@ -43,6 +44,7 @@
       :size='pageConfig.size'
       :current='pageConfig.current'
       :total='pageConfig.totalSize'
+      :page-size="pageConfig.pageSize"
       :page-size-options='pageConfig.options'
       :show-quick-jumper='pageConfig.showJumper'
       :showSizeChanger='pageConfig.showSize'
@@ -71,7 +73,8 @@
   )
 </template>
 <script lang="ts">
-import { Afile, EditClassFace, SearchClassFace } from '@/store/modules/classe';
+import { Afile, BaseSearchFace } from '@/types/base';
+import { EditClassFace } from '@/types/modules/classe';
 import {
   Button, message, Modal, Pagination, Table, Upload,
 } from 'ant-design-vue';
@@ -83,8 +86,9 @@ import { useStore } from 'vuex';
 export default defineComponent({
   components: {
     theSearch: defineAsyncComponent(() => import('@/components/Teacher/search.vue')),
-    theAdd: defineAsyncComponent(() => import('./modal/Create.vue')),
-    theEdit: defineAsyncComponent(() => import('./modal/Create.vue')),
+    theTitleAndSearch: defineAsyncComponent(() => import('@/components/Teacher/TitleAndSearch.vue')),
+    theAdd: defineAsyncComponent(() => import('./modal/Edit.vue')),
+    theEdit: defineAsyncComponent(() => import('./modal/Edit.vue')),
     theList: defineAsyncComponent(() => import('./modal/List.vue')),
     aButton: Button,
     aTable: Table,
@@ -174,7 +178,7 @@ export default defineComponent({
     };
     // sort
     const tableSort = (p: unknown, f: unknown, s: {field: string;order: string}) => {
-      const search: SearchClassFace = {};
+      const search: BaseSearchFace = {};
       const { searchForm } = store.state.classe;
       if (s.order) {
         search.sortName = s.field;
@@ -216,8 +220,8 @@ export default defineComponent({
       }
     };
     // record action
-    const getStudentList = (id: string) => {
-      console.log(id, '再掉一波学生列表接口');
+    const getStudentList = (v: EditClassFace) => {
+      store.commit('classe/updateClassInfo', { ...toRaw(v) });
       changeBoolean('modalStudentList', true);
     };
     const editClass = (v: EditClassFace, modal = true) => {
@@ -285,13 +289,6 @@ export default defineComponent({
 </script>
 <style lang="stylus" scoped>
 .main
-  .the-p
-    width 96px
-    height 33px
-    margin-bottom 16px
-    font-size 24px
-    color rgba(0,0,0,.85)
-    line-height 33px
   .the-search
     .btn-group
       .btn-i
