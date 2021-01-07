@@ -17,7 +17,7 @@
       placement="bottom",
       :getPopupContainer="() => $refs.userProfile"
     )
-      template(slot="content")
+      template(#content)
         .menu
           .menu-item(@click="changePath('/Teacher/userInfo')")
             a-icon(type="user", :style="{ fontSize: '16px' }")
