@@ -12,7 +12,7 @@
   .navigation-bar(v-else)
   .user-profile(ref="userProfile")
     a-badge
-      a-icon(type="bell", :style="{ fontSize: '24px', cursor: 'pointer' }")
+      b-icon(type="bell", :style="{ fontSize: '24px', cursor: 'pointer' }")
     a-popover(
       placement="bottom",
       :getPopupContainer="() => $refs.userProfile"
@@ -20,19 +20,19 @@
       template(#content)
         .menu
           .menu-item(@click="changePath('/Teacher/userInfo')")
-            a-icon(type="user", :style="{ fontSize: '16px' }")
+            //- b-icon(type="iconzhongzhi", :style="{ fontSize: '16px' }")
             span 个人中心
           .menu-item(@click="outLogin")
-            a-icon(type="import", :style="{ fontSize: '16px' }")
+            //- b-icon(type="iconzhongzhi", :style="{ fontSize: '16px' }")
             span 退出账号
       .user
         a-avatar(shape="square", :size="32", :src="user.headImagePath")
         .name {{ user.name }}
 </template>
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineAsyncComponent, defineComponent } from 'vue';
 import {
-  Badge, Icon, Avatar, Popover,
+  Badge, Avatar, Popover,
 } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -40,7 +40,7 @@ import { useStore } from 'vuex';
 export default defineComponent({
   components: {
     aBadge: Badge,
-    aIcon: Icon,
+    bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
     aAvatar: Avatar,
     aPopover: Popover,
   },

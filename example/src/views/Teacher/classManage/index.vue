@@ -3,13 +3,22 @@
   the-title-and-search.the-search(:title='["班级列表"]')
     template(#button)
       .btn-group.flex.flex-row.flex-start
-        a-button.btn-i(
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
           type='primary'
           @click="changeBoolean('modalClassAdd',true)"
-        ) 新建
-        a-button.btn-i(type='primary')
+        )
+          b-icon(type='iconjia')
+          span 新建
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-sw-130(type='primary')
+          b-icon(type='iconxiazai')
           a(href="./static/students.xls") 下载学生模板
-        a-button.btn-i(type='primary' ghost @click='delClass(undefined)') 删除
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
+          type='primary'
+          ghost
+          @click='delClass(undefined)'
+        )
+          b-icon(type='iconshanchu')
+          span 删除
     template(#search)
       the-search(@getSearch='searchChange')
   a-table.table(
@@ -94,6 +103,7 @@ export default defineComponent({
     aTable: Table,
     aPagination: Pagination,
     aUpload: Upload,
+    bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
   },
   setup() {
     const store = useStore();
@@ -293,6 +303,10 @@ export default defineComponent({
     .btn-group
       .btn-i
         margin-right 16px
+      .btns-sw-130
+        width 136px
+        a
+          color #ffffff
   .table
     margin-top 24px
     .operation

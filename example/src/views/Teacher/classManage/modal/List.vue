@@ -15,14 +15,14 @@ a-modal.main(
     :loading="loadingUserList"
   )
     template(v-slot:studentEdit='{ text, record }')
-      .operation
-        .btn-link.pointer.btns-link-primary(@click="editUser(record)") icon
+      .operation.pointer(@click="editUser(record)")
+        b-icon(type='iconbianji4')
     template(v-slot:studentReset='{ text, record }')
-      .operation
-        .btn-link.pointer.btns-link-primary(@click="resetUser(record)") icon
+      .operation.pointer(@click="resetUser(record)")
+        b-icon(type='iconzhongzhi')
     template(v-slot:studentDelete='{ text, record }')
-      .operation
-        .btn-link.pointer.btns-link-primary(@click="delUser(record.code)") icon
+      .operation.pointer(@click="delUser(record.code)")
+        b-icon(type='iconshanchu')
   template(#footer)
     .btn-group.flex.flex-row.justify-between
       a-button(
@@ -84,6 +84,7 @@ export default defineComponent({
     aConfigProvider: ConfigProvider,
     aButton: Button,
     aPagination: Pagination,
+    bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
   },
   props: {
     visible: {

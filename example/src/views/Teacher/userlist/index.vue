@@ -3,11 +3,18 @@
   the-title-and-search.the-search(:title='tabTitle' @tabChange='tabChange')
     template(#button)
       .btn-group.flex.flex-row.flex-start
-        a-button.btn-i(
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
           type='primary'
-          @click="changeBoolean(activeTab === 0?'modalTeacherAdd':'modalStudentAdd',true)"
-        ) 新建
-        a-button.btn-i(type='primary' ghost @click='delUser(undefined)') 删除
+          @click="changeBoolean(activeTab === 0?'modalTeacherAdd':'modalStudentAdd',true)" )
+          b-icon(type='iconjia')
+          span 新建
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
+          type='primary'
+          ghost
+          @click='delUser(undefined)'
+        )
+          b-icon(type='iconshanchu')
+          span 删除
     template(#search)
       the-search(@getSearch='searchChange')
   .table-container
@@ -94,6 +101,7 @@ export default defineComponent({
     aButton: Button,
     aTable: Table,
     aPagination: Pagination,
+    bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
   },
   props: {},
   setup() {
