@@ -11,9 +11,9 @@
 ### 使用方法
 1. 常规创建项目 
 	```
-	vue add findsoft-basic
-	请输入后台接口地址->http://192.168.1.147:8080/eg
-	请输入后台SwaageApi地址-> http://192.168.1.147:8080/eg/v2/api-docs
+	vue add findsoft-basic-3
+	请输入项目名称-> eg
+	请输入服务器地址-> http://192.168.1.147:8080
 	npm run dev 即可启动项目
 	```
 
