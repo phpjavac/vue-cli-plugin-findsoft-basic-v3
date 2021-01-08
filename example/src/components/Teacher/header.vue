@@ -12,18 +12,18 @@
   .navigation-bar(v-else)
   .user-profile(ref="userProfile")
     a-badge
-      b-icon(type="bell", :style="{ fontSize: '24px', cursor: 'pointer' }")
+      b-icon(type="icontongzhi4", :style="{ fontSize: '24px', cursor: 'pointer' }")
     a-popover(
       placement="bottom",
       :getPopupContainer="() => $refs.userProfile"
     )
       template(#content)
         .menu
-          .menu-item(@click="changePath('/Teacher/userInfo')")
-            //- b-icon(type="iconzhongzhi", :style="{ fontSize: '16px' }")
+          .menu-item.align-items-center(@click="changePath('/Teacher/userInfo')")
+            b-icon(type="iconzhanghao", :style="{ fontSize: '16px' }")
             span 个人中心
-          .menu-item(@click="outLogin")
-            //- b-icon(type="iconzhongzhi", :style="{ fontSize: '16px' }")
+          .menu-item.align-items-center(@click="outLogin")
+            b-icon(type="icontuichu11", :style="{ fontSize: '16px' }")
             span 退出账号
       .user
         a-avatar(shape="square", :size="32", :src="user.headImagePath")
@@ -168,7 +168,7 @@ export default defineComponent({
     .menu
       width 120px
       padding 0 16px
-      padding-top 16px
+      // padding-top 16px
       .menu-item
         cursor pointer
         height 36px
