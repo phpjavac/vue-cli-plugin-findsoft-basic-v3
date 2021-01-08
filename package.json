@@ -1,9 +1,10 @@
 {
   "name": "vue-cli-plugin-findsoft-basic-v3",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build":"sudo ./build/build.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
