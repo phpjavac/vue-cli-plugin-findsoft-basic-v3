@@ -118,7 +118,7 @@ class Classe implements StoreOptions<State> {
       formData.append('classId', classId);
       formData.append('file', file);
       return new Promise((resolve) => {
-        axios.post(`api/classMember/insertStudent?classId=${classId}`, formData).then((res) => {
+        axios.post(`./api/classMember/insertStudent?classId=${classId}`, formData).then((res) => {
           resolve(res);
         });
       });
