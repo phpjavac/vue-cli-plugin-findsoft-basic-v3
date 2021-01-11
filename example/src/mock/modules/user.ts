@@ -4,7 +4,7 @@ import MockRequest, { AjaxDate } from '../MockRequest';
 class LoginClass {
   code = ''
 
-  name = '@cname'
+  name = Mock.Random.cname()
 
   role = ''
 
@@ -20,20 +20,15 @@ loginMap.set('admin', new LoginClass('admin'));
 loginMap.set('teacher', new LoginClass('teacher'));
 loginMap.set('student', new LoginClass('student'));
 
-class UserInfo {
-  code = '';
-
-  role =''
-
-  name = '@cname';
-
-  createTime = '@datetime()';
+class UserInfo extends LoginClass {
+  createTime = Mock.Random.datetime();
 
   disable = false;
 
   headImagePath = Mock.Random.image('64x64');
 
   constructor(code: string) {
+    super(code);
     this.code = code;
     this.role = code;
   }
@@ -42,6 +37,7 @@ class UserInfo {
 // 登录
 export function getByCode(data: AjaxDate) {
   const { code } = JSON.parse(data.body);
+  console.log(new UserInfo(code), 'new UserInfo(code)');
   return new MockRequest(
     new UserInfo(code),
     '用户信息', true,
@@ -113,7 +109,6 @@ export function changeStudentName() {
 //
 export function getUserList(data: AjaxDate) {
   const { pageNo, pageSize } = JSON.parse(data.body);
-  console.log(JSON.parse(data.body), 'JSON.parse(data.body)');
   return Mock.mock(
     new MockRequest(
       {
