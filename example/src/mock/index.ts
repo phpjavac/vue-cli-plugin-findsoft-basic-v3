@@ -1,26 +1,21 @@
 import Mock from 'mockjs';
 
-import { getDemoList } from './demo';
-import { getByCode, login } from './modules/user';
 import {
-  getClassList, editClass, delClass, insertStudent,
-} from './modules/classe';
-import {
+  getByCode, login, getStudentList, delteStudent,
   getUserList,
   resetPassword,
   delteTeacher,
   changeUserName,
   createUser,
-} from './Teacher/classManage/getUserList';
-import { getStudentList, delteStudent } from './Teacher/classManage/getStudentList';
-// import { getClassList } from './Teacher/classManage/getClassList';
-import { getCode, changeUserSignatures, changePasswords } from './Teacher/public/userInfo';
+} from './modules/user';
+import {
+  getClassList, editClass, delClass, insertStudent,
+} from './modules/classe';
+import { changeUserSignatures, changePasswords } from './modules/public/userInfo';
 
 Mock.setup({
-  timeout: '500-1000',
+  timeout: '1-150',
 });
-
-Mock.mock('mock/demo', 'post', getDemoList);
 
 // 登录模块
 Mock.mock('./api/user/login', 'post', login);
@@ -49,7 +44,7 @@ Mock.mock('./api/user/changeUserInfo', 'post', changeUserName);
 // 添加用户
 Mock.mock('./api/classMember/createClassMember', 'post', createUser);
 // 获取用户信息
-Mock.mock('./api/user/getByCode', 'post', getCode);
+// Mock.mock('./api/user/getByCode', 'post', getCode);
 // 更改个人信息
 Mock.mock('./api/user/changeUserSignature', 'post', changeUserSignatures);
 // 修改密码
