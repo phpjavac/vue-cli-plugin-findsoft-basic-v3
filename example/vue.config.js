@@ -10,11 +10,11 @@ module.exports = {
   devServer: {
     proxy: {
       '/': {
-        target: 'http://192.168.1.147:8080/dcaw',
+        target: 'http://zx.aiisx.com/dcaw',
         changeOrigin: true,
       },
       '/upload': {
-        target: 'http://192.168.1.147:8080/dcaw',
+        target: 'http://zx.aiisx.com/dcaw',
         changeOrigin: true,
       },
     },
@@ -25,7 +25,7 @@ module.exports = {
       remoteFtpPath: '/DISK-D/findsoft_test/tomcat8/webapps/dcaw/', // 项目地址
     },
     toTypes: {
-      host: 'http://192.168.1.147:8080/dcaw/v2/api-docs', // swagger地址
+      host: 'http://zx.aiisx.com/dcaw/v2/api-docs', // swagger地址
       TypesPath: './types/api.ts', // 生成的interface
     },
   },
