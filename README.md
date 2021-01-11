@@ -14,6 +14,7 @@
 	vue add findsoft-basic-3
 	请输入项目名称-> eg
 	请输入服务器地址-> http://192.168.1.147:8080
+	npm install
 	npm run dev 即可启动项目
 	npm run mock 可使用mock启动
 	```

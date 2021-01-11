@@ -8,8 +8,7 @@ class LoginClass {
 
   role = ''
 
-  token = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkY2F3LWFwcCIsInN1YiI6IntcInVzZXJDb2RlXCI6XCJhZG1pblwiLFwib3RoZXJcIjpcIntcXFwiYWRtaW5cXFwiOnRydWUsXFxcInRlYWNoZXJcXFwiOnRydWUsXFxcInN0dWRlbnRcXFwiOmZhbHNlfVwifSIsImlhdCI6MTYxMDM0NDY0NywiZXhwIjoxNjExODE1ODc2fQ.YiMHh0trDF7PZklnG4dsJAHT8LqcTNQbM7hfe87EgBA'
-  // new Date().getTime().toString()
+  token = new Date().getTime().toString()
 
   constructor(code: string) {
     this.code = code;
