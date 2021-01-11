@@ -1,4 +1,4 @@
-# 哲寻科技web组的前端基础框架-vue3版本
+# findsoft的前端基础框架-vue3版本
 
 > Vue CLI 4 的一个第三方插件，专用于初始化实训类相关的vue项目，方便统一维护和更新常用代码。
 
@@ -11,9 +11,10 @@
 ### 使用方法
 1. 常规创建项目 
 	```
-	vue add findsoft-basic
-	请输入后台接口地址->http://192.168.1.147:8080/eg
-	请输入后台SwaageApi地址-> http://192.168.1.147:8080/eg/v2/api-docs
+	vue add findsoft-basic-3
+	请输入项目名称-> eg
+	请输入服务器地址-> http://192.168.1.147:8080
+	npm install
 	npm run dev 即可启动项目
 	```
 

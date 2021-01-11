@@ -1,4 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const styleJson = require('./src/styles/antd.json');
 // 转为es6模块 import项目运行不起来，先用require
 
@@ -35,6 +37,9 @@ module.exports = {
           modifyVars: styleJson,
           javascriptEnabled: true,
         },
+      },
+      stylus: {
+        import: path.resolve(__dirname, './src/styles/variable.styl'),
       },
     },
   },
