@@ -5,16 +5,16 @@ const styleJson = require('./src/styles/antd.json');
 // 转为es6模块 import项目运行不起来，先用require
 
 module.exports = {
-  publicPath: '/dcaw',
+  publicPath: './',
 
   devServer: {
     proxy: {
       '/': {
-        target: 'http://192.168.1.147:8080',
+        target: 'http://192.168.1.147:8080/dcaw',
         changeOrigin: true,
       },
       '/upload': {
-        target: 'http://192.168.1.147:8080/',
+        target: 'http://192.168.1.147:8080/dcaw',
         changeOrigin: true,
       },
     },
