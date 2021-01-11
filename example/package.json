@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "mock": "vue-cli-service serve --mode mock",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
@@ -15,6 +16,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "mockjs": "^1.1.0",
+    "moment": "^2.29.1",
     "register-service-worker": "^1.7.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
