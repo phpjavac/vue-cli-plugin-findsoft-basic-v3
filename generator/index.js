@@ -10,6 +10,7 @@ module.exports = (api, options) => {
             "ant-design-vue": "^2.0.0-rc.5",
             "axios": "^0.21.1",
             "mockjs": "^1.1.0",
+            "moment": "^2.29.1",
         },
         devDependencies: {
             "@types/mockjs": "^1.0.3",

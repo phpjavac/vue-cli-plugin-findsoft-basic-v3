@@ -16,6 +16,7 @@
 	请输入服务器地址-> http://192.168.1.147:8080
 	npm install
 	npm run dev 即可启动项目
+	npm run mock 可使用mock启动
 	```
 
 ### 推荐的项目目录结构
