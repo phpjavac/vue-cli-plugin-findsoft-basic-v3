@@ -33,8 +33,8 @@ class Api {
     changeUserInfo = (formData: unknown) => axios.post('./api/user/changeUserInfo', formData)
 
     /**
-     * 创建班级
-     * @param formData 创建班级信息
+     * 创建学生&教师
+     * @param formData 创建学生&教师
      */
     createClassMember = (formData: unknown) => axios.post('./api/classMember/createClassMember', formData)
 
@@ -67,6 +67,43 @@ class Api {
      * @param formData
      */
     delTeacher = (formData: unknown) => axios.post('./api/userManage/delTeacher', formData)
+
+    /**
+     * 更改个人信息
+     * @param formData
+     */
+    changeUserSignature = (formData: unknown) => axios.post('./api/user/changeUserSignature', formData)
+
+    /**
+     * 修改密码
+     * @param formData
+     */
+    changePassword = (formData: unknown) => axios.post('./api/user/changePassword', formData)
+
+    /**
+     * 查询班级列表
+     * @param searchData
+     */
+    getClassList = (searchData: unknown) => axios.post('./api/class/queryClass', searchData)
+
+    /**
+     * 编辑&创建班级
+     * @param formData
+     */
+    editClassData = (formData: unknown) => axios.post('./api/class/createOrUpdateClass', formData)
+
+    /**
+     * 删除班级
+     * @param formData
+     */
+    delClass = (formData: unknown) => axios.post('./api/userManage/delClass', formData)
+
+    /**
+     * 导入学生
+     * @param formData
+     * @param classId 班级id
+     */
+    uploadStudentByClass=(formData: unknown, classId: string) => axios.post(`./api/classMember/insertStudent?classId=${classId}`, formData)
 }
 
 export default new Api();
