@@ -13,35 +13,35 @@ import {
 import { changeUserSignatures, changePasswords } from './modules/public/userInfo';
 
 export default class MockPath {
-    login = './api/user/login';
+    login = './mock/user/login';
 
-    getByCode = './api/user/getByCode';
+    getByCode = './mock/user/getByCode';
 
-    getClassList = './api/class/queryClass'
+    getClassList = './mock/class/queryClass'
 
-    editClass = './api/class/createOrUpdateClass'
+    editClass = './mock/class/createOrUpdateClass'
 
-    delClass = './api/userManage/delClass'
+    delClass = './mock/userManage/delClass'
 
-    insertStudent = './api/classMember/insertStudent'
+    insertStudent = './mock/classMember/insertStudent'
 
-    getUserList = './api/user/queryUserList'
+    getUserList = './mock/user/queryUserList'
 
-    getStudentList = './api/classMember/listStudent'
+    getStudentList = './mock/classMember/listStudent'
 
-    resetPassword = './api/user/adminResetPassword'
+    resetPassword = './mock/user/adminResetPassword'
 
-    delteTeacher = './api/userManage/delTeacher'
+    delteTeacher = './mock/userManage/delTeacher'
 
-    delteStudent = './api/userManage/delStudent'
+    delteStudent = './mock/userManage/delStudent'
 
-    changeUserName = './api/user/changeUserInfo'
+    changeUserName = './mock/user/changeUserInfo'
 
-    createUser = './api/classMember/createClassMember'
+    createUser = './mock/classMember/createClassMember'
 
-    changeUserSignatures = './api/user/changeUserSignature'
+    changeUserSignatures = './mock/user/changeUserSignature'
 
-    changePasswords = './api/user/changePassword'
+    changePasswords = './mock/user/changePassword'
 }
 
 const mockPath = new MockPath();
@@ -59,8 +59,6 @@ Mock.mock(mockPath.insertStudent, 'post', insertStudent);
 Mock.mock(mockPath.getUserList, 'post', getUserList);
 // 学生列表
 Mock.mock(mockPath.getStudentList, 'post', getStudentList);
-// 获取班级列表
-// Mock.mock('./api/class/queryClass', 'post', getClassList);
 // 重置密码
 Mock.mock(mockPath.resetPassword, 'post', resetPassword);
 // 删除教师
@@ -71,8 +69,6 @@ Mock.mock(mockPath.delteStudent, 'post', delteStudent);
 Mock.mock(mockPath.changeUserName, 'post', changeUserName);
 // 添加用户
 Mock.mock(mockPath.createUser, 'post', createUser);
-// 获取用户信息
-// Mock.mock('./api/user/getByCode', 'post', getCode);
 // 更改个人信息
 Mock.mock(mockPath.changeUserSignatures, 'post', changeUserSignatures);
 // 修改密码
