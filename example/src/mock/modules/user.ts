@@ -27,10 +27,19 @@ class UserInfo extends LoginClass {
 
   headImagePath = Mock.Random.image('64x64');
 
+  admin = false
+
+  teacher = false
+
+  student = false
+
   constructor(code: string) {
     super(code);
     this.code = code;
     this.role = code;
+    this.admin = code === 'admin';
+    this.teacher = code === 'teacher';
+    this.student = code === 'student';
   }
 }
 
