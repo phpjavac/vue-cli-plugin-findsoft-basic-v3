@@ -50,7 +50,6 @@ export class SearchUserClass extends BaseSearchClass {
 
   constructor(data: StudentModalFace) {
     super(data);
-    console.log(data, 'con_data——classRoom_uuid');
     // eslint-disable-next-line @typescript-eslint/camelcase
     if (data.classId) this.classRoom_uuid = data.classId;
   }

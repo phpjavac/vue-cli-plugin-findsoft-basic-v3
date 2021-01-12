@@ -44,7 +44,7 @@ module.exports = (api, options) => {
             pluginOptions: {
                 toTypes: {
                     host: `${options.serverPath}/${options.productName}/v2/api-docs`,
-                    TypesPath: './types/api.ts',
+                    TypesPath: './src/types/api.ts',
                 },
                 ftp: {
                     host: '自行配置',
@@ -54,11 +54,15 @@ module.exports = (api, options) => {
             },
             css: {
                 loaderOptions: {
-                    less: {
-                        lessOptions: {
-                            javascriptEnabled: true,
-                        },
+                  less: {
+                    lessOptions: {
+                      modifyVars: styleJson,
+                      javascriptEnabled: true,
                     },
+                  },
+                  stylus: {
+                    import: path.resolve(__dirname, './src/styles/variable.styl'),
+                  },
                 },
             },
         },

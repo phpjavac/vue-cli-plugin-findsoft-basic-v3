@@ -28,7 +28,6 @@ export function editClass(data: AjaxDate) {
 
 export function delClass(data: AjaxDate) {
   const { ids } = JSON.parse(data.body);
-  console.log(ids, '删除的ids');
   return new MockRequest(
     ids, '删除成功', true,
   );
@@ -36,7 +35,6 @@ export function delClass(data: AjaxDate) {
 
 export function insertStudent(data: AjaxDate) {
   const ids = JSON.parse(data.body);
-  console.log(ids, 'ssssss');
   return new MockRequest(
     ids, '导入成功', true,
   );
