@@ -1,7 +1,7 @@
 import {
   ActionTree, MutationTree, StoreOptions,
 } from 'vuex';
-import axios from '@/axios/fetch';
+import axios from '@/axios/api';
 import { definitions } from '@/types/api';
 import { BaseSearchFace } from '@/types/base';
 import { EditClassFace, SearchClassClass } from '@/types/modules/classe';
@@ -70,10 +70,11 @@ class Classe implements StoreOptions<State> {
   actions: ActionTree<State, unknown> = {
     // 班级列表
     getClassList({ commit }, data) {
+      commit('updateClassList', []);
       const searchData = new SearchClassClass(data);
       searchData.setKeyWord(data.keyWord);
       return new Promise((resolve) => {
-        axios.post('./api/class/queryClass', searchData).then((res) => {
+        axios.getClassList(searchData).then((res) => {
           commit('updateClassList', res.data.data.list || []);
           resolve(res.data.data);
         });
@@ -90,7 +91,7 @@ class Classe implements StoreOptions<State> {
         teacherCodes: JSON.stringify([data.teacherId]),
       };
       return new Promise((resolve, reject) => {
-        axios.post('./api/class/createOrUpdateClass', formData).then((res) => {
+        axios.editClassData(formData).then((res) => {
           resolve(res);
         }).catch((err) => {
           reject(err);
@@ -105,7 +106,7 @@ class Classe implements StoreOptions<State> {
     delClass(_: unknown, ids) {
       const formData = { classIds: JSON.stringify(ids) };
       return new Promise((resolve) => {
-        axios.post('./api/userManage/delClass', formData).then((res) => {
+        axios.delClass(formData).then((res) => {
           resolve(res.data.data);
         });
       });
@@ -118,7 +119,7 @@ class Classe implements StoreOptions<State> {
       formData.append('classId', classId);
       formData.append('file', file);
       return new Promise((resolve) => {
-        axios.post(`api/classMember/insertStudent?classId=${classId}`, formData).then((res) => {
+        axios.uploadStudentByClass(formData, classId).then((res) => {
           resolve(res);
         });
       });

@@ -1,9 +1,7 @@
 import Mock from 'mockjs';
 
-import { getDemoList } from './demo';
-
 Mock.setup({
-  timeout: '500-1000',
+  timeout: '10-1500',
 });
 
-Mock.mock('mock/demo', 'post', getDemoList);
+export default Mock;
