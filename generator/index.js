@@ -1,3 +1,10 @@
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const styleJson = require('./src/styles/antd.json');
+// 转为es6模块 import项目运行不起来
+
 module.exports = (api, options) => {
     api.render('./template')
     api.extendPackage({
