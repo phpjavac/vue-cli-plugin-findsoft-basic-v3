@@ -2,7 +2,7 @@
 const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const styleJson = require('./src/styles/antd.json');
-// 转为es6模块 import项目运行不起来，先用require
+// 转为es6模块 import项目运行不起来
 
 module.exports = {
   publicPath: './',
@@ -26,7 +26,7 @@ module.exports = {
     },
     toTypes: {
       host: 'http://zx.aiisx.com/dcaw/v2/api-docs', // swagger地址
-      TypesPath: './types/api.ts', // 生成的interface
+      TypesPath: './src/types/api.ts', // 生成的interface
     },
   },
   // 解决按需引入插件css引入失败
