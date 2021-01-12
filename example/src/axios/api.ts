@@ -10,7 +10,6 @@ class Api {
      * @param data 登录信息
      */
     login = (data: unknown) => {
-      console.log(this.VUE_APP_MOCK);
       let path = './api/user/login';
       if (this.VUE_APP_MOCK) {
         path = mockpath.login;

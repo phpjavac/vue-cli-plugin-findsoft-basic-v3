@@ -149,7 +149,7 @@ export default defineComponent({
   .user-profile
     display flex
     align-items center
-    width 130px
+    width 124px
     justify-content space-between
     font-size 14px
     font-family MicrosoftYaHeiUI

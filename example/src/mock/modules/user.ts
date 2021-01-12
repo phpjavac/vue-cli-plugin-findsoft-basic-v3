@@ -37,7 +37,6 @@ class UserInfo extends LoginClass {
 // 登录
 export function getByCode(data: AjaxDate) {
   const { code } = JSON.parse(data.body);
-  console.log(new UserInfo(code), 'new UserInfo(code)');
   return new MockRequest(
     new UserInfo(code),
     '用户信息', true,
@@ -45,9 +44,8 @@ export function getByCode(data: AjaxDate) {
 }
 
 export function login(data: AjaxDate) {
-  const { code, password } = JSON.parse(data.body);
+  const { code } = JSON.parse(data.body);
   let loginData;
-  console.log('请求参数', code, password);
   if (['admin', 'teacher', 'student'].includes(code)) {
     loginData = new MockRequest(loginMap.get(code), '登录成功', true);
   } else {
