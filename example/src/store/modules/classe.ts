@@ -70,6 +70,7 @@ class Classe implements StoreOptions<State> {
   actions: ActionTree<State, unknown> = {
     // 班级列表
     getClassList({ commit }, data) {
+      commit('updateClassList', []);
       const searchData = new SearchClassClass(data);
       searchData.setKeyWord(data.keyWord);
       return new Promise((resolve) => {

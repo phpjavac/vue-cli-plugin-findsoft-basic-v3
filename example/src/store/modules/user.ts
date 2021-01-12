@@ -174,6 +174,7 @@ class User implements StoreOptions<State> {
     },
     // 教师列表
     getTeacherList({ commit }: { commit: Commit }, Querydata: BaseSearchFace) {
+      commit('updateTeacherList', []);
       const searchData = new SearchUserClass(Querydata);
       searchData.setQueryParam(Querydata);
       return new Promise((resolve, reject) => {
@@ -188,6 +189,7 @@ class User implements StoreOptions<State> {
     },
     // 学生列表——按照v2版本的接口查询
     getStudentList({ commit }: { commit: Commit }, Querydata: BaseSearchFace) {
+      commit('updateStudentList', []);
       const searchData = new SearchUserClass(Querydata);
       searchData.setKeyWord(Querydata.keyWord);
       searchData.setTeacherId();
