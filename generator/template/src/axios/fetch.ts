@@ -47,7 +47,7 @@ http.interceptors.response.use(
         content: response.data.message,
         onOk() {
           sessionStorage.clear();
-          window.location.href = '/dcaw';
+          window.location.href = '/';
         },
       });
     } else if (!response.data.success) {

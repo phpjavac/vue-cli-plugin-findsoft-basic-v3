@@ -1,7 +1,7 @@
 import {
   ActionTree, Commit, GetterTree, MutationTree, StoreOptions,
 } from 'vuex';
-import axios from '@/axios/fetch';
+import axios from '@/axios/api';
 import { message } from 'ant-design-vue';
 import { definitions } from '@/types/api';
 import {
@@ -103,8 +103,7 @@ class User implements StoreOptions<State> {
   actions: ActionTree<State, unknown> = {
     login({ commit, dispatch }, form) {
       return new Promise<string>((resolve, reject) => {
-        axios
-          .post('./api/user/login', form)
+        axios.login(form)
           .then(async (res) => {
             message.success('登陆成功');
             commit('saveUserInfo', res.data.data);
@@ -133,9 +132,7 @@ class User implements StoreOptions<State> {
     // 获取用户个人信息
     getByCode({ commit }: { commit: Commit }) {
       return new Promise<void>((resolve, reject) => {
-        axios.post('./api/user/getByCode', {
-          code: sessionStorage.code,
-        }).then((user) => {
+        axios.getByCode().then((user) => {
           const userInfo = user.data.data;
           commit('pulUser', userInfo);
           resolve(user.data.data);
@@ -153,7 +150,7 @@ class User implements StoreOptions<State> {
         isTeacher: data.isTeacher,
       };
       return new Promise((resolve, reject) => {
-        axios.post('./api/classMember/createClassMember', formData).then((res) => {
+        axios.createClassMember(formData).then((res) => {
           resolve(res);
         }).catch((err) => {
           reject(err);
@@ -167,7 +164,7 @@ class User implements StoreOptions<State> {
         name: data.name,
       };
       return new Promise((resolve, reject) => {
-        axios.post('./api/user/changeUserInfo', formData).then((res) => {
+        axios.changeUserInfo(formData).then((res) => {
           resolve(res.data);
         }).catch((err) => {
           message.error(err);
@@ -177,10 +174,11 @@ class User implements StoreOptions<State> {
     },
     // 教师列表
     getTeacherList({ commit }: { commit: Commit }, Querydata: BaseSearchFace) {
+      commit('updateTeacherList', []);
       const searchData = new SearchUserClass(Querydata);
       searchData.setQueryParam(Querydata);
       return new Promise((resolve, reject) => {
-        axios.post('./api/user/queryUserList', searchData).then((res) => {
+        axios.queryUserList(searchData).then((res) => {
           const { data } = res.data;
           commit('updateTeacherList', data.list || []);
           resolve(data);
@@ -191,11 +189,12 @@ class User implements StoreOptions<State> {
     },
     // 学生列表——按照v2版本的接口查询
     getStudentList({ commit }: { commit: Commit }, Querydata: BaseSearchFace) {
+      commit('updateStudentList', []);
       const searchData = new SearchUserClass(Querydata);
       searchData.setKeyWord(Querydata.keyWord);
       searchData.setTeacherId();
       return new Promise((resolve, reject) => {
-        axios.post('./api/classMember/listStudent', searchData).then((res) => {
+        axios.queryStudentList(searchData).then((res) => {
           const { data } = res.data;
           commit('updateStudentList', data.list || []);
           resolve(data);
@@ -206,9 +205,9 @@ class User implements StoreOptions<State> {
     },
 
     // 重置用户密码为123456——teacher & student common
-    resetPassword(_: unknown, BaseUserCodeRequest: definitions['BaseUserCodeRequest']) {
+    resetPassword(_: unknown, BaseUserCodeRequest: string) {
       return new Promise((resolve, reject) => {
-        axios.post('./api/user/adminResetPassword', { code: BaseUserCodeRequest }).then((res) => {
+        axios.adminResetPassword(BaseUserCodeRequest).then((res) => {
           const { data } = res;
           resolve(data);
         }).catch((err) => {
@@ -217,11 +216,11 @@ class User implements StoreOptions<State> {
       });
     },
     // 删除用户——type 0教师 1学生
-    delUser(_: unknown, data: {type: number;ids: string[]}) {
+    delUser(_: unknown, data: { type: number; ids: string[] }) {
       const formData = { userCodes: JSON.stringify(data.ids) };
-      const path = data.type ? 'api/userManage/delStudent' : 'api/userManage/delTeacher';
+      const queryFun = data.type ? axios.delStudent : axios.delTeacher;
       return new Promise((resolve, reject) => {
-        axios.post(path, formData).then((res) => {
+        queryFun(formData).then((res) => {
           resolve(res.data);
         }).catch((err) => {
           reject(err);

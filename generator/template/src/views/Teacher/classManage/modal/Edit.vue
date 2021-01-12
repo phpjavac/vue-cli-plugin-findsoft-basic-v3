@@ -87,7 +87,6 @@ export default defineComponent({
     const onSubmit = (e: Event) => {
       e.preventDefault();
       validate().then(async () => {
-        console.log('formRule createUser', toRaw(formModel));
         await store.dispatch('classe/editClassData', toRaw(formModel)).then(() => {
           message.success(`${props.isEdit ? '修改成功' : '新增成功'}`);
           resetFields();
@@ -104,8 +103,6 @@ export default defineComponent({
       () => props.visible,
       () => {
         if (props.isEdit && props.visible) {
-          // 这里有个问题，props直接传formData监听不到变化，暂时先用vuex处理
-          console.log('props.formData', props);
           Object.assign(formModel, store.state.classe.classInfo);
         }
       },
