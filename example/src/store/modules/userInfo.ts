@@ -1,5 +1,5 @@
 import { ActionTree, MutationTree, StoreOptions } from 'vuex';
-import axios from '@/axios/fetch';
+import axios from '@/axios/api';
 import { definitions } from '@/types/api';
 import { message } from 'ant-design-vue';
 
@@ -20,7 +20,7 @@ class UserInfo implements StoreOptions<State> {
     ) {
       return new Promise((resolve, reject) => {
         axios
-          .post('./api/user/changeUserSignature', ChangeUserSignatureRequest)
+          .changeUserSignature(ChangeUserSignatureRequest)
           .then((res) => {
             message.success('保存个人信息成功');
             resolve(res.data.data);
@@ -35,7 +35,7 @@ class UserInfo implements StoreOptions<State> {
     changePassword(_: unknown, ChangePasswordRequest: definitions['ChangePasswordRequest']) {
       return new Promise((resolve, reject) => {
         axios
-          .post('./api/user/changePassword', ChangePasswordRequest)
+          .changePassword(ChangePasswordRequest)
           .then((res) => {
             message.success('密码修改成功');
             resolve(res.data.data);
