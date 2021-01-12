@@ -1,11 +1,15 @@
 {
   "name": "vue-cli-plugin-findsoft-basic-v3",
-  "version": "1.1.2",
-  "description": "更新",
+  "version": "1.2.0",
+  "description": "findsoft-前端基础框架",
   "main": "index.js",
   "scripts": {
     "build":"sudo ./build/build.sh && ./build/build.bat",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phpjavac/vue-cli-plugin-findsoft-basic-v3.git"
   },
   "author": "",
   "license": "ISC"
