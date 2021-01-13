@@ -3,29 +3,31 @@ export default class MockPath {
 
     getByCode = './api/user/getByCode';
 
-    getClassList = './api/class/queryClass'
+    softConfig = './softConfig/get';
 
-    editClass = './api/class/createOrUpdateClass'
+    getClassList = './api/class/queryClass';
 
-    delClass = './api/userManage/delClass'
+    editClass = './api/class/createOrUpdateClass';
 
-    insertStudent = './api/classMember/insertStudent'
+    delClass = './api/userManage/delClass';
 
-    getUserList = './api/user/queryUserList'
+    insertStudent = './api/classMember/insertStudent';
 
-    getStudentList = './api/classMember/listStudent'
+    getUserList = './api/user/queryUserList';
 
-    resetPassword = './api/user/adminResetPassword'
+    getStudentList = './api/classMember/listStudent';
 
-    delteTeacher = './api/userManage/delTeacher'
+    resetPassword = './api/user/adminResetPassword';
 
-    delteStudent = './api/userManage/delStudent'
+    delteTeacher = './api/userManage/delTeacher';
 
-    changeUserName = './api/user/changeUserInfo'
+    delteStudent = './api/userManage/delStudent';
 
-    createUser = './api/classMember/createClassMember'
+    changeUserName = './api/user/changeUserInfo';
 
-    changeUserSignatures = './api/user/changeUserSignature'
+    createUser = './api/classMember/createClassMember';
 
-    changePasswords = './api/user/changePassword'
+    changeUserSignatures = './api/user/changeUserSignature';
+
+    changePasswords = './api/user/changePassword';
 }
