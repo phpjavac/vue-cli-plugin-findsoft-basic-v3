@@ -1,5 +1,0 @@
-各图片说明
-
-logo.png -> 为软件登陆页的logo图片
-logoNav.png -> 为软件各顶部导航栏的logo图片
-ZXlogo.ico -> 为网页标签页ico图片
