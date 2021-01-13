@@ -105,7 +105,6 @@ class User implements StoreOptions<State> {
       return new Promise<string>((resolve, reject) => {
         axios.login(form)
           .then(async (res) => {
-            message.success('登陆成功');
             commit('saveUserInfo', res.data.data);
             const routerPath: {
               [index: string]: { path: string };
@@ -121,6 +120,7 @@ class User implements StoreOptions<State> {
               },
             };
             await dispatch('getByCode');
+            message.success('登陆成功');
             router.push(routerPath[res.data.data.role]);
             resolve(res.data.data.role);
           })
