@@ -18,6 +18,8 @@ class Api {
         .post(path, data);
     }
 
+    softConfig = () => axios.get(this.VUE_APP_MOCK ? mockpath.softConfig : './softConfig/get')
+
     /**
      * 获取用户信息
      */

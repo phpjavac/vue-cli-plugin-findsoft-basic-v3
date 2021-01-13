@@ -11,10 +11,8 @@ a-modal.main(
       a-input(v-model:value='formModel.name', placeholder='填写姓名', :maxlength="20")
     a-form-item(label="密码") 初始密码为123456
   template(#footer)
-    a-config-provider(:auto-insert-space-in-button="false")
-      a-button.btns-w-80(key='back', type='primary', ghost @click='onCancel') 取消
-    a-config-provider(:auto-insert-space-in-button="false")
-      a-button.btns-w-80(key='submit', type='primary', @click='onSubmit') 保存
+    a-button(key='back', type='primary', ghost @click='onCancel') 取消
+    a-button(key='submit', type='primary', @click='onSubmit') 保存
 </template>
 
 <script lang="ts">

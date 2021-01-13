@@ -1,6 +1,10 @@
 import Mock from 'mockjs';
 import {
-  getByCode, login, getStudentList, delteStudent,
+  getByCode,
+  login,
+  getStudentList,
+  delteStudent,
+  getConfig,
   getUserList,
   resetPassword,
   delteTeacher,
@@ -22,6 +26,7 @@ Mock.setup({
 // 登录模块
 Mock.mock(mockPath.login, 'post', login);
 Mock.mock(mockPath.getByCode, 'post', getByCode);
+Mock.mock(mockPath.softConfig, 'get', getConfig);
 
 // 班级模块
 Mock.mock(mockPath.getClassList, 'post', getClassList);

@@ -3,18 +3,18 @@
   the-title-and-search.the-search(:title='tabTitle' @tabChange='tabChange')
     template(#button)
       .btn-group.flex.flex-row.flex-start
-        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center(
           type='primary'
           @click="changeBoolean(activeTab === 0?'modalTeacherAdd':'modalStudentAdd',true)" )
           b-icon(type='iconjia')
-          span 新建
-        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
+          span.pad-left-8 新建
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center(
           type='primary'
           ghost
           @click='delUser(undefined)'
         )
           b-icon(type='iconshanchu')
-          span 删除
+          span.pad-left-8 删除
     template(#search)
       the-search(@getSearch='searchChange')
   .table-container
@@ -336,6 +336,8 @@ export default defineComponent({
     .btn-group
       .btn-i
         margin-right 16px
+      .pad-left-8
+        padding-left 8px
   .table-container
     .table
       margin 22px 0 16px
