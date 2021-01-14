@@ -11,7 +11,7 @@
 ### 使用方法
 1. 常规创建项目 
 	```
-	vue add findsoft-basic-3
+	vue add findsoft-basic-v3
 	请输入项目名称-> eg
 	请输入服务器地址-> http://192.168.1.147:8080
 	npm install
