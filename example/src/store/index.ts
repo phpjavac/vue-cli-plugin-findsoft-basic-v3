@@ -3,6 +3,7 @@ import system from './modules/system';
 import user from './modules/user';
 import classe from './modules/classe';
 import userInfo from './modules/userInfo';
+import breadcrumb from './modules/breadcrumb';
 
 const store = createStore({
   state: {
@@ -16,6 +17,7 @@ const store = createStore({
     user,
     classe,
     userInfo,
+    breadcrumb,
   },
 });
 
@@ -26,6 +28,7 @@ declare module 'vuex' {
     user: typeof user.state;
     classe: typeof classe.state;
     userInfo: typeof userInfo.state;
+    breadcrumb: typeof breadcrumb.state;
   }
   export function useStore<S = StoreStateType & ModulesType>(): Store<S>;
 }
