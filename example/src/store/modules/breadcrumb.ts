@@ -38,10 +38,13 @@ class BreadCrumb implements StoreOptions<State> {
       state.breadList.splice(startIndex, state.breadList.length);
       localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     push(state, { getters, data }: { getters: any; data: Bread }) {
+      // 可在此对特殊情况做额外处理
       state.breadList.push(data);
       localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     delete(state, { getters, index }: { getters: any; index: number }) {
       try {
         delete state.breadList[index];
