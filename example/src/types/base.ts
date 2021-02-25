@@ -5,7 +5,7 @@
 
 /**
  * @description 基础查询接口
- * 
+ *
  * @keyWord 关键字
  * @pageNo 页码
  * @pageSize 页条数
@@ -22,7 +22,7 @@ export interface BaseSearchFace {
 
 /**
  * @description 基础查询类
- * 
+ *
  * @pageNo 页码
  * @pageSize 页条数
  * @seqAsc 升序
@@ -61,12 +61,12 @@ export class BaseSearchClass {
 
 /**
  * @description Antd-Upload-v3 所需接口
- * 
+ *
  * @uid 文件唯一标识
  * @name 文件名
  * @status 状态码 uploading done error removed
  * @originFIleObj 文件对象
- * 
+ *
  * @remark 暂时没找到暴露的interface，先从antd官网文档扒过来
  */
 export interface Afile {
@@ -79,4 +79,9 @@ export interface Afile {
 
   // 文档没有标注，但是控制台打印的文件对象对应该字段
   originFileObj: File; // 文件对象
+}
+
+export interface Bread {
+  breadcrumbName: string;
+  path: string;
 }
