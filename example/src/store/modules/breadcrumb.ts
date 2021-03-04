@@ -38,11 +38,11 @@ class BreadCrumb implements StoreOptions<State> {
       state.breadList.splice(startIndex, state.breadList.length);
       localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
-    push(state, { getters, data }: { getters: any; data: Bread }) {
+    push(state, { getters, data }: { getters: {storeKey: string}; data: Bread }) {
       state.breadList.push(data);
       localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
-    delete(state, { getters, index }: { getters: any; index: number }) {
+    delete(state, { getters, index }: { getters: {storeKey: string}; index: number }) {
       try {
         delete state.breadList[index];
       } catch (e) {
