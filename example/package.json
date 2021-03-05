@@ -5,6 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:self": "npm run build:component && npm run build:docs",
+    "build:component": "vue-cli-service build --target lib --name vueCropper ./src/components/UploadImg.vue",
+    "build:docs": "vue-cli-service build --dest docs",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "getTypes": " vue-cli-service getTypes"

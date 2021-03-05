@@ -130,8 +130,6 @@ export default defineComponent({
       if (typeof FileReader === 'function') {
         const reader = new FileReader();
         reader.onload = (event: any) => {
-          console.log(event, 'eeeeeeee');
-
           choseImg.value = event.currentTarget.result;
 
           modalVisible.value = true;
@@ -144,8 +142,6 @@ export default defineComponent({
       }
     };
     const onOk = () => {
-      console.log('点击了确定\n把展示框图片改掉，用emit把file传回去。', cropper.value);
-
       afterImg.value = (cropper.value as any).getCroppedCanvas().toDataURL();
 
       (cropper.value as any)
@@ -160,7 +156,6 @@ export default defineComponent({
         });
     };
     const onCancel = () => {
-      console.log('关掉模态框，把组件图片置空');
       choseImg.value = '';
     };
 
