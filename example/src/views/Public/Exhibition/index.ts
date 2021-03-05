@@ -4,6 +4,7 @@
  * @description 展示组件列表
  *
  * @param name 组件名
+ * @param nameEn 英文名&
  * @param image 展示图
  * @param path 具体展示页面地址
  * @param type 组件所属类型
@@ -35,6 +36,13 @@ export const componentList: ComponentFace[] = [
     nameEn: 'Ellipsis',
     image: require('@/assets/img/exhibition/upload.png'),
     path: 'ExEllipsis',
+    type: '',
+  },
+  {
+    name: '数值波动',
+    nameEn: 'Fluctuation',
+    image: require('@/assets/img/exhibition/upload.png'),
+    path: 'ExFluctuation',
     type: '',
   },
   {
