@@ -17,9 +17,9 @@
   //- 3、裁切时，也是显示旧图
   //- 4、裁切后，显示裁切之后的图
   //- 5、上传的图，不需要显示。只是用来控制cropper的显示内容
-  .left-img(v-if="!oldImgSrc && !afterImg ")
+  .left-img(v-if="!oldImgSrc && !afterImg " :style='{width: CWidth, height: CHeight}')
     img(src="../assets/img/exhibition/noimg.png")
-  img.left-img(v-else, :src="afterImg || oldImgSrc")
+  img.left-img(v-else, :src="afterImg || oldImgSrc" :style='{width: CWidth, height: CHeight}')
   .r-text
     .text 支持格式：
       span {{importType.join('、')}}
@@ -47,6 +47,7 @@ import {
   Form, Button, Upload, message, Modal,
 } from 'ant-design-vue';
 import {
+  computed,
   defineAsyncComponent, defineComponent, nextTick, ref, SetupContext,
 } from 'vue';
 import VueCropper from 'vue-cropperjs';
@@ -85,6 +86,11 @@ export default defineComponent({
       type: Number,
       default: 16 / 9,
     },
+    /** 组件图片高度 —— 为了让图片按正常比例显示，但不应该把api开放出来 */
+    // componentsHeight: {
+    //   type: Number,
+    //   default: 118,
+    // },
     /** 推荐尺寸 */
     sizeText: {
       type: String,
@@ -115,8 +121,11 @@ export default defineComponent({
     const modalVisible = ref(false); /** 模态框 */
     const choseImg = ref(''); /** 裁剪框里的图片，也就是当前选择的图片 */
     const afterImg = ref(''); /** 用来存储裁切后的图片 */
+    const CHeight = 118; // 组件高度
     const cropper = ref(null); /** 组件refs */
 
+    /** 根据比例获得宽度 */
+    const CWidth = computed(() => `${props.aspectRatio * CHeight}px`);
     // eslint-disable-next-line consistent-return
     const beforeUpload = (file: File) => {
       // const arr = ['image/png', 'image/jpeg'];
@@ -162,6 +171,8 @@ export default defineComponent({
     return {
       beforeUpload,
 
+      CWidth,
+      CHeight,
       cropper,
       modalVisible,
       choseImg,
@@ -189,6 +200,7 @@ export default defineComponent({
   .r-text
     width 200px
     margin-left 16px
+    text-align left
     .text
       font-size 12px
       font-family MicrosoftYaHeiUI

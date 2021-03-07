@@ -26,7 +26,9 @@ export default defineComponent({
   setup() {
     const uploadOption = {
       // fileSize: 1,
-      // oldImgSrc: 'http://dummyimage.com/64x64',
+      oldImgSrc: 'http://dummyimage.com/64x64',
+      aspectRatio: 1,
+      disabled: true,
     };
 
     return {
