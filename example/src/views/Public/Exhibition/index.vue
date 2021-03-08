@@ -28,6 +28,7 @@ export default defineComponent({
     CityBuild: defineAsyncComponent(() => import('@/views/Public/Exhibition/CityBuild.vue')),
     Ellipsis: defineAsyncComponent(() => import('@/views/Public/Exhibition/Ellipsis.vue')),
     ToTop: defineAsyncComponent(() => import('@/views/Public/Exhibition/ToTop.vue')),
+    Fluctuation: defineAsyncComponent(() => import('@/views/Public/Exhibition/Fluctuation.vue')),
   },
   props: {},
   setup() {

@@ -5,8 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:self": "npm run build:component && npm run build:docs",
-    "build:component": "vue-cli-service build --target lib --name vueCropper ./src/components/UploadImg.vue",
+    "build:self": "npm run build:ellipsis",
+    "build:cropper": "vue-cli-service build --target lib --name vueCropper ./src/components/UploadImg.vue",
+    "build:ellipsis": "vue-cli-service build --target lib --name ellipsis ./src/components/EllipsisFun.vue",
     "build:docs": "vue-cli-service build --dest docs",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@ant-design-vue/use": "^0.0.1-alpha.8",
+    "@findsoft/vue-fluctuation": "^1.0.3",
     "ant-design-vue": "^2.0.0-rc.5",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
@@ -21,6 +23,7 @@
     "mockjs": "^1.1.0",
     "moment": "^2.29.1",
     "register-service-worker": "^1.7.1",
+    "to-top-vue": "^1.0.7",
     "vue": "^3.0.0",
     "vue-cropperjs": "^5.0.0",
     "vue-router": "^4.0.0-0",

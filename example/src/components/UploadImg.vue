@@ -38,7 +38,8 @@
       :beforeUpload="beforeUpload"
     )
       a-button(type="dashed")
-        a-icon(type="icontuichu11")
+        //- a-icon(type="icontuichu11")
+        slot(name='prefix')
         | 上传
 </template>
 

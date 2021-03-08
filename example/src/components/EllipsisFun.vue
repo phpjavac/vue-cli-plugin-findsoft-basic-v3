@@ -1,8 +1,14 @@
 <template lang="pug">
-a-tooltip(:title="text")
-  span.ellipsis#ellipsis(
-    ref='ellipsis'
-    ) {{showText}}
+.main
+  template(v-if='showAll')
+    a-tooltip(:title="text")
+      span.ellipsis(
+        ref='ellipsis'
+        ) {{showText}}
+  template(v-else)
+    span.ellipsis(
+      ref='ellipsis'
+      ) {{showText}}
 </template>
 
 <script lang="ts">
@@ -24,6 +30,11 @@ export default defineComponent({
     ellipsisType: {
       type: String,
       default: '...',
+    },
+    /** 悬停是否显示全文内容 */
+    showAll: {
+      type: Boolean,
+      default: true,
     },
 
     /** 字体大小 这个api也不重要 */
