@@ -62,7 +62,7 @@ export default defineComponent({
     aFormItem: Form.Item,
     aButton: Button,
     aUpload: Upload,
-    aIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
+    // aIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
     VueCropper,
     aModal: Modal,
   },
@@ -209,6 +209,6 @@ export default defineComponent({
       line-height 26px
       span
         color rgba(68, 133, 240, 1)
-  .icon
-    transform rotate(-90deg)
+  // .icon
+  //   transform rotate(-90deg)
 </style>

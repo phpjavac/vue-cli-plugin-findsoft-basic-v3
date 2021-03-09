@@ -111,7 +111,7 @@ export default defineComponent({
       e.appendChild(t);
       document.body.appendChild(e);
       const domRect = (e as any).getBoundingClientRect();
-      console.log(domRect, 'domRect');
+      // console.log(domRect, 'domRect');
       const { height: DRH } = domRect;
       if (DRH) FH = DRH;
       document.body.removeChild(e);
@@ -167,7 +167,7 @@ export default defineComponent({
 
       /** 计算最大行数 如果一行都不够，返回1行 */
       const maxLen = Math.floor(limitHeightNumber / FH) || 1;
-      console.log(maxLen, 'maxLen', ellipsisType);
+      // console.log(maxLen, 'maxLen', ellipsisType);
 
       /** 判断长度 */
       if (strNum * maxLen < text.length) {

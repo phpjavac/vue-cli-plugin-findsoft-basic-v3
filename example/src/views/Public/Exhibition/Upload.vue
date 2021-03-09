@@ -5,7 +5,7 @@
     a-form-item(label="上传图片")
       upload-img(v-bind='uploadOption')
         template(#prefix)
-          a-icon(type="icontuichu11")
+          a-icon.icon(type="icontuichu11")
 </template>
 
 <script lang="ts">
@@ -45,4 +45,6 @@ export default defineComponent({
   .content
     background #fff
     padding 20px
+    .icon
+      transform rotate(-90deg)
 </style>

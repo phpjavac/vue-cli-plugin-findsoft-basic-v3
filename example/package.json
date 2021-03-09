@@ -8,6 +8,7 @@
     "build:self": "npm run build:ellipsis",
     "build:cropper": "vue-cli-service build --target lib --name vueCropper ./src/components/UploadImg.vue",
     "build:ellipsis": "vue-cli-service build --target lib --name ellipsis ./src/components/EllipsisFun.vue",
+    "build:fluctuation": "vue-cli-service build --target lib --name vueFluctuation ./src/components/Fluctuation.vue",
     "build:docs": "vue-cli-service build --dest docs",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
@@ -16,6 +17,7 @@
   "dependencies": {
     "@ant-design-vue/use": "^0.0.1-alpha.8",
     "@findsoft/vue-fluctuation": "^1.0.3",
+    "@findsoft/vue-fluctuation-v3": "^1.0.0",
     "ant-design-vue": "^2.0.0-rc.5",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",

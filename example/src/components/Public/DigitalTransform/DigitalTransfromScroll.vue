@@ -97,7 +97,7 @@ export default defineComponent({
 .dt-scroll
   overflow hidden
   display inline-block
-  height 1.5em
+  // height 1.5em
   .dt-scroll-list
     display inline-flex
     flex-direction column
