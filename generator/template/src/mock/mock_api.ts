@@ -1,75 +1,33 @@
-import Mock from './index';
-import {
-  getByCode, login, getStudentList, delteStudent,
-  getUserList,
-  resetPassword,
-  delteTeacher,
-  changeUserName,
-  createUser,
-} from './modules/user';
-import {
-  getClassList, editClass, delClass, insertStudent,
-} from './modules/classe';
-import { changeUserSignatures, changePasswords } from './modules/public/userInfo';
-
 export default class MockPath {
-    login = './mock/user/login';
+    login = './api/user/login';
 
-    getByCode = './mock/user/getByCode';
+    getByCode = './api/user/getByCode';
 
-    getClassList = './mock/class/queryClass'
+    softConfig = './softConfig/get';
 
-    editClass = './mock/class/createOrUpdateClass'
+    getClassList = './api/class/queryClass';
 
-    delClass = './mock/userManage/delClass'
+    editClass = './api/class/createOrUpdateClass';
 
-    insertStudent = './mock/classMember/insertStudent'
+    delClass = './api/userManage/delClass';
 
-    getUserList = './mock/user/queryUserList'
+    insertStudent = './api/classMember/insertStudent';
 
-    getStudentList = './mock/classMember/listStudent'
+    getUserList = './api/user/queryUserList';
 
-    resetPassword = './mock/user/adminResetPassword'
+    getStudentList = './api/classMember/listStudent';
 
-    delteTeacher = './mock/userManage/delTeacher'
+    resetPassword = './api/user/adminResetPassword';
 
-    delteStudent = './mock/userManage/delStudent'
+    delteTeacher = './api/userManage/delTeacher';
 
-    changeUserName = './mock/user/changeUserInfo'
+    delteStudent = './api/userManage/delStudent';
 
-    createUser = './mock/classMember/createClassMember'
+    changeUserName = './api/user/changeUserInfo';
 
-    changeUserSignatures = './mock/user/changeUserSignature'
+    createUser = './api/classMember/createClassMember';
 
-    changePasswords = './mock/user/changePassword'
+    changeUserSignatures = './api/user/changeUserSignature';
+
+    changePasswords = './api/user/changePassword';
 }
-
-const mockPath = new MockPath();
-// 登录模块
-Mock.mock(mockPath.login, 'post', login);
-Mock.mock(mockPath.getByCode, 'post', getByCode);
-
-// 班级模块
-Mock.mock(mockPath.getClassList, 'post', getClassList);
-Mock.mock(mockPath.editClass, 'post', editClass);
-Mock.mock(mockPath.delClass, 'post', delClass);
-Mock.mock(mockPath.insertStudent, 'post', insertStudent);
-
-// 教师列表
-Mock.mock(mockPath.getUserList, 'post', getUserList);
-// 学生列表
-Mock.mock(mockPath.getStudentList, 'post', getStudentList);
-// 重置密码
-Mock.mock(mockPath.resetPassword, 'post', resetPassword);
-// 删除教师
-Mock.mock(mockPath.delteTeacher, 'post', delteTeacher);
-// 删除学生
-Mock.mock(mockPath.delteStudent, 'post', delteStudent);
-// 编辑用户姓名
-Mock.mock(mockPath.changeUserName, 'post', changeUserName);
-// 添加用户
-Mock.mock(mockPath.createUser, 'post', createUser);
-// 更改个人信息
-Mock.mock(mockPath.changeUserSignatures, 'post', changeUserSignatures);
-// 修改密码
-Mock.mock(mockPath.changePasswords, 'post', changePasswords);

@@ -108,7 +108,7 @@ router.beforeEach((to, from, next) => {
     next(); // 判断白名单
   } else if (!role || !code) {
     next({ path: '/' }); // 判断登录
-  } else if (to.meta.role && to.meta.role.includes(role)) {
+  } else if (to.meta.role && (to.meta.role as []).includes((role as never))) {
     next(); // 判断页面、角色权限
   } else {
     next({ path: '/404' });

@@ -65,6 +65,16 @@ const routes: Array<RouteRecordRaw> = [
           role: ['admin', 'teacher', 'student'],
         },
       },
+      {
+        path: '/Teacher/exhibition',
+        name: 'Teacher/Exhibition',
+        component: () => import('../views/Public/Exhibition/index.vue'),
+        meta: {
+          title: '组件展示',
+          icon: '',
+          role: ['admin', 'teacher', 'student'],
+        },
+      },
     ],
   },
   {

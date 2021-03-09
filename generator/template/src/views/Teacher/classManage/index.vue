@@ -1,24 +1,25 @@
 <template lang="pug">
 .main
+  //- breadcrumb
   the-title-and-search.the-search(:title='["班级列表"]')
     template(#button)
       .btn-group.flex.flex-row.flex-start
-        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center(
           type='primary'
           @click="changeBoolean('modalClassAdd',true)"
         )
           b-icon(type='iconjia')
-          span 新建
-        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-sw-130(type='primary')
+          span.pad-left-8 新建
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btn-i-white(type='primary')
           b-icon(type='iconxiazai')
-          a(href="./static/students.xls") 下载学生模板
-        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
+          a.pad-left-8(href="./static/students.xls") 下载学生模板
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center(
           type='primary'
           ghost
           @click='delClass(undefined)'
         )
           b-icon(type='iconshanchu')
-          span 删除
+          span.pad-left-8 删除
     template(#search)
       the-search(@getSearch='searchChange')
   a-table.table(
@@ -104,6 +105,7 @@ export default defineComponent({
     aPagination: Pagination,
     aUpload: Upload,
     bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
+    // breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumb.vue')),
   },
   setup() {
     const store = useStore();
@@ -303,8 +305,9 @@ export default defineComponent({
     .btn-group
       .btn-i
         margin-right 16px
-      .btns-sw-130
-        width 136px
+      .pad-left-8
+        padding-left 8px
+      .btn-i-white
         a
           color #ffffff
   .table
