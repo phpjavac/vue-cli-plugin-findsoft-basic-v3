@@ -24,34 +24,34 @@ export const componentList: ComponentFace[] = [
     path: 'ExUpload',
     type: '',
   },
-  {
-    name: '返回顶部',
-    nameEn: 'ToTop',
-    image: require('@/assets/img/exhibition/upload.png'),
-    path: 'ExTop',
-    type: '',
-  },
+  // {
+  //   name: '返回顶部',
+  //   nameEn: 'ToTop',
+  //   image: require('@/assets/img/exhibition/upload.png'),
+  //   path: 'ExTop',
+  //   type: '',
+  // },
   {
     name: '文本省略',
     nameEn: 'Ellipsis',
-    image: require('@/assets/img/exhibition/upload.png'),
+    image: require('@/assets/img/exhibition/ell.png'),
     path: 'ExEllipsis',
     type: '',
   },
   {
     name: '数值波动',
     nameEn: 'Fluctuation',
-    image: require('@/assets/img/exhibition/upload.png'),
+    image: require('@/assets/img/exhibition/yyy.png'),
     path: 'ExFluctuation',
     type: '',
   },
-  {
-    name: '城市构建',
-    nameEn: 'CityBuild',
-    image: require('@/assets/img/exhibition/upload.png'),
-    path: 'ExCityBuilde',
-    type: '',
-  },
+  // {
+  //   name: '城市构建',
+  //   nameEn: 'CityBuild',
+  //   image: require('@/assets/img/exhibition/upload.png'),
+  //   path: 'ExCityBuilde',
+  //   type: '',
+  // },
 ];
 
 export const e = '站空';

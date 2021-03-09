@@ -51,6 +51,8 @@ export default defineComponent({
     height 220px
     img
       margin 0 auto
-      width 80%
+      width auto
       height auto
+      max-width 200px
+      max-height 200px
 </style>
