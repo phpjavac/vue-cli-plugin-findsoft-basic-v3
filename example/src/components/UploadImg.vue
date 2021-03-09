@@ -11,7 +11,7 @@
     @ok="onOk",
     :maskClosable="false"
   )
-    vue-cropper(ref="cropper", id='vue-cropper' :src="choseImg", :aspectRatio="aspectRatio")
+    vue-cropper(ref="cropper", id='vue-cropper' :src="choseImg", :aspectRatio="aspectRatio" v-if='cropperShow')
   //- 1、如果有传过来的旧图，显示旧图
   //- 2、如果没有，显示无图
   //- 3、裁切时，也是显示旧图
@@ -49,7 +49,7 @@ import {
 } from 'ant-design-vue';
 import {
   computed,
-  defineAsyncComponent, defineComponent, nextTick, ref, SetupContext,
+  defineAsyncComponent, defineComponent, nextTick, ref, SetupContext, watch,
 } from 'vue';
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
@@ -124,6 +124,7 @@ export default defineComponent({
     const afterImg = ref(''); /** 用来存储裁切后的图片 */
     const CHeight = 118; // 组件高度
     const cropper = ref(null); /** 组件refs */
+    const cropperShow = ref(true); /** 组件显示状态 */
 
     /** 根据比例获得宽度 */
     const CWidth = computed(() => `${props.aspectRatio * CHeight}px`);
@@ -169,12 +170,24 @@ export default defineComponent({
       choseImg.value = '';
     };
 
+    /** 监听尺寸变化，变化时，重新加载组件 */
+    watch(
+      () => props.aspectRatio,
+      () => {
+        cropperShow.value = false;
+        nextTick(() => {
+          cropperShow.value = true;
+        });
+      },
+    );
+
     return {
       beforeUpload,
 
       CWidth,
       CHeight,
       cropper,
+      cropperShow,
       modalVisible,
       choseImg,
       afterImg,
