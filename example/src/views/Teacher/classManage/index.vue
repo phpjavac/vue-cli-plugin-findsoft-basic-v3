@@ -1,6 +1,6 @@
 <template lang="pug">
 .main
-  //- breadcrumb
+  breadcrumb
   the-title-and-search.the-search(:title='["班级列表"]')
     template(#button)
       .btn-group.flex.flex-row.flex-start
@@ -105,7 +105,7 @@ export default defineComponent({
     aPagination: Pagination,
     aUpload: Upload,
     bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
-    // breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumb.vue')),
+    breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumb.vue')),
   },
   setup() {
     const store = useStore();

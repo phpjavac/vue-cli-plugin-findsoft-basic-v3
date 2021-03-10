@@ -9,7 +9,7 @@
     )
     span.unit-box {{ unit }}
     transition(name='lotus')
-      p.fluctuating-animate(v-show="isShow") {{ changeValue }}
+      p.fluctuating-animate(v-show="isShow" :style='{color: `${changeValue > 0 ? plusColor : reduceColor}`}') {{ changeValue }}
 </template>
 
 <script lang="ts">
@@ -39,6 +39,14 @@ export default defineComponent({
     interval: {
       type: Number,
       default: 500,
+    },
+    plusColor: {
+      type: String,
+      default: 'red',
+    },
+    reduceColor: {
+      typp: String,
+      default: 'limegreen',
     },
   },
   setup(props) {

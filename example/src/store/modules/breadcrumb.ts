@@ -26,6 +26,7 @@ class BreadCrumb implements StoreOptions<State> {
 
   mutations: MutationTree<State> = {
     init(state, { getters }) {
+      // debugger;
       if (localStorage.getItem(getters.storeKey)) {
         try {
           state.breadList = JSON.parse(localStorage.getItem(getters.storeKey) as string);
