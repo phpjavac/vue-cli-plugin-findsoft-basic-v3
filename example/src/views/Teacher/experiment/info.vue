@@ -5,12 +5,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import breadcrumb from '@/components/Breadcrumbs.vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 
 export default defineComponent({
   components: {
-    breadcrumb,
+    breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumbs.vue')),
   },
   props: {},
   setup() {

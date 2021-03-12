@@ -6,13 +6,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import breadcrumb from '@/components/Breadcrumbs.vue';
 
 export default defineComponent({
   components: {
-    breadcrumb,
+    breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumbs.vue')),
   },
   props: {},
   setup() {
