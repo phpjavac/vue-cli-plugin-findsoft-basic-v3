@@ -9,7 +9,8 @@ div
 /**
  * 方案
  * 1、通过路由文件的子父级关系确定面包屑的显示。即通过路由地址在路由文件中获得到子父关系
- * 2、面包屑的层级关系，直接手动操作。——面包屑显示的时候，只需要根据list直接显示就可以，不需要考虑路由的层级关系
+ * 2、面包屑的层级关系，直接手动操作。
+ *  ——面包屑显示的时候，只需要根据list直接显示就可以，不需要考虑路由的层级关系
  *    # 每次加载从storage里取，然后再渲染——init——为了处理刷新情况
  *    # 在组件调用时，向list中添加
  *    # 点击时，删除后面的
@@ -33,20 +34,6 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const store = useStore();
-    // const breadList = ref([
-    //   {
-    //     breadcrumbName: '111',
-    //     path: 'breadcrumbName1',
-    //   },
-    //   {
-    //     breadcrumbName: '222',
-    //     path: 'breadcrumbName2',
-    //   },
-    //   {
-    //     breadcrumbName: '333',
-    //     path: 'breadcrumbName3',
-    //   },
-    // ]);
     const breadList = computed(() => store.state.breadcrumb.breadList);
     // const role = sessionStorage.getItem('role') as UserRole | null;
 
@@ -75,6 +62,12 @@ export default defineComponent({
         // splice(index + 1);
         store.dispatch('breadcrumb/splice', index);
       }
+
+      /** 开始处理面包值 */
+      store.dispatch('breadcrumb/push', {
+        breadcrumbName: '实验管理',
+        path: route.path,
+      });
       // console.log('splice', toRaw(breadList.value));
     };
     onMounted(() => {

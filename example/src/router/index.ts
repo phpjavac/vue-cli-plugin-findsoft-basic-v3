@@ -56,11 +56,21 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: '/Teacher/userInfo',
-        name: 'Teacher/UserInfo',
-        component: () => import('../views/Public/UserInfo.vue'),
+        path: '/Teacher/experimentlist',
+        name: 'Teacher/Experimentlist',
+        component: () => import('../views/Teacher/experiment/index.vue'),
         meta: {
-          title: '个人中心',
+          title: '实验管理',
+          icon: '',
+          role: ['admin', 'teacher'],
+        },
+      },
+      {
+        path: '/Teacher/experimentinfo',
+        name: 'Teacher/Experimentinfo',
+        component: () => import('../views/Teacher/experiment/info.vue'),
+        meta: {
+          title: '实验详情',
           icon: '',
           role: ['admin', 'teacher', 'student'],
         },

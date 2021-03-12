@@ -1,6 +1,5 @@
 <template lang="pug">
 .main
-  breadcrumb
   the-title-and-search.the-search(:title='["班级列表"]')
     template(#button)
       .btn-group.flex.flex-row.flex-start
@@ -92,8 +91,7 @@ import {
   computed, defineAsyncComponent, defineComponent, onMounted, reactive, Ref, ref, toRaw,
 } from 'vue';
 import { useStore } from 'vuex';
-import { useRoute } from 'vue-router';
-import breadcrumb from '@/components/Breadcrumbs.vue';
+// import { useRoute } from 'vue-router';
 
 export default defineComponent({
   components: {
@@ -107,11 +105,10 @@ export default defineComponent({
     aPagination: Pagination,
     aUpload: Upload,
     bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
-    breadcrumb,
   },
   setup() {
     const store = useStore();
-    const route = useRoute();
+    // const route = useRoute();
     // vuex true&false
     const changeBoolean = (name: string, type: boolean) => {
       store.commit('classe/changeBoolean', { name, type });
@@ -274,12 +271,6 @@ export default defineComponent({
       // 更新教师列表——下拉框用，所以不传pageSize
       // 这里queryParam可以不处理，后面写教师列表的时候，用 类和接口 一起优化一下
       store.dispatch('user/getTeacherList', { pageNo: 1, queryParam: { role: 1 } });
-
-      store.dispatch('breadcrumb/push', {
-        breadcrumbName: '班级列表',
-        path: route.path,
-      });
-      console.log(toRaw(store.state.breadcrumb.breadList), 'bbbbbbbbbbb');
     });
 
     return {
