@@ -2,6 +2,7 @@
 //- 页面参考antd组件展示页面
 .exhibition
   template(v-if='current === "list"')
+    breadcrumb
     PageHeader(title='组件列表' :back='false')
     .component-main.flex.flex-row.flex-wrap
       .component.pointer(v-for='item in componentList' :key='item.path' @click='changeComponent(item.nameEn)')
@@ -17,11 +18,13 @@ import {
   computed, defineAsyncComponent, defineComponent, onMounted,
 } from 'vue';
 import { useStore } from 'vuex';
-// import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
+import breadcrumb from '@/components/Breadcrumbs.vue';
 import { componentList } from './index';
 
 export default defineComponent({
   components: {
+    breadcrumb,
     Card: defineAsyncComponent(() => import('@/components/Public/Exhibition/Card.vue')),
     PageHeader: defineAsyncComponent(() => import('@/components/Public/Exhibition/PageHeader.vue')),
     Upload: defineAsyncComponent(() => import('@/views/Public/Exhibition/Upload.vue')),
@@ -32,7 +35,7 @@ export default defineComponent({
   },
   props: {},
   setup() {
-    // const router = useRouter();
+    const route = useRoute();
     const store = useStore();
     const current = computed(() => store.state.exhibition.current);
 
@@ -44,6 +47,10 @@ export default defineComponent({
     onMounted(() => {
       changeComponent('');
       console.log(current, 'current');
+      store.dispatch('breadcrumb/push', {
+        breadcrumbName: '自定义啦',
+        path: route.path,
+      });
     });
 
     return {

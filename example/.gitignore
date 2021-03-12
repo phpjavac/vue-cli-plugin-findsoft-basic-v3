@@ -2,6 +2,8 @@
 node_modules
 /dist
 /docs
+src/components/Breadcrumb copy.vue
+src/store/modules/breadcrumb copy.ts
 
 
 # local env files

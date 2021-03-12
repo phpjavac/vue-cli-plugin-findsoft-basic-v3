@@ -6,7 +6,7 @@ div
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 import { useStore, mapActions } from 'vuex';
 import { Breadcrumb } from 'ant-design-vue';
 import { useRoute } from 'vue-router';
@@ -16,8 +16,8 @@ import { UserRole } from '@/types/user';
 
 export default defineComponent({
   components: {
-    breadcrumb: Breadcrumb,
-    'breadcrumb-item': Breadcrumb.Item,
+    aBreadcrumb: Breadcrumb,
+    aBreadcrumbItem: Breadcrumb.Item,
   },
 
   setup() {
@@ -29,22 +29,36 @@ export default defineComponent({
 
     function handleClick(r: Bread, bIndex: number) {
       if (bIndex < breadList.value.length - 1) {
-        splice(bIndex + 1);
+        // splice(bIndex + 1);
+        store.dispatch('breadcrumb/splice', bIndex + 1);
       }
     }
 
-    init();
-    const list = getDefaultRoutes(role);
-    if (list.find((r) => r.path === route.path)) {
-      clear();
-    }
+    const selfMounted = () => {
+      // init();
+      store.dispatch('breadcrumb/init');
+      const list = getDefaultRoutes(role);
+      if (list.find((r) => r.path === route.path)) {
+      // clear();
+        store.dispatch('breadcrumb/clear');
+      }
 
-    // 未点击面包屑时，自动删除不需要的 面包屑
-    const { path } = route;
-    const index = breadList.value.findIndex((p) => p.path.includes(path));
-    if (index > -1) {
-      splice(index + 1);
-    }
+      // 未点击面包屑时，自动删除不需要的 面包屑
+      const { path } = route;
+      const index = breadList.value.findIndex((p) => p.path.includes(path));
+      if (index > -1) {
+      // splice(index + 1);
+        store.dispatch('breadcrumb/splice', index + 1);
+      }
+    };
+    onMounted(() => {
+      selfMounted();
+    });
+
+    return {
+      handleClick,
+      breadList,
+    };
   },
 });
 </script>
