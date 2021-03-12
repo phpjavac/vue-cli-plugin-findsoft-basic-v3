@@ -14,6 +14,7 @@ export default defineComponent({
 </script>
 <style lang="stylus" scoped>
 .teacher
+  min-width 1366px
   min-height 100vh
   background #EEF2F5
   text-align center

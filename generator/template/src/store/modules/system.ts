@@ -1,7 +1,7 @@
 import {
   ActionTree, Commit, MutationTree, StoreOptions,
 } from 'vuex';
-import axios from '@/axios/fetch';
+import axios from '@/axios/api';
 
 interface SoftConfig{
     softName: string;
@@ -30,7 +30,7 @@ class System implements StoreOptions<State> {
       actions: ActionTree<State, unknown> = {
         getSoftConfig({ commit }: {commit: Commit}) {
           return new Promise<void>((resolve, reject) => {
-            axios.get('./softConfig/get').then((res) => {
+            axios.softConfig().then((res) => {
               commit('updateSoftConfig', res.data);
               resolve();
             }).catch((err) => {

@@ -63,6 +63,16 @@ export function login(data: AjaxDate) {
   return loginData;
 }
 
+export function getConfig() {
+  return Mock.mock({
+    copyRightValue: '©  2014 findsoft 上海哲寻信息科技有限公司',
+    message: null,
+    softName: '哲寻基础组件',
+    success: true,
+    useCas: '0',
+  });
+}
+
 // 学生
 export function getStudentList(data: AjaxDate) {
   const { pageNo, pageSize } = JSON.parse(data.body);

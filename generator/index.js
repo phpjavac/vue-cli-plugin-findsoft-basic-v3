@@ -11,6 +11,8 @@ module.exports = (api, options) => {
             "axios": "^0.21.1",
             "mockjs": "^1.1.0",
             "moment": "^2.29.1",
+            "cropperjs": "^1.5.11",
+            "vue-cropperjs": "^5.0.0",
         },
         devDependencies: {
             "@types/mockjs": "^1.0.3",
