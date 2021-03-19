@@ -1,6 +1,5 @@
 <template lang="pug">
 .main
-  //- breadcrumb
   the-title-and-search.the-search(:title='["班级列表"]')
     template(#button)
       .btn-group.flex.flex-row.flex-start
@@ -92,6 +91,7 @@ import {
   computed, defineAsyncComponent, defineComponent, onMounted, reactive, Ref, ref, toRaw,
 } from 'vue';
 import { useStore } from 'vuex';
+// import { useRoute } from 'vue-router';
 
 export default defineComponent({
   components: {
@@ -105,10 +105,10 @@ export default defineComponent({
     aPagination: Pagination,
     aUpload: Upload,
     bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
-    // breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumb.vue')),
   },
   setup() {
     const store = useStore();
+    // const route = useRoute();
     // vuex true&false
     const changeBoolean = (name: string, type: boolean) => {
       store.commit('classe/changeBoolean', { name, type });

@@ -17,7 +17,7 @@ import {
   computed, defineAsyncComponent, defineComponent, onMounted,
 } from 'vue';
 import { useStore } from 'vuex';
-// import { useRouter } from 'vue-router';
+// import { useRoute } from 'vue-router';
 import { componentList } from './index';
 
 export default defineComponent({
@@ -32,7 +32,7 @@ export default defineComponent({
   },
   props: {},
   setup() {
-    // const router = useRouter();
+    // const route = useRoute();
     const store = useStore();
     const current = computed(() => store.state.exhibition.current);
 
@@ -44,6 +44,10 @@ export default defineComponent({
     onMounted(() => {
       changeComponent('');
       console.log(current, 'current');
+      // store.dispatch('breadcrumb/push', {
+      //   breadcrumbName: '自定义啦',
+      //   path: route.path,
+      // });
     });
 
     return {

@@ -1,12 +1,14 @@
 <template lang="pug">
 div
-  breadcrumb(seprator="/")
+  //- breadcrumb(seprator="/")
     breadcrumb-item(v-for="(route,index) in breadList",:key="route.breadcrumbName")
       router-link(:to="route.path",@click.native="handleClick(route,index)") {{route.breadcrumbName}}
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted } from 'vue';
+import {
+  computed, defineComponent, onMounted, toRaw,
+} from 'vue';
 import { useStore, mapActions } from 'vuex';
 import { Breadcrumb } from 'ant-design-vue';
 import { useRoute } from 'vue-router';
@@ -16,8 +18,8 @@ import { UserRole } from '@/types/user';
 
 export default defineComponent({
   components: {
-    aBreadcrumb: Breadcrumb,
-    aBreadcrumbItem: Breadcrumb.Item,
+    breadcrumb: Breadcrumb,
+    'breadcrumb-item': Breadcrumb.Item,
   },
 
   setup() {
@@ -34,12 +36,12 @@ export default defineComponent({
       }
     }
 
-    const selfMounted = () => {
-      // init();
+    const selfMounted = async () => {
+      // await init();
       store.dispatch('breadcrumb/init');
       const list = getDefaultRoutes(role);
       if (list.find((r) => r.path === route.path)) {
-      // clear();
+        // clear();
         store.dispatch('breadcrumb/clear');
       }
 
@@ -47,17 +49,20 @@ export default defineComponent({
       const { path } = route;
       const index = breadList.value.findIndex((p) => p.path.includes(path));
       if (index > -1) {
-      // splice(index + 1);
+        // splice(index + 1);
         store.dispatch('breadcrumb/splice', index + 1);
       }
     };
+
     onMounted(() => {
+      console.log(getDefaultRoutes(role), 'list', role, 'role');
       selfMounted();
+      console.log(toRaw(breadList.value));
     });
 
     return {
-      handleClick,
       breadList,
+      handleClick,
     };
   },
 });

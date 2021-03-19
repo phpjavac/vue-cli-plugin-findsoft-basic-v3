@@ -35,7 +35,7 @@ export default defineComponent({
   setup(props) {
     /** var */
     const listRef = ref(null);
-    const digitals = ref([',', '.', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0']);
+    const digitals = ref(['-', ',', '.', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0']);
     const listHeight = ref(0);
     const spacing = ref(1);
     const listStyle = computed(() => ({

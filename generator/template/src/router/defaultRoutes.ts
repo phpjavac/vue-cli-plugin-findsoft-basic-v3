@@ -12,7 +12,7 @@ const routes = {
     },
     {
       name: '实验管理',
-      path: '/Teacher/distributecase',
+      path: '/Teacher/experimentlist',
     },
     {
       name: '报告管理',
@@ -26,6 +26,10 @@ const routes = {
       name: '自定义',
       path: '/Teacher/customcase',
     },
+    // {
+    //   name: '组件展示',
+    //   path: '/Teacher/exhibition',
+    // },
   ],
   teacher: [
     {
@@ -38,7 +42,7 @@ const routes = {
     },
     {
       name: '实验管理',
-      path: '/Teacher/distributecase',
+      path: '/Teacher/experimentlist',
     },
     {
       name: '报告管理',
@@ -52,8 +56,17 @@ const routes = {
       name: '自定义',
       path: '/Teacher/customcase',
     },
+    // {
+    //   name: '组件展示',
+    //   path: '/Teacher/exhibition',
+    // },
   ],
-  student: [],
+  student: [
+    {
+      name: '组件展示',
+      path: '/Teacher/exhibition',
+    },
+  ],
 };
 
 const getDefaultRoutes = (role: UserRole | null) => {
