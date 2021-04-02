@@ -8,7 +8,7 @@
       v-for="(item, index) in navList",
       :class="{ active: index === active }",
       @click="changePath(item.path)"
-    ) {{ item .name }}
+    ) {{ item.name }}
   .navigation-bar(v-else)
   .user-profile(ref="userProfile")
     a-badge
@@ -22,6 +22,9 @@
           .menu-item.align-items-center(@click="changePath('/Teacher/userInfo')")
             b-icon(type="iconzhanghao", :style="{ fontSize: '16px' }")
             span 个人中心
+          .menu-item.align-items-center(@click="changePath('/Teacher/exhibition')")
+            b-icon(type="iconchakan", :style="{ fontSize: '16px' }")
+            span 组件展示
           .menu-item.align-items-center(@click="outLogin")
             b-icon(type="icontuichu11", :style="{ fontSize: '16px' }")
             span 退出账号
@@ -36,6 +39,8 @@ import {
 } from 'ant-design-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import getDefaultRoutes from '@/router/defaultRoutes';
+import { UserRole } from '@/types/user';
 
 export default defineComponent({
   components: {
@@ -48,32 +53,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const store = useStore();
-    const navList = [
-      {
-        name: '用户管理',
-        path: '/Teacher/userlist',
-      },
-      {
-        name: '班级管理',
-        path: '/Teacher/classlist',
-      },
-      {
-        name: '实验管理',
-        path: '/Teacher/distributecase',
-      },
-      {
-        name: '报告管理',
-        path: '/Teacher/reportmanage',
-      },
-      {
-        name: '资料中心',
-        path: '/Teacher/datacenter',
-      },
-      {
-        name: '自定义',
-        path: '/Teacher/customcase',
-      },
-    ];
+    const role = sessionStorage.getItem('role') as UserRole | null;
 
     function changePath(path: string) {
       if (route.path === path) {
@@ -87,15 +67,21 @@ export default defineComponent({
       router.go(0);
     }
     function back() {
-      if (sessionStorage.role === 'student') {
+      if (role === 'student') {
         router.push('/Student');
-      } else {
+      } else if (role === 'teacher') {
         router.push('/Teacher/userlist');
+      } else if (role === 'admin') {
+        router.push('/Teacher/userlist');
+      } else {
+        router.push('/Login');
       }
     }
+
+    const navList = getDefaultRoutes(role);
+    const user = computed(() => store.state.user.user);
     const active = computed(() => navList.findIndex(((value) => route.path === value.path)));
     const softConfig = computed(() => store.state.system.softConfig);
-    const user = computed(() => store.state.user.user);
     return {
       navList,
       changePath,

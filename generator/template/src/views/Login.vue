@@ -72,7 +72,8 @@ export default defineComponent({
   flex-direction column
   background url('../assets/img/login/bg.png') no-repeat
   background-color rgba(0, 0, 0, 0.6)
-  background-size 100% 100%
+  // background-size 100% 100%
+  background-size: cover
   height 100vh
   width 100%
   min-height 100vh
@@ -100,7 +101,7 @@ export default defineComponent({
     z-index 2
     position relative
     width 380px
-    height 428px
+    min-height 400px
     background rgba(255, 255, 255, 1)
     box-shadow 0px 2px 4px 0px rgba(0, 0, 0, 0.3)
     border-radius 8px

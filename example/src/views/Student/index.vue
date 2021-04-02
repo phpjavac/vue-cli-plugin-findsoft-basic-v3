@@ -21,6 +21,7 @@ export default defineComponent({
 
 <style lang="stylus" scoped>
 .main
+  min-width 1366px
   min-height 100vh
   background #EEF2F5
   text-align center

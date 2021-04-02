@@ -56,11 +56,31 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: '/Teacher/userInfo',
-        name: 'Teacher/UserInfo',
-        component: () => import('../views/Public/UserInfo.vue'),
+        path: '/Teacher/experimentlist',
+        name: 'Teacher/Experimentlist',
+        component: () => import('../views/Teacher/experiment/index.vue'),
         meta: {
-          title: '个人中心',
+          title: '实验管理',
+          icon: '',
+          role: ['admin', 'teacher'],
+        },
+      },
+      {
+        path: '/Teacher/experimentinfo',
+        name: 'Teacher/Experimentinfo',
+        component: () => import('../views/Teacher/experiment/info.vue'),
+        meta: {
+          title: '实验详情',
+          icon: '',
+          role: ['admin', 'teacher', 'student'],
+        },
+      },
+      {
+        path: '/Teacher/exhibition',
+        name: 'Teacher/Exhibition',
+        component: () => import('../views/Public/Exhibition/index.vue'),
+        meta: {
+          title: '组件展示',
           icon: '',
           role: ['admin', 'teacher', 'student'],
         },
@@ -98,7 +118,7 @@ router.beforeEach((to, from, next) => {
     next(); // 判断白名单
   } else if (!role || !code) {
     next({ path: '/' }); // 判断登录
-  } else if (to.meta.role && to.meta.role.includes(role)) {
+  } else if (to.meta.role && (to.meta.role as []).includes((role as never))) {
     next(); // 判断页面、角色权限
   } else {
     next({ path: '/404' });

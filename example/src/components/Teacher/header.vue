@@ -22,6 +22,9 @@
           .menu-item.align-items-center(@click="changePath('/Teacher/userInfo')")
             b-icon(type="iconzhanghao", :style="{ fontSize: '16px' }")
             span 个人中心
+          .menu-item.align-items-center(@click="changePath('/Teacher/exhibition')")
+            b-icon(type="iconchakan", :style="{ fontSize: '16px' }")
+            span 组件展示
           .menu-item.align-items-center(@click="outLogin")
             b-icon(type="icontuichu11", :style="{ fontSize: '16px' }")
             span 退出账号

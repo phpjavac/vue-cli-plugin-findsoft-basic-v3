@@ -19,10 +19,8 @@ a-modal.main(
       )
         a-select-option( v-for="v in selectTeachers" :key="v.code" :value='v.code') {{v.name}}
   template(#footer)
-    a-config-provider(:auto-insert-space-in-button="false")
-      a-button.btns-w-80(key='back', type='primary', ghost @click='onCancel') 取消
-    a-config-provider(:auto-insert-space-in-button="false")
-      a-button.btns-w-80(key='submit', type='primary', @click='onSubmit') 保存
+    a-button(key='back', type='primary', ghost @click='onCancel') 取消
+    a-button(key='submit', type='primary', @click='onSubmit') 保存
 </template>
 
 <script lang="ts">

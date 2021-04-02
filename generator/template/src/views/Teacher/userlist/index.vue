@@ -3,18 +3,18 @@
   the-title-and-search.the-search(:title='tabTitle' @tabChange='tabChange')
     template(#button)
       .btn-group.flex.flex-row.flex-start
-        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center(
           type='primary'
           @click="changeBoolean(activeTab === 0?'modalTeacherAdd':'modalStudentAdd',true)" )
           b-icon(type='iconjia')
-          span 新建
-        a-button.btn-i.flex.flex-row.justify-between.align-items-center.btns-w-80(
+          span.pad-left-8 新建
+        a-button.btn-i.flex.flex-row.justify-between.align-items-center(
           type='primary'
           ghost
           @click='delUser(undefined)'
         )
           b-icon(type='iconshanchu')
-          span 删除
+          span.pad-left-8 删除
     template(#search)
       the-search(@getSearch='searchChange')
   .table-container
@@ -88,7 +88,9 @@ import {
   defineAsyncComponent, defineComponent, onMounted, reactive, Ref, ref, toRaw,
 } from 'vue';
 import { useStore } from 'vuex';
+// import { useRoute } from 'vue-router';
 // import { useGetters } from 'vuex-composition-helpers';
+// import breadcrumb from '@/components/Breadcrumbs.vue';
 
 export default defineComponent({
   components: {
@@ -102,10 +104,12 @@ export default defineComponent({
     aTable: Table,
     aPagination: Pagination,
     bIcon: defineAsyncComponent(() => import('@/components/BaseIcon.vue')),
+    // breadcrumb,
   },
   props: {},
   setup() {
     const store = useStore();
+    // const route = useRoute();
     const activeTab = ref(0); // 0教师 1学生
     const tabTitle = computed(() => {
       let title: string[] = [];
@@ -295,6 +299,12 @@ export default defineComponent({
       }
       // 获取班级列表——供模态框
       store.dispatch('classe/getClassList', { pageNo: 1 });
+
+      // store.dispatch('breadcrumb/push', {
+      //   breadcrumbName: '用户列表',
+      //   path: route.path,
+      // });
+      // console.log(toRaw(store.state.breadcrumb.breadList), 'bbbbbbbbbbb');
     });
 
     return {
@@ -336,6 +346,8 @@ export default defineComponent({
     .btn-group
       .btn-i
         margin-right 16px
+      .pad-left-8
+        padding-left 8px
   .table-container
     .table
       margin 22px 0 16px
