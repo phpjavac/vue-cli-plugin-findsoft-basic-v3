@@ -1,12 +1,10 @@
 <template lang="pug">
 .main
-  breadcrumb
-  .div 这是详情页，主要用来展示面包屑
-  div.pointer(@click="handleClick") 点击进入三级页面
+  breadcrumb(:breadcrumb="{breadcrumbName: '三级页面', path: $route.path}")
+  .div 这是三级页面，主要用来展示面包屑
 </template>
 
 <script lang="ts">
-import { useRouter } from 'vue-router';
 import { defineAsyncComponent, defineComponent } from 'vue';
 
 export default defineComponent({
@@ -15,11 +13,7 @@ export default defineComponent({
   },
   props: {},
   setup() {
-    const router = useRouter();
     return {
-      handleClick() {
-        router.push('/Teacher/experimentinfo/detail');
-      },
     };
   },
 });
