@@ -1,5 +1,7 @@
 import { UserRole } from '@/types/user';
 
+// 获取一级路由列表
+
 const routes = {
   admin: [
     {
@@ -70,7 +72,7 @@ const routes = {
 };
 
 const getDefaultRoutes = (role: UserRole | null) => {
-  if (role === null) return [];
+  if (role === undefined || role === null) return [];
   return routes[role] === undefined ? [] : routes[role];
 };
 
