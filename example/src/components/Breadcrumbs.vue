@@ -30,18 +30,12 @@ export default defineComponent({
     aBreadcrumb: Breadcrumb,
     aBreadcrumbItem: Breadcrumb.Item,
   },
-  props: {
-    // 当前页面的名称和路由，不传时会从 route 对象中获取
-    breadcrumb: {
-      type: Object || undefined,
-      default: undefined,
-      required: false,
-    },
-  },
-  setup(props) {
+
+  setup() {
     const route = useRoute();
     const store = useStore();
     const breadList = computed(() => store.state.breadcrumb.breadList);
+    // const role = sessionStorage.getItem('role') as UserRole | null;
 
     function handleClick(r: Bread, bIndex: number) {
       if (bIndex < breadList.value.length - 1) {
@@ -51,21 +45,30 @@ export default defineComponent({
     }
 
     const selfMounted = async () => {
+      // await init();
       store.dispatch('breadcrumb/init');
+      // console.log('init', toRaw(breadList.value));
+      // const list = getDefaultRoutes(role);
+      // if (list.find((r) => r.path === route.path)) {
+      //   // clear();
+      //   store.dispatch('breadcrumb/clear');
+      // }
+      // console.log('clear', toRaw(breadList.value));
 
       // 未点击面包屑时，自动删除不需要的 面包屑
       const { path } = route;
       const index = breadList.value.findIndex((p) => p.path.includes(path));
       if (index > -1) {
+        // splice(index + 1);
         store.dispatch('breadcrumb/splice', index);
       }
 
       /** 开始处理面包值 */
-      if (!props.breadcrumb) {
-        store.dispatch('breadcrumb/push', { breadcrumbName: route.meta.title || '未配置页面标题', path: route.path });
-      } else {
-        store.dispatch('breadcrumb/push', props.breadcrumb);
-      }
+      store.dispatch('breadcrumb/push', {
+        breadcrumbName: '实验管理',
+        path: route.path,
+      });
+      // console.log('splice', toRaw(breadList.value));
     };
     onMounted(() => {
       selfMounted();
