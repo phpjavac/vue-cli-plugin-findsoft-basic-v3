@@ -112,6 +112,17 @@ export default defineComponent({
       type: Array,
       default: () => ['jpg', 'jpeg', 'png'],
     },
+    /** 该属性为true时，不对图片进行裁剪 */
+    nocut: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  watch: {
+    oldImgSrc() {
+      // 修复直接更新 oldImgSrc 时，图片不刷新的问题
+      this.afterImg = '';
+    },
   },
   setup(props, context: SetupContext) {
     const getExportType = (type: string) => {
@@ -142,12 +153,15 @@ export default defineComponent({
         const reader = new FileReader();
         reader.onload = (event: any) => {
           choseImg.value = event.currentTarget.result;
-
-          modalVisible.value = true;
-          nextTick(() => {
+          if (!props.nocut) {
+            modalVisible.value = true;
+            nextTick(() => {
             /** 这句话用来更新弹框里的图片 */
-            (cropper.value as any).replace(event.currentTarget.result);
-          });
+              (cropper.value as any).replace(event.currentTarget.result);
+            });
+          } else {
+            context.emit('upload', file);
+          }
         };
         reader.readAsDataURL(file);
       }
