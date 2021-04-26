@@ -3,15 +3,20 @@
   breadcrumb(:breadcrumb="breadcrumb")
   .div 这是列表页，主要用来显示面包屑
   .div.pointer(@click='goInfo') 点击进入详情页
+  button(@click="showQuestion=true") 显示问题弹窗
+  question(:visible="showQuestion",@ok="handleQuestionOk",@cancel="showQuestion=false")
+  div {{questionData}}
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue';
+import { Question, QuestionI } from '@/components/question/js/interface';
+import { defineAsyncComponent, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
   components: {
     breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumbs.vue')),
+    question: defineAsyncComponent(() => import('@/components/question/index.vue')),
   },
   props: {},
   setup() {
@@ -21,8 +26,20 @@ export default defineComponent({
       router.push('/Teacher/experimentinfo');
     };
 
+    const showQuestion = ref(false);
+
+    const questionData = new Question();
+
+    const handleQuestionOk = (data: QuestionI) => {
+      Object.assign(questionData, data);
+      showQuestion.value = false;
+    };
+
     return {
       breadcrumb: { breadcrumbName: '一级页面', path: route.path },
+      showQuestion,
+      questionData,
+      handleQuestionOk,
       goInfo,
     };
   },

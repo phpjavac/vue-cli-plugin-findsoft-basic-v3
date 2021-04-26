@@ -16,12 +16,14 @@
   },
   "dependencies": {
     "@ant-design-vue/use": "^0.0.1-alpha.8",
+    "@ant-design/icons-vue": "^6.0.1",
     "@findsoft/vue-fluctuation": "^1.0.3",
     "@findsoft/vue-fluctuation-v3": "^1.0.0",
     "ant-design-vue": "^2.0.0-rc.5",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "cropperjs": "^1.5.11",
+    "lodash": "^4.17.21",
     "mockjs": "^1.1.0",
     "moment": "^2.29.1",
     "register-service-worker": "^1.7.1",
@@ -29,7 +31,8 @@
     "vue": "^3.0.0",
     "vue-cropperjs": "^5.0.0",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    "wangeditor": "^4.6.16"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
