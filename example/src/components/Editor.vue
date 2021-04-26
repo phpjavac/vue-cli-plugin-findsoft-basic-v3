@@ -33,13 +33,21 @@ export default defineComponent({
         editor.txt.html(props.modelValue);
       }
 
+      let htmlCache = '';
       editor.config.onchange = (html: string) => {
+        htmlCache = html;
         emit('update:modelValue', html);
       };
 
-      watch(() => props.modelValue, () => {
-        editor.txt.html(props.modelValue);
-      });
+      // TODO: 添加配置属性
+
+      // 当 prop 变化时自动更新富文本内容
+      watch(() => props.modelValue, (v: string) => {
+        if (props.modelValue !== htmlCache) {
+          // 直接赋值会导致光标位置出错，只有当父组件主动改变props时才更新富文本内容，子组件触发的更新不会导致重新赋值
+          editor.txt.html(v);
+        }
+      }, { immediate: false });
     });
     return {
       uid,
