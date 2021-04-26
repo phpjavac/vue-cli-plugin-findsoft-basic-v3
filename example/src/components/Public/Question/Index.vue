@@ -21,10 +21,10 @@ import { cloneDeep } from 'lodash';
 import {
   Button, Form, Modal, Select,
 } from 'ant-design-vue';
-import Single from './single.vue';
-import Multiple from './multiple.vue';
-import TrueOrFalse from './trueOrFalse.vue';
-import Blank from './blank.vue';
+import Single from './Single.vue';
+import Multiple from './Multiple.vue';
+import TrueOrFalse from './TrueOrFalse.vue';
+import Blank from './Blank.vue';
 import { questionTypes, reverseData } from './js/index';
 import {
   ParseQuestionI, Question, PMeta,

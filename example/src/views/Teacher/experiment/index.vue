@@ -9,14 +9,14 @@
 </template>
 
 <script lang="ts">
-import { Question, QuestionI } from '@/components/question/js/interface';
+import { Question, QuestionI } from '@/components/Public/Question/js/interface';
 import { defineAsyncComponent, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
   components: {
     breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumbs.vue')),
-    question: defineAsyncComponent(() => import('@/components/question/index.vue')),
+    question: defineAsyncComponent(() => import('@/components/Public/Question/Index.vue')),
   },
   props: {},
   setup() {
