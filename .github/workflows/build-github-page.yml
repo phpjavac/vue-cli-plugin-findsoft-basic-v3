@@ -1,21 +1,21 @@
-name: build-github-page
-# 只在main分支push才触发
-on:
-  push:
-    branches:
-      - main
+# name: build-github-page
+# # 只在main分支push才触发
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  my_first_job:
-    name: My first job
-    runs-on: ubuntu-latest
-    setp:
-    - name: Pring a greeting
-      env:
-        MY_VAR: Hi there! My name is
-        FIRST_NAME: Curry
-        MIDLE_NAME: PASTE
-      run: |
-        echo $MY_VAR $FIRST_NAME $MIDLE_NAME
-#  my_second_job:
-#    name: second
+# jobs:
+#   my_first_job:
+#     name: My first job
+#     runs-on: ubuntu-latest
+#     setp:
+#     - name: Pring a greeting
+#       env:
+#         MY_VAR: Hi there! My name is
+#         FIRST_NAME: Curry
+#         MIDLE_NAME: PASTE
+#       run: |
+#         echo $MY_VAR $FIRST_NAME $MIDLE_NAME
+# #  my_second_job:
+# #    name: second
