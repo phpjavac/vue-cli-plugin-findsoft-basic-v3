@@ -10,6 +10,7 @@
   a-button(@click='sendData') 点击发送ws信息xxxx
   a-button(@click='initWs(2)') 创建与第一个ws相同的连接
   a-button(@click='initWs(3)') 创建不同的ws连接
+  a-button(@click='initWs(33)') 关闭第二个ws
 </template>
 
 <script lang="ts">
@@ -17,7 +18,8 @@ import { Question, QuestionI } from '@/components/Public/Question/js/interface';
 import { defineAsyncComponent, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Button, message } from 'ant-design-vue';
-import WsHeartBeat, { FWsData } from 'ws-heartbeat-ts';
+import WsHeartBeat, { FWsData } from '@findsoft/ws-heartbeat-ts';
+// import WsHeartBeat, { FWsData } from 'ws-heartbeat-ts';
 
 export default defineComponent({
   components: {
@@ -100,9 +102,13 @@ export default defineComponent({
         const two = WsHeartBeat.getInstance({ url: wsUrls[0] });
         log(`创建了一个ws，地址为${wsUrls[0]},两个实例是否相同 ${wsInstance === two}`);
       } else if (code === 3) {
-        wsInstance2 = WsHeartBeat.getInstance({ url: wsUrls[1] });
+        wsInstance2 = WsHeartBeat.getInstance({ url: wsUrls[1], pingMsg: 'break', pingTimeout: 1000 });
         init2();
         log(`创建了一个ws，地址为${wsUrls[1]}`);
+        console.log(wsInstance2, 'WsHeartBeat');
+      } else if (code === 33) {
+        wsInstance2.close();
+        console.log(wsInstance2, 'WsHeartBeat');
       }
     };
 
