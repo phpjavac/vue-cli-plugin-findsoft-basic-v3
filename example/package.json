@@ -32,7 +32,8 @@
     "vue-cropperjs": "^5.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",
-    "wangeditor": "^4.6.16"
+    "wangeditor": "^4.6.16",
+    "ws-heartbeat-ts": "^0.5.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
