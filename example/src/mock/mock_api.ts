@@ -1,33 +1,33 @@
 export default class MockPath {
-    login = './api/user/login';
+  login = './api/user/login';
 
-    getByCode = './api/user/getByCode';
+  getByCode = './api/user/getByCode';
 
-    softConfig = './softConfig/get';
+  softConfig = './softConfig/get';
 
-    getClassList = './api/class/queryClass';
+  getClassList = './api/class/queryClass';
 
-    editClass = './api/class/createOrUpdateClass';
+  editClass = './api/class/createOrUpdateClass';
 
-    delClass = './api/userManage/delClass';
+  delClass = './api/userManage/delClass';
 
-    insertStudent = './api/classMember/insertStudent';
+  insertStudent = './api/classMember/insertStudent';
 
-    getUserList = './api/user/queryUserList';
+  getUserList = './api/user/queryUserList';
 
-    getStudentList = './api/classMember/listStudent';
+  getStudentList = './api/classMember/listStudent';
 
-    resetPassword = './api/user/adminResetPassword';
+  resetPassword = './api/user/adminResetPassword';
 
-    delteTeacher = './api/userManage/delTeacher';
+  delteTeacher = './api/userManage/delTeacher';
 
-    delteStudent = './api/userManage/delStudent';
+  delteStudent = './api/userManage/delStudent';
 
-    changeUserName = './api/user/changeUserInfo';
+  changeUserName = './api/user/changeUserInfo';
 
-    createUser = './api/classMember/createClassMember';
+  createUser = './api/classMember/createClassMember';
 
-    changeUserSignatures = './api/user/changeUserSignature';
+  changeUserSignatures = './api/user/changeUserSignature';
 
-    changePasswords = './api/user/changePassword';
+  changePasswords = './api/user/changePassword';
 }

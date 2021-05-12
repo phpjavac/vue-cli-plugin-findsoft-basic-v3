@@ -35,7 +35,8 @@ http.interceptors.response.use(
     response.config.cancelToken = source.token;
     if (response.data.success) {
       return response;
-    } if (response.data.success === undefined) {
+    }
+    if (response.data.success === undefined) {
       // 修复部分接口不符合返回格式规范，导致无法获取response
       return response;
     }

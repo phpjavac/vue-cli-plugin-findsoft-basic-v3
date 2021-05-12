@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 /**
  * 基础类
  * 如列表查询，好像只有列表查询会用到😅
@@ -41,7 +42,7 @@ export class BaseSearchClass {
   seqColumn?: string;
 
   // 部分接口可能没有 关键字查询。如果需要就调用方法，传额外的参数接口报错。
-  setKeyWord(val: string|undefined) {
+  setKeyWord(val: string | undefined) {
     this.keyWord = val;
   }
 
@@ -51,7 +52,7 @@ export class BaseSearchClass {
     this.pageSize = data.pageSize;
 
     // 处理有排序的查询
-    if(data.sortDesc !== undefined && data.sortName){
+    if (data.sortDesc !== undefined && data.sortName) {
       this.seqAsc = data.sortDesc;
       // 特别的排序字段，交给子类处理。父类只做赋值操作
       this.seqColumn = data.sortName;
@@ -72,10 +73,10 @@ export class BaseSearchClass {
 export interface Afile {
   uid: string; // 文件唯一标识，建议设置为负数，防止和内部产生的 id 冲突
   name: string; // 文件名
-  status: 'uploading'|'done'|'error'|'removed'; // 状态有：uploading done error removed
+  status: 'uploading' | 'done' | 'error' | 'removed'; // 状态有：uploading done error removed
   response: {}; // '{"status": "success"}', // 服务端响应内容
   linkProps: {}; // '{"download": "image"}', // 下载链接额外的 HTML 属性
-  xhr: XMLHttpRequest;// 'XMLHttpRequest{ ... }', // XMLHttpRequest Header
+  xhr: XMLHttpRequest; // 'XMLHttpRequest{ ... }', // XMLHttpRequest Header
 
   // 文档没有标注，但是控制台打印的文件对象对应该字段
   originFileObj: File; // 文件对象
@@ -85,3 +86,15 @@ export interface Bread {
   breadcrumbName: string;
   path: string;
 }
+
+/**
+ * 获取类的key
+ */
+export type ClassKey<T> = {
+  readonly [k in keyof T]: string;
+};
+
+/**
+ * 自定义axios请求配置对象
+ */
+export type ReqConfig = AxiosRequestConfig & { useMock: boolean };
