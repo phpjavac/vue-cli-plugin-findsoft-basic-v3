@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -27,6 +28,13 @@ module.exports = {
     toTypes: {
       host: 'http://zx.aiisx.com/dcaw/v2/api-docs', // swagger地址
       TypesPath: './src/types/api.ts', // 生成的interface
+    },
+    buildVersion: {
+      path: require('path').resolve('dist'), // build root dir
+      env: require('process').env, // env obj
+      cvs: 'git', // cvs type, git or svn
+      versionPath: '', // version file parent dir, empty string for default
+      name: '', // version file name, empty string for default
     },
   },
   // 解决按需引入插件css引入失败

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build && vue-cli-service build-version",
+    "buildVersion": "vue-cli-service build-version",
     "build:self": "npm run build:ellipsis",
     "build:cropper": "vue-cli-service build --target lib --name vueCropper ./src/components/UploadImg.vue",
     "build:ellipsis": "vue-cli-service build --target lib --name ellipsis ./src/components/EllipsisFun.vue",
@@ -63,6 +64,7 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "typescript": "~3.9.3",
+    "vue-cli-plugin-build-version": "^1.0.5",
     "vue-cli-plugin-swagger-to-types": "~1.2.0",
     "vue-jest": "^5.0.0-0"
   }
