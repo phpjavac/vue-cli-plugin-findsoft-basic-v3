@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { Question, QuestionI } from '@/components/Public/Question/js/interface';
+import { getUniqueId } from '@/lib';
 import { defineAsyncComponent, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -25,6 +26,7 @@ export default defineComponent({
     const goInfo = () => {
       router.push('/Teacher/experimentinfo');
     };
+    console.log(getUniqueId([{}, {}]));
 
     const showQuestion = ref(false);
 
