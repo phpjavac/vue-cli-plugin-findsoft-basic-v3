@@ -52,10 +52,10 @@ export const momentTransSingle = (MomentData: Moment|undefined, type = 'date') =
  * @param prefix 后缀
  * @returns 增加ID后的数组
  */
-export const getUniqueId = (data: {}[], prefix = 'basic_') => {
+export const getUniqueId = (data: {}[], prefix = 'basic_', key = 'lodashId') => {
   // 直接用lodash的 isArray
   if (isArray(data)) {
-    return data.map((v) => ({ ...v, lodashId: lodash.uniqueId(prefix) }));
+    return data.map((v) => ({ ...v, [key]: lodash.uniqueId(prefix) }));
   }
   return data;
 };
