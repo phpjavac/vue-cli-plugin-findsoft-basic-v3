@@ -64,7 +64,7 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "typescript": "~3.9.3",
-    "vue-cli-plugin-build-version": "^1.0.5",
+    "vue-cli-plugin-build-version": "^1.0.6",
     "vue-cli-plugin-swagger-to-types": "~1.2.0",
     "vue-jest": "^5.0.0-0"
   }

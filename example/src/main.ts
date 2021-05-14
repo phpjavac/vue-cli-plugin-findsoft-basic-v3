@@ -12,19 +12,19 @@ const getSimulation = () => import('@/mock/index');
 * 打印版本号
 * */
 const logVersion = async () => {
-  // if (process.env.NODE_ENV === 'production') {
-  const style = 'padding:4px;border-radius:2px;background:#1890ff;color:white;';
-  try {
-    const { data } = await axios.get('version/get');
-    console.log(`%c服务端SVN版本：${data.version}`, style);
+  if (process.env.NODE_ENV === 'production') {
+    const style = 'padding:4px;border-radius:2px;background:#1890ff;color:white;';
+    try {
+      const { data } = await axios.get('version/get');
+      console.log(`%c服务端SVN版本：${data.version}`, style);
 
-    const res = await axios.get(`version.json?t=${new Date().valueOf()}`);
-    console.log(`%c客户端SVN版本：${res.data.svn}`, style);
-    console.log(`%c打包时间：${res.data.date}`, style);
-  } catch (e) {
-    console.log(e);
+      const res = await axios.get(`version.json?t=${new Date().valueOf()}`);
+      console.log(`%c客户端SVN版本：${res.data.svn}`, style);
+      console.log(`%c打包时间：${res.data.date}`, style);
+    } catch (e) {
+      console.log(e);
+    }
   }
-  // }
 };
 
 const instantiationApp = async () => {
