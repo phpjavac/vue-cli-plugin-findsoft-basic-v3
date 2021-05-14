@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import moment from 'moment';
 import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
@@ -19,8 +20,8 @@ const logVersion = async () => {
       console.log(`%c服务端SVN版本：${data.version}`, style);
 
       const res = await axios.get(`version.json?t=${new Date().valueOf()}`);
-      console.log(`%c客户端SVN版本：${res.data.svn}`, style);
-      console.log(`%c打包时间：${res.data.date}`, style);
+      console.log(`%c客户端SVN版本：${res.data.rev}`, style);
+      console.log(`%c打包时间：${moment(new Date().valueOf()).format('yyyy-MM-DD HH:mm:ss')}`, style);
     } catch (e) {
       console.log(e);
     }
