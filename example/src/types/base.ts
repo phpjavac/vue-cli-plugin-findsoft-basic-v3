@@ -88,13 +88,13 @@ export interface Bread {
 }
 
 /**
- * 获取类的key
+ * 获取类的属性
  */
-export type ClassKey<T> = {
-  readonly [k in keyof T]: string;
+export type ClassKey<T, R = any> = {
+  readonly [k in keyof T]: R;
 };
 
 /**
  * 自定义axios请求配置对象
  */
-export type ReqConfig = AxiosRequestConfig & { useMock: boolean };
+export type ReqConfig = AxiosRequestConfig & { useMock?: boolean; url: string; method: string };

@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Mock from 'mockjs';
+import Urls from '@/axios/urls';
+import { AxiosRequestConfig } from 'axios';
+import { ClassKey, ReqConfig } from '@/types/base';
 import {
   getByCode,
   login,
@@ -11,46 +15,64 @@ import {
   changeUserName,
   createUser,
 } from './modules/user';
-import {
-  getClassList, editClass, delClass, insertStudent,
-} from './modules/classe';
+import { getClassList, editClass, delClass } from './modules/classe';
 import { changeUserSignatures, changePasswords } from './modules/public/userInfo';
-import MockPath from './mock_api';
 
-const mockPath = new MockPath();
+class MockRouter implements ClassKey<Urls> {
+  login = login;
 
-console.log('mock');
-Mock.setup({
-  timeout: '10-1500',
-});
-// 登录模块
-Mock.mock(mockPath.login, 'post', login);
-Mock.mock(mockPath.getByCode, 'post', getByCode);
-Mock.mock(mockPath.softConfig, 'get', getConfig);
+  softConfig = getConfig;
 
-// 班级模块
-Mock.mock(mockPath.getClassList, 'post', getClassList);
-Mock.mock(mockPath.editClass, 'post', editClass);
-Mock.mock(mockPath.delClass, 'post', delClass);
-Mock.mock(mockPath.insertStudent, 'post', insertStudent);
+  getByCode = getByCode;
 
-// 教师列表
-Mock.mock(mockPath.getUserList, 'post', getUserList);
-// 学生列表
-Mock.mock(mockPath.getStudentList, 'post', getStudentList);
-// 重置密码
-Mock.mock(mockPath.resetPassword, 'post', resetPassword);
-// 删除教师
-Mock.mock(mockPath.delteTeacher, 'post', delteTeacher);
-// 删除学生
-Mock.mock(mockPath.delteStudent, 'post', delteStudent);
-// 编辑用户姓名
-Mock.mock(mockPath.changeUserName, 'post', changeUserName);
-// 添加用户
-Mock.mock(mockPath.createUser, 'post', createUser);
-// 更改个人信息
-Mock.mock(mockPath.changeUserSignatures, 'post', changeUserSignatures);
-// 修改密码
-Mock.mock(mockPath.changePasswords, 'post', changePasswords);
+  changeUserInfo = changeUserName;
 
+  createClassMember = createUser;
+
+  queryUserList = getUserList;
+
+  queryStudentList = getStudentList;
+
+  adminResetPassword = resetPassword;
+
+  delStudent = delteStudent;
+
+  delTeacher = delteTeacher;
+
+  changeUserSignature = changeUserSignatures;
+
+  changePassword = changePasswords;
+
+  getClassList = getClassList;
+
+  editClassData = editClass;
+
+  delClass = delClass;
+
+  uploadStudentByClass: any;
+
+  constructor() {
+    Mock.setup({
+      timeout: '10-1500',
+    });
+    const urls = new Urls();
+    let useMock = process.env.VUE_APP_MOCK === '1';
+    Object.keys(urls).forEach((k) => {
+      const config: ReqConfig = (urls as any)[k]();
+      if (config.useMock !== undefined) useMock = config.useMock;
+      if (useMock) {
+        Mock.mock(config.url, config.method, (this as any)[k]);
+      }
+    });
+    console.log(Mock);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getData(config: AxiosRequestConfig) {
+    return config;
+  }
+}
+
+// eslint-disable-next-line no-new
+export { MockRouter };
 export default Mock;
