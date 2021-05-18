@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Mock from 'mockjs';
 import Urls from '@/axios/urls';
-import { AxiosRequestConfig } from 'axios';
 import { ClassKey, ReqConfig } from '@/types/base';
 import {
   getByCode,
@@ -18,6 +17,9 @@ import {
 import { getClassList, editClass, delClass } from './modules/classe';
 import { changeUserSignatures, changePasswords } from './modules/public/userInfo';
 
+/**
+ * 根据Urls配置生成mock路由
+ */
 class MockRouter implements ClassKey<Urls> {
   login = login;
 
@@ -49,7 +51,7 @@ class MockRouter implements ClassKey<Urls> {
 
   delClass = delClass;
 
-  uploadStudentByClass: any;
+  uploadStudentByClass: any; // 对应的函数实现可以省略
 
   constructor() {
     Mock.setup({
@@ -64,12 +66,6 @@ class MockRouter implements ClassKey<Urls> {
         Mock.mock(config.url, config.method, (this as any)[k]);
       }
     });
-    console.log(Mock);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getData(config: AxiosRequestConfig) {
-    return config;
   }
 }
 

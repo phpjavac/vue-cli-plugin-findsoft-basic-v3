@@ -97,4 +97,19 @@ export type ClassKey<T, R = any> = {
 /**
  * 自定义axios请求配置对象
  */
-export type ReqConfig = AxiosRequestConfig & { useMock?: boolean; url: string; method: string };
+export type ReqConfig = AxiosRequestConfig & {
+  /**
+   * 省略useMock后根据全局变量判断是否使用mock接口
+   */
+  useMock?: boolean;
+
+  /**
+   * 请求网址
+   */
+  url: string;
+
+  /**
+   * 请求方法
+   */
+  method: string;
+};

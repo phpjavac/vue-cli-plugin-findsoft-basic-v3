@@ -4,6 +4,7 @@ import { ClassKey } from '@/types/base';
 import { AxiosResponse } from 'axios';
 import Urls from './urls';
 
+// TODO 根据urls配置文件自动生成api函数，最终目标是不需要手动修改此文件
 class Api implements ClassKey<Urls, (...T: any) => Promise<AxiosResponse>> {
   urls: Urls;
 
@@ -56,23 +57,6 @@ class Api implements ClassKey<Urls, (...T: any) => Promise<AxiosResponse>> {
     axios.request(this.urls.uploadStudentByClass(data, classId));
 
   login = (data: any) => axios.request(this.urls.login(data));
-}
-
-type ApiUrlType = ClassKey<Api>;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const obj = {} as any;
-Object.keys(new Api()).forEach((k: string) => {
-  obj[k] = k;
-});
-Object.freeze(obj); // 只读
-
-/**
- * 根据接口类生成接口的 k，v 对象
- * @example { getStudents: 'getStudents'}
- */
-export class ApiUrl {
-  public static readonly Urls = obj as ApiUrlType;
 }
 
 export default new Api();

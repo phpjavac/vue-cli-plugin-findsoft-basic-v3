@@ -6,13 +6,10 @@ import router from './router';
 import store from './store';
 import '@/styles/index.styl';
 
-const mockRouter = new MockRouter();
-console.log(mockRouter);
+// eslint-disable-next-line no-new
+new MockRouter();
 
 const instantiationApp = async () => {
-  // if (process.env.VUE_APP_MOCK === '1') {
-
-  // }
   createApp(App)
     .use(store)
     .use(router)

@@ -9,19 +9,17 @@ class Urls {
   login = (data: any): ReqConfig => ({
     url: './api/user/login',
     method: 'post',
-    useMock: false,
+    useMock: true,
     data,
   });
 
   /**
    * 获取软件配置信息
-   * @param c
-   * @returns
    */
   softConfig = (): ReqConfig => ({
     url: './softConfig/get',
     method: 'get',
-    useMock: false,
+    useMock: true,
   });
 
   /**
