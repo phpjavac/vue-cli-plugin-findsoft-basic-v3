@@ -32,7 +32,7 @@ import { PlusOutlined, DeleteOutlined } from '@ant-design/icons-vue';
 import Editor from '@/components/Editor.vue';
 import WangEditor from 'wangeditor';
 import { uniqBy, uniqueId } from 'lodash';
-import { ParseQuestionI } from './js/interface';
+import { ParseQuestionI } from './lib/interface';
 
 export default defineComponent({
   name: 'Single',

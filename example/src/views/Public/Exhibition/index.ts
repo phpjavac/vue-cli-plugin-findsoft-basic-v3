@@ -52,6 +52,13 @@ export const componentList: ComponentFace[] = [
   //   path: 'ExCityBuilde',
   //   type: '',
   // },
+  {
+    name: '案例卡片',
+    nameEn: 'CaseCardView',
+    image: 'https://s3.jpg.cm/2021/05/18/OqL58.jpg',
+    path: 'ExCaseCard',
+    type: '',
+  },
 ];
 
 export const e = '站空';

@@ -16,6 +16,7 @@ module.exports = {
     'max-classes-per-file': 'off' /**允许一个文件存在多个类 */,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    '@typescript-eslint/interface-name-prefix': 'off', /** 禁用 ts 接口名限制（为什么要限制interface不能以I开头？） */
   },
   overrides: [
     {

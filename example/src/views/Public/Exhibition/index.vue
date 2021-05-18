@@ -13,9 +13,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed, defineAsyncComponent, defineComponent, onMounted,
-} from 'vue';
+import { computed, defineAsyncComponent, defineComponent, onMounted } from 'vue';
 import { useStore } from 'vuex';
 // import { useRoute } from 'vue-router';
 import { componentList } from './index';
@@ -29,6 +27,7 @@ export default defineComponent({
     Ellipsis: defineAsyncComponent(() => import('@/views/Public/Exhibition/Ellipsis.vue')),
     ToTop: defineAsyncComponent(() => import('@/views/Public/Exhibition/ToTop.vue')),
     Fluctuation: defineAsyncComponent(() => import('@/views/Public/Exhibition/Fluctuation.vue')),
+    CaseCardView: defineAsyncComponent(() => import('@/views/Public/Exhibition/CaseCardView.vue')),
   },
   props: {},
   setup() {
