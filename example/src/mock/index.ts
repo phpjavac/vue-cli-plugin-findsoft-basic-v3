@@ -18,7 +18,7 @@ import { getClassList, editClass, delClass } from './modules/classe';
 import { changeUserSignatures, changePasswords } from './modules/public/userInfo';
 
 /**
- * 根据Urls配置生成mock路由
+ * 根据Urls配置生成mock路由,此类实现 url 类的所有属性
  */
 class MockRouter implements ClassKey<Urls> {
   login = login;

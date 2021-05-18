@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReqConfig } from '@/types/base';
 
+/**
+ * api请求配置类，在此添加新的请求配置后需要同步更改Api 和 MockRoute类
+ */
 class Urls {
   /**
    * 登录接口
