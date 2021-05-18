@@ -1,110 +1,62 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from '@/axios/fetch';
-import MockPath from '@/mock/mock_api';
+import { ClassKey } from '@/types/base';
+import { AxiosResponse } from 'axios';
+import Urls from './urls';
 
-const mockpath = new MockPath();
-class Api {
-    VUE_APP_MOCK = process.env.VUE_APP_MOCK === '1'
+// TODO 根据urls配置文件自动生成api函数，最终目标是不需要手动修改此文件
+class Api implements ClassKey<Urls, (...T: any) => Promise<AxiosResponse>> {
+  urls: Urls;
 
-    /**
-     * 登录接口
-     * @param data 登录信息
-     */
-    login = (data: unknown) => {
-      let path = './api/user/login';
-      if (this.VUE_APP_MOCK) {
-        path = mockpath.login;
-      }
-      return axios
-        .post(path, data);
-    }
+  constructor() {
+    this.urls = new Urls();
+  }
 
-    softConfig = () => axios.get(this.VUE_APP_MOCK ? mockpath.softConfig : './softConfig/get')
+  softConfig: (...T: any) => Promise<AxiosResponse<any>> = () =>
+    axios.request(this.urls.softConfig());
 
-    /**
-     * 获取用户信息
-     */
-    getByCode = () => axios.post(this.VUE_APP_MOCK ? mockpath.getByCode : './api/user/getByCode', {
-      code: sessionStorage.code,
-    })
+  getByCode: (...T: any) => Promise<AxiosResponse> = () => axios.request(this.urls.getByCode());
 
-    /**
-     * 修改用户信息
-     * @param formData 用户信息
-     */
-    changeUserInfo = (formData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.changeUserName : './api/user/changeUserInfo', formData)
+  changeUserInfo: (...T: any) => Promise<AxiosResponse> = (formData) =>
+    axios.request(this.urls.changeUserInfo(formData));
 
-    /**
-     * 创建学生&教师
-     * @param formData 创建学生&教师
-     */
-    createClassMember = (formData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.createUser : './api/classMember/createClassMember', formData)
+  createClassMember: (...T: any) => Promise<AxiosResponse> = (formData) =>
+    axios.request(this.urls.createClassMember(formData));
 
-    /**
-     * 查询用户列表
-     * @param searchData 查询条件
-     */
-    queryUserList = (searchData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.getUserList : './api/user/queryUserList', searchData)
+  queryUserList: (...T: any) => Promise<AxiosResponse> = (searchData) =>
+    axios.request(this.urls.queryUserList(searchData));
 
-    /**
-     * 查询学生列表
-     * @param searchData
-     */
-    queryStudentList = (searchData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.getStudentList : './api/classMember/listStudent', searchData)
+  queryStudentList: (...T: any) => Promise<AxiosResponse> = (searchData) =>
+    axios.request(this.urls.queryStudentList(searchData));
 
-    /**
-     * 重置用户密码
-     * @param BaseUserCodeRequest code
-     */
-    adminResetPassword = (BaseUserCodeRequest: string) => axios.post(this.VUE_APP_MOCK ? mockpath.resetPassword : './api/user/adminResetPassword', { code: BaseUserCodeRequest })
+  adminResetPassword: (...T: any) => Promise<AxiosResponse> = (baseUserCodeRequest) =>
+    axios.request(this.urls.adminResetPassword(baseUserCodeRequest));
 
-    /**
-     * 删除学生
-     * @param formData
-     */
-    delStudent = (formData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.delteStudent : './api/userManage/delStudent', formData)
+  delStudent: (...T: any) => Promise<AxiosResponse> = (data) =>
+    axios.request(this.urls.delStudent(data));
 
-    /**
-     * 删除教师
-     * @param formData
-     */
-    delTeacher = (formData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.delteTeacher : './api/userManage/delTeacher', formData)
+  delTeacher: (...T: any) => Promise<AxiosResponse> = (data) =>
+    axios.request(this.urls.delTeacher(data));
 
-    /**
-     * 更改个人信息
-     * @param formData
-     */
-    changeUserSignature = (formData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.changeUserSignatures : './api/user/changeUserSignature', formData)
+  changeUserSignature: (...T: any) => Promise<AxiosResponse> = (data) =>
+    axios.request(this.urls.changeUserSignature(data));
 
-    /**
-     * 修改密码
-     * @param formData
-     */
-    changePassword = (formData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.changePasswords : './api/user/changePassword', formData)
+  changePassword: (...T: any) => Promise<AxiosResponse> = (data) =>
+    axios.request(this.urls.changePassword(data));
 
-    /**
-     * 查询班级列表
-     * @param searchData
-     */
-    getClassList = (searchData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.getClassList : './api/class/queryClass', searchData)
+  getClassList: (...T: any) => Promise<AxiosResponse> = (data) =>
+    axios.request(this.urls.getClassList(data));
 
-    /**
-     * 编辑&创建班级
-     * @param formData
-     */
-    editClassData = (formData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.editClass : './api/class/createOrUpdateClass', formData)
+  editClassData: (...T: any) => Promise<AxiosResponse> = (data) =>
+    axios.request(this.urls.editClassData(data));
 
-    /**
-     * 删除班级
-     * @param formData
-     */
-    delClass = (formData: unknown) => axios.post(this.VUE_APP_MOCK ? mockpath.delClass : './api/userManage/delClass', formData)
+  delClass: (...T: any) => Promise<AxiosResponse> = (data) =>
+    axios.request(this.urls.delClass(data));
 
-    /**
-     * 导入学生——没有处理mock
-     * @param formData
-     * @param classId 班级id
-     */
-    uploadStudentByClass=(formData: unknown, classId: string) => axios.post(`./api/classMember/insertStudent?classId=${classId}`, formData)
+  uploadStudentByClass: (T: any, classId: string) => Promise<AxiosResponse> = (data, classId) =>
+    axios.request(this.urls.uploadStudentByClass(data, classId));
+
+  login = (data: any) => axios.request(this.urls.login(data));
 }
 
 export default new Api();

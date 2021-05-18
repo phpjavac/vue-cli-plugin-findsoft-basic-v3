@@ -1,6 +1,6 @@
 <template>
   <a-config-provider :locale="zh">
-    <router-view/>
+    <router-view />
   </a-config-provider>
 </template>
 <script lang="ts">
@@ -26,8 +26,5 @@ export default {
     };
   },
 };
-
 </script>
-<style lang="stylus">
-
-</style>
+<style lang="stylus"></style>

@@ -23,7 +23,8 @@
     "javascriptreact",
     "vue",
   ],
-  "editor.formatOnSave": false, //每次保存自动格式化
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true, //每次保存自动格式化
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
