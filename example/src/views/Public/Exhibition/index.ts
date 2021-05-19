@@ -55,8 +55,15 @@ export const componentList: ComponentFace[] = [
   {
     name: '案例卡片',
     nameEn: 'CaseCardView',
-    image: 'https://s3.jpg.cm/2021/05/18/OqL58.jpg',
+    image: 'https://s3.jpg.cm/2021/05/19/O1cRe.png',
     path: 'ExCaseCard',
+    type: '',
+  },
+  {
+    name: '分配弹窗',
+    nameEn: 'DistributeModalView',
+    image: 'https://s3.jpg.cm/2021/05/19/O1nuH.png',
+    path: 'ExDistributeModal',
     type: '',
   },
 ];

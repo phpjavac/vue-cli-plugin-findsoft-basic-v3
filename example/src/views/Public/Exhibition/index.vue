@@ -28,6 +28,9 @@ export default defineComponent({
     ToTop: defineAsyncComponent(() => import('@/views/Public/Exhibition/ToTop.vue')),
     Fluctuation: defineAsyncComponent(() => import('@/views/Public/Exhibition/Fluctuation.vue')),
     CaseCardView: defineAsyncComponent(() => import('@/views/Public/Exhibition/CaseCardView.vue')),
+    DistributeModalView: defineAsyncComponent(() =>
+      import('@/views/Public/Exhibition/DistributeModalView.vue'),
+    ),
   },
   props: {},
   setup() {
