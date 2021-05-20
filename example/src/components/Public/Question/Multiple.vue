@@ -19,17 +19,13 @@ a-form(layout="vertical")
 </template>
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  defineComponent, inject, onMounted, reactive, watch,
-} from 'vue';
-import {
-  Form, InputNumber, Select, Button, Input, Checkbox, message,
-} from 'ant-design-vue';
+import { defineComponent, inject, onMounted, reactive, watch } from 'vue';
+import { Form, InputNumber, Select, Button, Input, Checkbox, message } from 'ant-design-vue';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons-vue';
 import Editor from '@/components/Editor.vue';
 import WangEditor from 'wangeditor';
 import { uniqBy, uniqueId } from 'lodash';
-import { ParseQuestionI } from './js/interface';
+import { ParseQuestionI } from './lib/interface';
 
 export default defineComponent({
   name: 'Multiple',
@@ -51,9 +47,13 @@ export default defineComponent({
   setup(props, { emit }) {
     const dataClone = inject('dataClone') as ParseQuestionI;
 
-    watch(() => dataClone, (data) => {
-      Object.assign(dataClone, data);
-    }, { deep: true });
+    watch(
+      () => dataClone,
+      (data) => {
+        Object.assign(dataClone, data);
+      },
+      { deep: true },
+    );
 
     const handleAddMetaClick = () => {
       dataClone.pMetas.push({
@@ -66,7 +66,8 @@ export default defineComponent({
       dataClone.pMetas.splice(metaIndex, 1);
     };
 
-    const isChecked = (metaIndex: number) => dataClone.pAnswer.findIndex((d: any) => d === metaIndex) > -1;
+    const isChecked = (metaIndex: number) =>
+      dataClone.pAnswer.findIndex((d: any) => d === metaIndex) > -1;
 
     const handleCheckboxChange = (metaIndex: number) => {
       const i = (dataClone.pAnswer as number[]).indexOf(metaIndex);

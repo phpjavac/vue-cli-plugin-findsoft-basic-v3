@@ -14,21 +14,15 @@ a-modal.qu-wrap(:visible="visible",width="800px",@cancel="handleCancel")
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  defineComponent, provide, reactive, watch,
-} from 'vue';
+import { defineComponent, provide, reactive, watch } from 'vue';
 import { cloneDeep } from 'lodash';
-import {
-  Button, Form, Modal, Select,
-} from 'ant-design-vue';
+import { Button, Form, Modal, Select } from 'ant-design-vue';
 import Single from './Single.vue';
 import Multiple from './Multiple.vue';
 import TrueOrFalse from './TrueOrFalse.vue';
 import Blank from './Blank.vue';
-import { questionTypes, reverseData } from './js/index';
-import {
-  ParseQuestionI, Question, PMeta,
-} from './js/interface';
+import { questionTypes, reverseData } from './lib/index';
+import { ParseQuestionI, Question, PMeta } from './lib/interface';
 
 export default defineComponent({
   name: 'Question',
@@ -62,9 +56,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const newKey = {
       pMetas: [] as PMeta[],
-      pAnswer: [] as Array<number|string|boolean|undefined>,
+      pAnswer: [] as Array<number | string | boolean | undefined>,
     };
-    const dataClone = reactive(cloneDeep({ ...props.data, ...newKey })) as unknown as ParseQuestionI;
+    const dataClone = (reactive(
+      cloneDeep({ ...props.data, ...newKey }),
+    ) as unknown) as ParseQuestionI;
 
     const handleQTypeChange = (qtype: number, dClone: ParseQuestionI) => {
       switch (qtype) {
@@ -84,16 +80,24 @@ export default defineComponent({
       }
     };
 
-    watch(() => props.data as Question, (data: Question) => {
-      Object.assign(dataClone, reactive(cloneDeep({ ...data, ...newKey })));
-    }, { deep: true });
-    watch(() => props.visible, (v: boolean) => {
-      if (!v) Object.assign(dataClone, reactive(cloneDeep({ ...props.data, ...newKey })));
-    });
+    watch(
+      () => props.data as Question,
+      (data: Question) => {
+        Object.assign(dataClone, reactive(cloneDeep({ ...data, ...newKey })));
+      },
+      { deep: true },
+    );
+    watch(
+      () => props.visible,
+      (v: boolean) => {
+        if (!v) Object.assign(dataClone, reactive(cloneDeep({ ...props.data, ...newKey })));
+      },
+    );
 
     provide('dataClone', dataClone);
 
-    const currentComponent = (qtype: number) => ['Single', 'Multiple', 'TrueOrFalse', 'Blank'][qtype];
+    const currentComponent = (qtype: number) =>
+      ['Single', 'Multiple', 'TrueOrFalse', 'Blank'][qtype];
 
     /**
      * 校验函数
