@@ -12,11 +12,13 @@
 import { Question, QuestionI } from '@/components/Public/Question/lib/interface';
 import { defineAsyncComponent, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { Button } from 'ant-design-vue';
 
 export default defineComponent({
   components: {
     breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumbs.vue')),
     question: defineAsyncComponent(() => import('@/components/Public/Question/Index.vue')),
+    aButton: Button,
   },
   props: {},
   setup() {
@@ -25,6 +27,7 @@ export default defineComponent({
     const goInfo = () => {
       router.push('/Teacher/experimentinfo');
     };
+    console.log(getUniqueId([{}, {}]));
 
     const showQuestion = ref(false);
 
