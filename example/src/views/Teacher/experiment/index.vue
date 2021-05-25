@@ -9,8 +9,7 @@
 </template>
 
 <script lang="ts">
-import { Question, QuestionI } from '@/components/Public/Question/js/interface';
-import { getUniqueId } from '@/lib';
+import { Question, QuestionI } from '@/components/Public/Question/lib/interface';
 import { defineAsyncComponent, defineComponent, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { Button } from 'ant-design-vue';
