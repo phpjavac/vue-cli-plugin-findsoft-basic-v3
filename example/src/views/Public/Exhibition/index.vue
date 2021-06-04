@@ -3,9 +3,11 @@
 .exhibition
   template(v-if='current === "list"')
     PageHeader(title='组件列表' :back='false')
-    .component-main.flex.flex-row.flex-wrap
-      .component.pointer(v-for='item in componentList' :key='item.path' @click='changeComponent(item.nameEn)')
-        Card(v-bind='item')
+    .component-main
+      a-row(:gutter="[32,32]")
+        a-col(v-bind='grid', v-for='item in componentList' :key='item.path' @click='changeComponent(item.nameEn)')
+          .item.component.pointer
+            Card(v-bind='item')
   template(v-else)
     component(
       :is='current'
@@ -15,6 +17,7 @@
 <script lang="ts">
 import { computed, defineAsyncComponent, defineComponent, onMounted } from 'vue';
 import { useStore } from 'vuex';
+import {Row,Col} from 'ant-design-vue'
 // import { useRoute } from 'vue-router';
 import { componentList } from './index';
 
@@ -31,6 +34,9 @@ export default defineComponent({
     DistributeModalView: defineAsyncComponent(() =>
       import('@/views/Public/Exhibition/DistributeModalView.vue'),
     ),
+    DraggableTable:defineAsyncComponent(()=>import('@/views/Public/Exhibition/DraggableTable.vue')),
+    aRow:Row,
+    aCol:Col,
   },
   props: {},
   setup() {
@@ -57,6 +63,12 @@ export default defineComponent({
       changeComponent,
 
       componentList,
+      grid:{
+        xs: 12,
+        lg: 8,
+        xl: 6,
+        xxl: 4
+      }
     };
   },
 });
