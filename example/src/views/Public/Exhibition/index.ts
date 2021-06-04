@@ -66,6 +66,13 @@ export const componentList: ComponentFace[] = [
     path: 'ExDistributeModal',
     type: '',
   },
+  {
+    name: '表格拖拽',
+    nameEn: 'DraggableTable',
+    image: require('@/assets/img/exhibition/draggable.png'),
+    path: 'ExDraggableTable',
+    type: '',
+  },
 ];
 
 export const e = '站空';
