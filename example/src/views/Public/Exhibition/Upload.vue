@@ -97,6 +97,10 @@ const aspectRatioList = [
     aspectRatio: 1,
     title: '1:1',
   },
+  {
+    aspectRatio: NaN,
+    title: '自由',
+  }
 ];
 
 export default defineComponent({

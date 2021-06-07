@@ -27,7 +27,6 @@ export default defineComponent({
     const goInfo = () => {
       router.push('/Teacher/experimentinfo');
     };
-    console.log(getUniqueId([{}, {}]));
 
     const showQuestion = ref(false);
 
