@@ -58,6 +58,7 @@ export default defineComponent({
       pMetas: [] as PMeta[],
       pAnswer: [] as Array<number | string | boolean | undefined>,
     };
+    // 初始化时当增加处理，用newKey覆盖data——pMetas,pAnswer
     const dataClone = (reactive(
       cloneDeep({ ...props.data, ...newKey }),
     ) as unknown) as ParseQuestionI;
@@ -83,7 +84,16 @@ export default defineComponent({
     watch(
       () => props.data as Question,
       (data: Question) => {
-        Object.assign(dataClone, reactive(cloneDeep({ ...data, ...newKey })));
+        /**
+         * id表示编辑
+         * 编辑时，用data覆盖newKey——pMetas,pAnswer
+         * 增加时，用newKey覆盖data——pMetas,pAnswer
+         */
+        if (data.id) {
+          Object.assign(dataClone, reactive(cloneDeep({ ...newKey, ...data })));
+        } else {
+          Object.assign(dataClone, reactive(cloneDeep({ ...data, ...newKey })));
+        }
       },
       { deep: true },
     );
