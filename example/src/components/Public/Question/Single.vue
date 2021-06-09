@@ -92,7 +92,7 @@ export default defineComponent({
         message.error('选项内容不能重复！');
         return false;
       }
-      if (!dataClone.pAnswer.length || Number.isNaN(dataClone.pAnswer[0])) {
+      if (!dataClone.pAnswer.length || Number.isNaN(dataClone.pAnswer[0]) || dataClone.pAnswer[0] === undefined) {
         message.error('请选择答案！');
         return false;
       }
