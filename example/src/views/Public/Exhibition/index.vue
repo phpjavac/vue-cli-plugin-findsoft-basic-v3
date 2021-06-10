@@ -35,8 +35,9 @@ export default defineComponent({
       import('@/views/Public/Exhibition/DistributeModalView.vue'),
     ),
     DraggableTable:defineAsyncComponent(()=>import('@/views/Public/Exhibition/DraggableTable.vue')),
-    aRow:Row,
-    aCol:Col,
+    BasicIcon: defineAsyncComponent(()=>import('@/views/Public/Exhibition/BasicIcon.vue')),
+    aRow: Row,
+    aCol: Col,
   },
   props: {},
   setup() {
