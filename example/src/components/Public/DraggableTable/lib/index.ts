@@ -14,9 +14,10 @@
   title: string;
   dataIndex: string;
   key?: string;
-  width?: number;
+  width?: number|string;
   align?: string;
   ellipsis?: boolean;
+  slots?: { customRender: string };
 }
 
 /**
@@ -45,7 +46,7 @@ export interface IProps {
  * @callback end 拖拽结束时触发，返回值为排序后的数组
  */
 export interface IEmits {
-  selectChange: () => string[];
+  selectChange: () => {selectRowKeys: string[]};
   end: () => IBaseRecord[];
 }
 
