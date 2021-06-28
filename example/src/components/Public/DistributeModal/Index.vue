@@ -62,7 +62,7 @@ a-modal.dm-wrap(:visible="visible",title="分配实验",width="680px",@cancel="h
                 span.dicr-text {{ stu.name }}
 </template>
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, watch } from 'vue';
+import { computed, defineComponent, PropType, reactive, ref, watch } from 'vue';
 import { cloneDeep } from 'lodash';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import {
@@ -125,7 +125,7 @@ export default defineComponent({
      * 班级列表
      */
     classSource: {
-      type: Array(Class),
+      type: Array as PropType<IClass[]>,
       default: () => [new Class()],
     },
     saving: {
