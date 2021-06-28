@@ -1,5 +1,5 @@
 <template lang="pug">
-a-modal.dm-wrap(:visible="visible",title="分配实验",width="680px",@cancel="handleCancel")
+a-modal.dm-wrap(:visible="visible",title="分配实验",width="680px",@onCancel="handleCancel")
   template(#footer)
     a-button(@click="handleCancel") 取消
     a-button(type="primary",@click="handleConfirm",:loading="saving") 确定
@@ -22,7 +22,7 @@ a-modal.dm-wrap(:visible="visible",title="分配实验",width="680px",@cancel="h
       Col(span="6")
         a-form-item(label="查看答案",:label-col="{span:12}",,:wraper-col="{span:12}")
           a-switch(v-model:checked="formState.viewAnswer")
-    a-form-model-item(
+    a-form-item(
       label='选择班级',
       :labelCol='{ span: 3 }',
       :wrapperCol='{ span: 21 }'
