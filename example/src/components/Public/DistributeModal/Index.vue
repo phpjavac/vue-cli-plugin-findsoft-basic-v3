@@ -1,5 +1,5 @@
 <template lang="pug">
-a-modal.dm-wrap(:visible="visible",title="分配实验",width="680px",@onCancel="handleCancel")
+a-modal.dm-wrap(:visible="visible",title="分配实验",width="680px",@cancel="handleCancel")
   template(#footer)
     a-button(@click="handleCancel") 取消
     a-button(type="primary",@click="handleConfirm",:loading="saving") 确定
