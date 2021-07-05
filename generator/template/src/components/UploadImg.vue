@@ -11,7 +11,8 @@
     @ok="onOk",
     :maskClosable="false"
   )
-    vue-cropper(ref="cropper", id='vue-cropper' :src="choseImg", :aspectRatio="aspectRatio" v-if='cropperShow')
+    vue-cropper(v-if='`${aspectRatio}` !== "NaN" && cropperShow', ref="cropper", :src="choseImg", :aspectRatio="aspectRatio")
+    vue-cropper(v-else-if='`${aspectRatio}` === "NaN" && cropperShow', ref="cropper", :src="choseImg")
   //- 1、如果有传过来的旧图，显示旧图
   //- 2、如果没有，显示无图
   //- 3、裁切时，也是显示旧图
@@ -82,7 +83,7 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    /** 裁剪比例 */
+    /** 裁剪比例 NaN表示自由尺寸 */
     aspectRatio: {
       type: Number,
       default: 16 / 9,
@@ -111,6 +112,17 @@ export default defineComponent({
     importType: {
       type: Array,
       default: () => ['jpg', 'jpeg', 'png'],
+    },
+    /** 该属性为true时，不对图片进行裁剪 */
+    nocut: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  watch: {
+    oldImgSrc() {
+      // 修复直接更新 oldImgSrc 时，图片不刷新的问题
+      this.afterImg = '';
     },
   },
   setup(props, context: SetupContext) {
@@ -142,12 +154,15 @@ export default defineComponent({
         const reader = new FileReader();
         reader.onload = (event: any) => {
           choseImg.value = event.currentTarget.result;
-
-          modalVisible.value = true;
-          nextTick(() => {
+          if (!props.nocut) {
+            modalVisible.value = true;
+            nextTick(() => {
             /** 这句话用来更新弹框里的图片 */
-            (cropper.value as any).replace(event.currentTarget.result);
-          });
+              (cropper.value as any).replace(event.currentTarget.result);
+            });
+          } else {
+            context.emit('upload', file);
+          }
         };
         reader.readAsDataURL(file);
       }

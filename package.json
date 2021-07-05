@@ -1,6 +1,6 @@
 {
   "name": "vue-cli-plugin-findsoft-basic-v3",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "findsoft-前端基础框架",
   "main": "index.js",
   "scripts": {

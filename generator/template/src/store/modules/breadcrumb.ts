@@ -1,5 +1,5 @@
 import {
-  ActionTree, GetterTree, MutationTree, StoreOptions,
+  ActionTree, MutationTree, StoreOptions,
 } from 'vuex';
 import { Bread } from '@/types/base';
 import Keys from '@/types/storagekeys';
@@ -8,6 +8,7 @@ class State {
   breadList: Bread[] = [];
 }
 
+// 防止学生端和教师端路径混合
 const storeKey = () => {
   try {
     return sessionStorage.getItem('role') === 'student' ? `stu${Keys.Bread}` : `tch${Keys.Bread}`;
@@ -21,20 +22,8 @@ class BreadCrumb implements StoreOptions<State> {
 
   state = new State();
 
-  // 防止学生端和教师端路径混合
-  getters: GetterTree<State, unknown> = {
-    storeKey() {
-      try {
-        return sessionStorage.getItem('role') === 'student' ? `stu${Keys.Bread}` : `tch${Keys.Bread}`;
-      } catch (e) {
-        return Keys.Bread;
-      }
-    },
-  };
-
   mutations: MutationTree<State> = {
     init(state) {
-      // debugger; storeKey
       if (localStorage.getItem(storeKey())) {
         try {
           state.breadList = JSON.parse(localStorage.getItem(storeKey()) as string);
@@ -42,23 +31,14 @@ class BreadCrumb implements StoreOptions<State> {
           state.breadList = [];
         }
       }
-      // if (localStorage.getItem(getters.storeKey)) {
-      //   try {
-      //     state.breadList = JSON.parse(localStorage.getItem(getters.storeKey) as string);
-      //   } catch (e) {
-      //     state.breadList = [];
-      //   }
-      // }
     },
     splice(state, { startIndex }) {
       state.breadList.splice(startIndex, state.breadList.length);
       localStorage.setItem(storeKey(), JSON.stringify(state.breadList));
-      // localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
     push(state, { data }: { getters: {storeKey: string}; data: Bread }) {
       state.breadList.push(data);
       localStorage.setItem(storeKey(), JSON.stringify(state.breadList));
-      // localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
     delete(state, { index }: { getters: {storeKey: string}; index: number }) {
       try {
@@ -67,17 +47,14 @@ class BreadCrumb implements StoreOptions<State> {
         console.log(e);
       }
       localStorage.setItem(storeKey(), JSON.stringify(state.breadList));
-      // localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
     pop(state) {
       state.breadList.pop();
       localStorage.setItem(storeKey(), JSON.stringify(state.breadList));
-      // localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
     clear(state) {
       state.breadList = [];
       localStorage.setItem(storeKey(), JSON.stringify(state.breadList));
-      // localStorage.setItem(getters.storeKey, JSON.stringify(state.breadList));
     },
   };
 
