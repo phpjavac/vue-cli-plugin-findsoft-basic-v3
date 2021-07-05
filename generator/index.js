@@ -13,6 +13,8 @@ module.exports = (api, options) => {
             "moment": "^2.29.1",
             "cropperjs": "^1.5.11",
             "vue-cropperjs": "^5.0.0",
+            "wangeditor": "^4.7.5",
+            "vuedraggable": "^2.24.3",
         },
         devDependencies: {
             "@types/mockjs": "^1.0.3",
