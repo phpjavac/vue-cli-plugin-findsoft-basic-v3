@@ -125,7 +125,7 @@ const whiteList = ['/', '/404']; // 路由白名单：不需要登录也可以�
 router.beforeEach((to, from, next) => {
   const { role, code } = sessionStorage;
   if (whiteList.includes(to.path)) {
-    if (role && code) {
+    if (role && code && to.name === 'login') {
       next({path: role === 'student' ? '/Student/home' : '/Teacher/userlist'}); // 判断是否已经登录过
     } else {
       next(); // 判断白名单
