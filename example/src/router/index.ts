@@ -125,7 +125,11 @@ const whiteList = ['/', '/404']; // 路由白名单：不需要登录也可以�
 router.beforeEach((to, from, next) => {
   const { role, code } = sessionStorage;
   if (whiteList.includes(to.path)) {
-    next(); // 判断白名单
+    if (role && code && to.name === 'login') {
+      next({path: role === 'student' ? '/Student/home' : '/Teacher/userlist'}); // 判断是否已经登录过
+    } else {
+      next(); // 判断白名单
+    }
   } else if (!role || !code) {
     next({ path: '/' }); // 判断登录
   } else if (to.meta.role && (to.meta.role as []).includes((role as never))) {
