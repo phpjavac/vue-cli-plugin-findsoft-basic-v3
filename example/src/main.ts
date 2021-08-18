@@ -7,6 +7,7 @@ import router from './router';
 import store from './store';
 import axios from './axios/fetch';
 import '@/styles/index.styl';
+import '@/icons/svg'; // svg
 
 // eslint-disable-next-line no-new
 new MockRouter();
